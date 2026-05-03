@@ -1,0 +1,38 @@
+services:
+  # --- Base de données ---
+  postgres-db:
+    image: postgres:latest
+    container_name: agro-postgres
+    environment:
+      POSTGRES_DB: agro_db
+      POSTGRES_USER: Memko
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5432:5432"
+
+  # --- Application 1: Auth ---
+  agro-auth:
+    build: ./Agro-Auth
+    container_name: agro-auth-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+
+  # --- Application 2: Analyse ---
+  agro-analyse:
+    build: ./Agro-Analyse
+    container_name: agro-analyse-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-db
+
+  # --- Application 3: Parcelles ---
+  agro-parcelles:
+    build: ./Agro-Parcelles
+    container_name: agro-parcelles-app
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres-db
