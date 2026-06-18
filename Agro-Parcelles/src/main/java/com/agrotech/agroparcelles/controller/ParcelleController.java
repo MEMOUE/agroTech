@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.controller;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.service.ParcelleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +29,14 @@ public class ParcelleController {
     }
 
     @PostMapping
-    public ResponseEntity<ParcelleDtoReponse> create(@RequestBody ParcelleDtoRequest request) {
+    public ResponseEntity<ParcelleDtoReponse> create(@Valid @RequestBody ParcelleDtoRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(parcelleService.save(request));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ParcelleDtoReponse> update(
             @PathVariable Long id,
-            @RequestBody ParcelleDtoRequest request) {
+            @Valid @RequestBody ParcelleDtoRequest request) {
         return ResponseEntity.ok(parcelleService.update(id, request));
     }
 

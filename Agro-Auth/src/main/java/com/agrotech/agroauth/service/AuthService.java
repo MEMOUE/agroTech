@@ -3,11 +3,13 @@ package com.agrotech.agroauth.service;
 import com.agrotech.agroauth.dto.*;
 import com.agrotech.agroauth.entity.Role;
 import com.agrotech.agroauth.entity.User;
+import com.agrotech.agroauth.exception.UserAlreadyExistsException;
 import com.agrotech.agroauth.repository.UserRepository;
 import com.agrotech.agroauth.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,10 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Ce nom d'utilisateur est déjà pris");
+            throw new UserAlreadyExistsException("Ce nom d'utilisateur est déjà pris");
+        }
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new UserAlreadyExistsException("Cet email est déjà utilisé");
         }
 
         Role role = request.getRole() != null ? request.getRole() : Role.AGRICULTEUR;
@@ -30,6 +35,7 @@ public class AuthService {
         User user = User.builder()
                 .username(request.getUsername())
                 .name(request.getName())
+                .email(request.getEmail().toLowerCase())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
                 .build();
@@ -42,6 +48,7 @@ public class AuthService {
                 .token(token)
                 .username(user.getUsername())
                 .name(user.getName())
+                .email(user.getEmail())
                 .role(user.getRole())
                 .build();
     }
@@ -55,7 +62,7 @@ public class AuthService {
         );
 
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());
 
@@ -63,13 +70,11 @@ public class AuthService {
                 .token(token)
                 .username(user.getUsername())
                 .name(user.getName())
+                .email(user.getEmail())
                 .role(user.getRole())
                 .build();
     }
 
-    /**
-     * Endpoint utilisé par les autres microservices pour valider un token.
-     */
     public TokenValidationResponse validateToken(String token) {
         if (!jwtUtil.validateToken(token)) {
             return TokenValidationResponse.builder()
@@ -84,6 +89,21 @@ public class AuthService {
                 .valid(true)
                 .username(username)
                 .role(Role.valueOf(role))
+                .build();
+    }
+
+    public UserProfileResponse getProfile(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+
+        return UserProfileResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .enabled(user.isEnabled())
+                .createdAt(user.getCreatedAt())
                 .build();
     }
 }
