@@ -1,16 +1,13 @@
 package com.agrotech.agroparcelles.service;
 
-
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.entity.Parcelle;
+import com.agrotech.agroparcelles.exception.ResourceNotFoundException;
 import com.agrotech.agroparcelles.mapper.ParcelleMapper;
 import com.agrotech.agroparcelles.repository.ParcelleRepository;
-import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -21,39 +18,42 @@ public class ParcelleService {
     private final ParcelleRepository parcelleRepository;
     private final ParcelleMapper parcelleMapper;
 
-    public Parcelle findById(long id) {
-        return parcelleRepository.findById(id)
-                .orElseThrow();
+    public ParcelleDtoReponse findById(Long id) {
+        Parcelle parcelle = parcelleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Parcelle introuvable : " + id));
+        return parcelleMapper.toDto(parcelle);
     }
-    
-    public List<ParcelleDtoReponse> findByUtilisateurId(long UtiliateurId) {
-        return parcelleRepository.findByUtilisateurId(UtiliateurId);
+
+    public List<ParcelleDtoReponse> findByIdUser(Long idUser) {
+        return parcelleRepository.findByIdUser(idUser).stream()
+                .map(parcelleMapper::toDto)
+                .toList();
     }
-    
+
     public ParcelleDtoReponse save(ParcelleDtoRequest parcelleDtoRequest) {
-
         Parcelle parcelle = parcelleMapper.toEntity(parcelleDtoRequest);
-
-        Parcelle parcelleSaved = parcelleRepository.save(parcelle);
-
-        return parcelleMapper.toDto(parcelleSaved);
-
+        Parcelle saved = parcelleRepository.save(parcelle);
+        return parcelleMapper.toDto(saved);
     }
 
-    public void delete(long id) {
-        if(parcelleRepository.findById(id).isEmpty()){
-            throw new OpenApiResourceNotFoundException("La ressource n'existe pas");
+    public ParcelleDtoReponse update(Long id, ParcelleDtoRequest parcelleDtoRequest) {
+        Parcelle existante = parcelleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Parcelle introuvable : " + id));
+
+        existante.setNomParcelle(parcelleDtoRequest.getNomParcelle());
+        existante.setCoordonneesGps(parcelleDtoRequest.getCoordonneesGps());
+        existante.setSuperficie(parcelleDtoRequest.getSuperficie());
+        if (parcelleDtoRequest.getIdUser() != null) {
+            existante.setIdUser(parcelleDtoRequest.getIdUser());
+        }
+
+        return parcelleMapper.toDto(parcelleRepository.save(existante));
+    }
+
+    public void delete(Long id) {
+        if (!parcelleRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Parcelle introuvable : " + id);
         }
         parcelleRepository.deleteById(id);
     }
-
-    public ParcelleDtoReponse update(long id, ParcelleDtoRequest parcelleDtoRequest) {
-        Parcelle parcelleExiste = parcelleRepository.findById(id).orElseThrow();
-        parcelleExiste.setNomParcelle(parcelleDtoRequest.getNomParcelle());
-        parcelleExiste.setCoordonneesGps(parcelleDtoRequest.getCoordonneesGps());
-        parcelleExiste.setSuperficie(parcelleDtoRequest.getSuperficie());
-        Parcelle parcelleUpdated = parcelleRepository.save(parcelleExiste);
-        return parcelleMapper.toDto(parcelleUpdated);
-    }
-
 }

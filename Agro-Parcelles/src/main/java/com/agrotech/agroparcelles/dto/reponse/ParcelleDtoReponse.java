@@ -4,6 +4,7 @@ import com.agrotech.agroparcelles.entity.Parcelle;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,10 +13,8 @@ import java.util.ArrayList;
 public class ParcelleDtoReponse {
 
     private Long id;
-
     private String nomParcelle;
-    private ArrayList<Parcelle.GpsPoint> coordonneesGps = new ArrayList<Parcelle.GpsPoint>();
+    private List<Parcelle.GpsPoint> coordonneesGps = new ArrayList<>();
     private double superficie;
-    @NonNull
     private Long idUser;
 }

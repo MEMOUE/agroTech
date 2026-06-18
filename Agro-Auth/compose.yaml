@@ -2,25 +2,18 @@ services:
   postgres:
     image: 'postgres:16'
     environment:
-      POSTGRES_DB: agro_db
+      POSTGRES_DB: agro_auth_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456789
     ports:
       - '5432:5432'
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  agro-auth:
-    build: .
-    ports:
-      - '8081:8081'
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/agro_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123456789
-      JWT_SECRET: VotreCleSecreteTresLongueEtSecuriseeAuMoins32Caracteres!
-    depends_on:
-      - postgres
+      - pgdata_auth:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d agro_auth_db']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  pgdata:
+  pgdata_auth:

@@ -2,10 +2,8 @@ package com.agrotech.agroparcelles.controller;
 
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
-import com.agrotech.agroparcelles.entity.Parcelle;
 import com.agrotech.agroparcelles.service.ParcelleService;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +17,31 @@ public class ParcelleController {
 
     private final ParcelleService parcelleService;
 
-    @GetMapping("/api/delete/{id}")
-    public void delete(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<ParcelleDtoReponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(parcelleService.findById(id));
+    }
+
+    @GetMapping("/utilisateur/{idUser}")
+    public ResponseEntity<List<ParcelleDtoReponse>> findByIdUser(@PathVariable Long idUser) {
+        return ResponseEntity.ok(parcelleService.findByIdUser(idUser));
+    }
+
+    @PostMapping
+    public ResponseEntity<ParcelleDtoReponse> create(@RequestBody ParcelleDtoRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(parcelleService.save(request));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ParcelleDtoReponse> update(
+            @PathVariable Long id,
+            @RequestBody ParcelleDtoRequest request) {
+        return ResponseEntity.ok(parcelleService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         parcelleService.delete(id);
+        return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/api/parcelleUser/{UserId}")
-    public ResponseEntity <List<ParcelleDtoReponse>> findByIdUser(@PathVariable Long idUser){
-       List <ParcelleDtoReponse> reponse = parcelleService.findByUtilisateurId(idUser);
-       if(reponse.isEmpty()){
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND); //fixme personaliser le message de retour
-       }
-        return ResponseEntity.status(HttpStatus.OK).body(reponse);
-    }
-
-
-    @PostMapping("/api/parcelle/create")
-    public ResponseEntity<ParcelleDtoReponse> createParcelle(@RequestBody ParcelleDtoRequest parcelleDtoRequest){
-        ParcelleDtoReponse reponse = parcelleService.save(parcelleDtoRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reponse);
-    }
-
 }
