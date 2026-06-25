@@ -1,0 +1,127 @@
+<div class="min-h-screen bg-white flex items-center justify-center p-4">
+  <div class="w-full max-w-sm">
+
+    <!-- Brand -->
+    <div class="text-center mb-8">
+      <img src="logo.png" alt="AgroTech" class="h-20 w-auto mx-auto mb-4" style="filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));" />
+
+      <p class="text-gray-500 mt-1 text-sm">Créer votre compte agriculteur</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-xl p-7">
+
+      @if (success()) {
+        <div class="text-center py-4">
+          <div class="inline-flex items-center justify-center w-14 h-14 bg-green-100 rounded-full mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 class="text-lg font-semibold text-gray-800 mb-1">Compte créé !</h2>
+          <p class="text-gray-500 text-sm mb-5">Vous êtes maintenant connecté.</p>
+          <a routerLink="/dashboard"
+            class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition text-sm">
+            Continuer
+          </a>
+        </div>
+      } @else {
+
+        @if (error()) {
+          <div class="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+            {{ error() }}
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-4">
+
+          <!-- Nom d'utilisateur -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5" for="username">
+              Nom d'utilisateur
+            </label>
+            <input id="username" type="text" formControlName="username"
+              placeholder="ex: jean_agriculteur"
+              autocomplete="username"
+              class="w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+              [class.border-red-400]="form.controls.username.invalid && form.controls.username.touched"
+              [class.border-gray-300]="!(form.controls.username.invalid && form.controls.username.touched)" />
+            @if (form.controls.username.errors?.['required'] && form.controls.username.touched) {
+              <p class="mt-1 text-xs text-red-500">Ce champ est requis.</p>
+            } @else if (form.controls.username.errors?.['minlength'] && form.controls.username.touched) {
+              <p class="mt-1 text-xs text-red-500">Minimum 3 caractères.</p>
+            }
+          </div>
+
+          <!-- Téléphone ou Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5" for="contact">
+              Téléphone ou Email
+            </label>
+            <input id="contact" type="text" formControlName="contact"
+              placeholder="ex: +237 6XX XXX XXX"
+              autocomplete="email"
+              class="w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+              [class.border-red-400]="form.controls.contact.invalid && form.controls.contact.touched"
+              [class.border-gray-300]="!(form.controls.contact.invalid && form.controls.contact.touched)" />
+            @if (form.controls.contact.errors?.['required'] && form.controls.contact.touched) {
+              <p class="mt-1 text-xs text-red-500">Ce champ est requis.</p>
+            } @else if (form.controls.contact.errors?.['phoneOrEmail'] && form.controls.contact.touched) {
+              <p class="mt-1 text-xs text-red-500">Entrez un numéro de téléphone ou une adresse email valide.</p>
+            }
+          </div>
+
+          <!-- Mot de passe -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5" for="password">
+              Mot de passe
+            </label>
+            <div class="relative">
+              <input id="password" [type]="showPassword() ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Minimum 6 caractères"
+                autocomplete="new-password"
+                class="w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition pr-12"
+                [class.border-red-400]="form.controls.password.invalid && form.controls.password.touched"
+                [class.border-gray-300]="!(form.controls.password.invalid && form.controls.password.touched)" />
+              <button type="button" (click)="showPassword.set(!showPassword())"
+                class="absolute inset-y-0 right-0 px-3.5 flex items-center text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+            </div>
+            @if (form.controls.password.errors?.['required'] && form.controls.password.touched) {
+              <p class="mt-1 text-xs text-red-500">Ce champ est requis.</p>
+            } @else if (form.controls.password.errors?.['minlength'] && form.controls.password.touched) {
+              <p class="mt-1 text-xs text-red-500">Minimum 6 caractères.</p>
+            }
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" [disabled]="loading()"
+            class="w-full py-3 bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-semibold rounded-xl transition focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mt-2 text-sm">
+            @if (loading()) {
+              <span class="inline-flex items-center gap-2">
+                <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
+                Inscription…
+              </span>
+            } @else {
+              S'inscrire
+            }
+          </button>
+        </form>
+
+        <p class="mt-5 text-center text-sm text-gray-500">
+          Déjà un compte ?
+          <a routerLink="/login" class="text-green-600 font-medium hover:underline">Se connecter</a>
+        </p>
+      }
+    </div>
+  </div>
+</div>

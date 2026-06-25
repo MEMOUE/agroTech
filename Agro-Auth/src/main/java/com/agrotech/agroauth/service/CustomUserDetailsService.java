@@ -18,9 +18,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé : " + username));
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        // Cherche d'abord par username
+        User user = userRepository.findByUsername(login)
+                .orElseGet(() -> {
+                    // Sinon cherche par email (utile si l'utilisateur entre son email réel)
+                    String emailToTry = login.contains("@") ? login.toLowerCase() : toPhoneEmail(login);
+                    return userRepository.findByEmail(emailToTry)
+                            .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé : " + login));
+                });
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
@@ -31,5 +37,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true,
                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
         );
+    }
+
+    /** Transforme un numéro de téléphone en email fictif (même logique que le frontend) */
+    private String toPhoneEmail(String phone) {
+        return phone.replaceAll("\\s", "") + "@agro.tel";
     }
 }

@@ -1,0 +1,236 @@
+<div class="min-h-screen bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a routerLink="/parcelles" class="text-gray-400 hover:text-gray-600 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </a>
+        <img src="favicon.ico" alt="AgroTech" class="h-6 w-6" />
+        <span class="font-semibold text-gray-800 truncate max-w-xs">{{ parcelle()?.nomParcelle ?? '…' }}</span>
+      </div>
+      @if (parcelle()) {
+        <a [routerLink]="['/parcelles', parcelle()!.id, 'edit']"
+          class="inline-flex items-center gap-1.5 px-4 py-1.5 border border-gray-200 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          Modifier
+        </a>
+      }
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    @if (error()) {
+      <div class="mb-6 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="flex justify-center py-20">
+        <svg class="animate-spin w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+        </svg>
+      </div>
+    } @else if (parcelle()) {
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- ── Colonne gauche ────────────────────────── -->
+        <div class="lg:col-span-1 space-y-5">
+
+          <!-- Infos -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <div class="h-24 bg-gradient-to-br from-green-700 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-12 h-12 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+              </svg>
+            </div>
+
+            <h2 class="font-bold text-gray-900 text-base mb-4">{{ parcelle()!.nomParcelle }}</h2>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="bg-green-50 rounded-xl p-3 text-center">
+                <p class="text-xl font-bold text-green-700">{{ parcelle()!.superficie | number:'1.2-2' }}</p>
+                <p class="text-xs text-green-600 mt-0.5">hectares</p>
+              </div>
+              <div class="bg-blue-50 rounded-xl p-3 text-center">
+                <p class="text-xl font-bold text-blue-700">{{ parcelle()!.perimetre | number:'1.0-0' }}</p>
+                <p class="text-xs text-blue-600 mt-0.5">mètres</p>
+              </div>
+            </div>
+
+            <div class="space-y-0 text-sm">
+              <div class="flex justify-between py-2 border-t border-gray-50">
+                <span class="text-gray-400">Points GPS</span>
+                <span class="font-medium text-gray-700">{{ parcelle()!.coordonneesGps.length }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-t border-gray-50">
+                <span class="text-gray-400">Centroïde</span>
+                <span class="font-medium text-gray-700 text-xs font-mono">
+                  {{ parcelle()!.centroideLat | number:'1.4-4' }},
+                  {{ parcelle()!.centroideLon | number:'1.4-4' }}
+                </span>
+              </div>
+              <div class="flex justify-between py-2 border-t border-gray-50">
+                <span class="text-gray-400">Créée</span>
+                <span class="font-medium text-gray-700 text-xs">{{ parcelle()!.createdAt | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-t border-gray-50">
+                <span class="text-gray-400">Mise à jour</span>
+                <span class="font-medium text-gray-700 text-xs">{{ parcelle()!.updatedAt | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bouton Google Maps -->
+          <button (click)="openGoogleMaps()"
+            class="w-full flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition text-sm font-semibold shadow-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Voir sur Google Maps
+          </button>
+
+          <!-- Points GPS -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h3 class="font-semibold text-gray-700 text-sm mb-3">Points GPS</h3>
+            <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1">
+              @for (pt of parcelle()!.coordonneesGps; track $index) {
+                <div class="flex items-center gap-3 py-1.5 border-b border-gray-50 last:border-0">
+                  <span class="w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center shrink-0">
+                    {{ $index + 1 }}
+                  </span>
+                  <span class="text-xs text-gray-600 font-mono">
+                    {{ pt.lat | number:'1.5-5' }}, {{ pt.lon | number:'1.5-5' }}
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Colonne droite ────────────────────────── -->
+        <div class="lg:col-span-2 space-y-5">
+
+          <!-- Carte satellite de la parcelle -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="px-5 pt-4 pb-2 flex items-center justify-between">
+              <h3 class="font-semibold text-gray-800">Carte satellite</h3>
+              <button (click)="openGoogleMaps()"
+                class="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                Google Maps
+              </button>
+            </div>
+            <app-parcelle-map [points]="parcelle()!.coordonneesGps" height="340px" />
+          </div>
+
+          <!-- Indicateurs satellite -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-gray-800">Données satellite — dernière mesure</h3>
+                @if (satellite()) {
+                  <p class="text-xs text-gray-400 mt-0.5">{{ satellite()!.source }}</p>
+                }
+              </div>
+              @if (loadingSat()) {
+                <svg class="animate-spin w-5 h-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
+              }
+            </div>
+
+            @if (satError()) {
+              <div class="px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex gap-2">
+                <span>⚠️</span> {{ satError() }}
+              </div>
+            } @else if (satIndicators().length) {
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                @for (ind of satIndicators(); track ind.label) {
+                  <div class="rounded-xl p-3.5 border border-gray-100" [class]="ind.bg">
+                    <div class="text-2xl mb-1">{{ ind.icon }}</div>
+                    <p class="text-xs text-gray-500 mb-1">{{ ind.label }}</p>
+                    <p class="text-xl font-bold" [class]="ind.text">
+                      {{ ind.value | number:'1.1-1' }}
+                      <span class="text-xs font-normal ml-0.5">{{ ind.unit }}</span>
+                    </p>
+                  </div>
+                }
+              </div>
+            } @else if (!loadingSat()) {
+              <p class="text-sm text-gray-400 text-center py-6">Chargement des données NASA POWER…</p>
+            }
+          </div>
+
+          <!-- Graphe température -->
+          @if (tempBars().length) {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <h3 class="font-semibold text-gray-800 mb-1">Température (°C) — 14 derniers jours</h3>
+              <p class="text-xs text-gray-400 mb-4">Survolez une barre pour la valeur</p>
+              <div class="flex items-end gap-1.5 h-32 mb-3">
+                @for (bar of tempBars(); track bar.date) {
+                  <div class="flex-1 flex flex-col items-center gap-1 group relative">
+                    <!-- Tooltip -->
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+                      {{ bar.val | number:'1.1-1' }}°C
+                    </span>
+                    <div class="w-full rounded-t-sm bg-gradient-to-t from-orange-500 to-orange-300 min-h-[3px] transition-all"
+                      [style.height.%]="bar.pct || 4"></div>
+                  </div>
+                }
+              </div>
+              <!-- Dates -->
+              <div class="flex gap-1.5">
+                @for (bar of tempBars(); track bar.date) {
+                  <div class="flex-1 text-center" style="font-size: 9px; color: #9ca3af;">
+                    {{ bar.date }}
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Graphe précipitations -->
+          @if (rainBars().length) {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <h3 class="font-semibold text-gray-800 mb-1">Précipitations (mm/j) — 14 derniers jours</h3>
+              <p class="text-xs text-gray-400 mb-4">Survolez une barre pour la valeur</p>
+              <div class="flex items-end gap-1.5 h-24 mb-3">
+                @for (bar of rainBars(); track bar.date) {
+                  <div class="flex-1 flex flex-col items-center gap-1 group relative">
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+                      {{ bar.val | number:'1.1-1' }} mm
+                    </span>
+                    <div class="w-full rounded-t-sm bg-gradient-to-t from-blue-500 to-blue-300 min-h-[3px] transition-all"
+                      [style.height.%]="bar.pct || 4"></div>
+                  </div>
+                }
+              </div>
+              <div class="flex gap-1.5">
+                @for (bar of rainBars(); track bar.date) {
+                  <div class="flex-1 text-center" style="font-size: 9px; color: #9ca3af;">
+                    {{ bar.date }}
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+    }
+  </main>
+</div>

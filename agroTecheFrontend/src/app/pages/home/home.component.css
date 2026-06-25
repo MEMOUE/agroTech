@@ -1,0 +1,163 @@
+/* ── Reveal animation ─────────────────────────────── */
+.reveal {
+  animation: revealUp 0.6s ease both;
+}
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.4s; }
+.reveal-delay-5 { animation-delay: 0.5s; }
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Satellite orbit ──────────────────────────────── */
+.orbit-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+}
+.earth {
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4ade80, #166534);
+  box-shadow: inset -12px -12px 24px rgba(0,0,0,0.3);
+  animation: earth-spin 20s linear infinite;
+}
+@keyframes earth-spin {
+  to { box-shadow: inset -12px -12px 24px rgba(0,0,0,0.3), 0 0 0 0 transparent; }
+}
+.orbit-ring {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(134,239,172,0.4);
+  animation: ring-spin 8s linear infinite;
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+
+.satellite {
+  position: absolute;
+  top: 50%;
+  left: -14px;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+}
+
+/* second satellite slower */
+.orbit-ring-2 {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px dashed rgba(134,239,172,0.2);
+  animation: ring-spin 14s linear infinite reverse;
+}
+.satellite-2 {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+}
+
+/* signal pulse */
+.signal-pulse {
+  position: absolute;
+  inset: 50px;
+  border-radius: 50%;
+  border: 2px solid rgba(74,222,128,0.5);
+  animation: pulse 2.5s ease-out infinite;
+}
+.signal-pulse-2 { animation-delay: 0.8s; }
+.signal-pulse-3 { animation-delay: 1.6s; }
+@keyframes pulse {
+  0%   { transform: scale(0.7); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ── Floating data pills ──────────────────────────── */
+.data-pill {
+  position: absolute;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: #d1fae5;
+  white-space: nowrap;
+  animation: float 4s ease-in-out infinite;
+}
+.pill-ndvi  { top: 8%; left: -20%; animation-delay: 0s; }
+.pill-humi  { bottom: 12%; left: -25%; animation-delay: 0.7s; }
+.pill-temp  { top: 20%; right: -20%; animation-delay: 1.4s; }
+.pill-rain  { bottom: 20%; right: -18%; animation-delay: 2.1s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Comparison cards ─────────────────────────────── */
+.vs-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.vs-card:hover { transform: translateY(-4px); }
+
+/* ── Feature card hover ───────────────────────────── */
+.feat-card {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.feat-card:hover { transform: translateY(-5px); }
+
+/* ── Language ticker ──────────────────────────────── */
+.lang-ticker {
+  overflow: hidden;
+}
+.lang-track {
+  display: flex;
+  gap: 12px;
+  animation: ticker 18s linear infinite;
+  width: max-content;
+}
+.lang-track:hover { animation-play-state: paused; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ── Hero text glow ───────────────────────────────── */
+.hero-headline {
+  animation: fadeUp 0.9s ease both;
+}
+.hero-sub {
+  animation: fadeUp 0.9s 0.2s ease both;
+}
+.hero-cta {
+  animation: fadeUp 0.9s 0.4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Step connector line ─────────────────────────── */
+.step-line {
+  position: absolute;
+  top: 24px;
+  left: calc(50% + 28px);
+  right: calc(-50% + 28px);
+  height: 2px;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  opacity: 0.4;
+}
+
+/* ── Grain texture overlay ───────────────────────── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

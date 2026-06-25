@@ -54,14 +54,16 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
+        // authenticate() appelle loadUserByUsername qui résout username/téléphone/email
+        var auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
 
-        User user = userRepository.findByUsername(request.getUsername())
+        // auth.getName() retourne le vrai username stocké en base (résolu par loadUserByUsername)
+        User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());
