@@ -16,7 +16,6 @@ public class GpsPointListConverter
     private static final JsonMapper MAPPER = JsonMapper.builder().build();
     private static final TypeReference<List<Parcelle.GpsPoint>> TYPE =
             new TypeReference<>() {};
-
     @Override
     public String convertToDatabaseColumn(List<Parcelle.GpsPoint> attribute) {
         return attribute == null ? "[]" : MAPPER.writeValueAsString(attribute);

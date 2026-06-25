@@ -1,11 +1,13 @@
 package com.agrotech.agroparcelles.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+@Slf4j
 @Component
 public class AuthValidationClient {
 
@@ -13,8 +15,6 @@ public class AuthValidationClient {
 
     public AuthValidationClient(
             @Value("${services.auth.url:http://localhost:8081}") String authUrl) {
-        // Fabrique statique : indépendante de l'auto-config.
-        // En SB4, le bean RestClient.Builder n'est plus fourni par le starter webmvc.
         this.restClient = RestClient.builder()
                 .baseUrl(authUrl)
                 .build();
@@ -23,14 +23,13 @@ public class AuthValidationClient {
     public TokenValidationResponse validate(String token) {
         try {
             return restClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/api/auth/validate")
-                            .queryParam("token", token)
-                            .build())
+                    .uri("/api/auth/validate")
+                    .header("Authorization", "Bearer " + token)
                     .retrieve()
-                    .onStatus(HttpStatusCode::isError, (req, res) -> { })
+                    .onStatus(HttpStatusCode::isError, (req, res) -> {})
                     .body(TokenValidationResponse.class);
         } catch (RestClientException e) {
+            log.warn("Erreur validation token auprès de Agro-Auth : {}", e.getMessage());
             return null;
         }
     }
