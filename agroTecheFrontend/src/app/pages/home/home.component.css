@@ -19,16 +19,35 @@
   height: 280px;
   margin: 0 auto;
 }
+/* Globe terrestre réaliste : texture NASA équirectangulaire (400×200 = 2:1)
+   qui défile horizontalement (repeat-x) pour simuler la rotation, sans couture. */
 .earth {
   position: absolute;
-  inset: 40px;
+  inset: 40px;                 /* 280px wrapper - 80 = globe de 200px */
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #4ade80, #166534);
-  box-shadow: inset -12px -12px 24px rgba(0,0,0,0.3);
-  animation: earth-spin 20s linear infinite;
+  overflow: hidden;
+  background-color: #0b1e3a;   /* océan profond en repli */
+  background-image: url('/earth.jpg');
+  background-size: 400px 200px;
+  background-repeat: repeat-x;
+  background-position: 0 center;
+  box-shadow: inset -12px -12px 24px rgba(0,0,0,0.4),
+              0 8px 24px rgba(0,0,0,0.35);
+  animation: earth-rotate 24s linear infinite;
 }
-@keyframes earth-spin {
-  to { box-shadow: inset -12px -12px 24px rgba(0,0,0,0.3), 0 0 0 0 transparent; }
+@keyframes earth-rotate {
+  to { background-position-x: -400px; }
+}
+/* Ombrage sphérique : reflet en haut-gauche + bords assombris */
+.earth::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(255,255,255,0.25) 0%,
+    transparent 55%,
+    rgba(0,0,0,0.45) 100%);
 }
 .orbit-ring {
   position: absolute;
