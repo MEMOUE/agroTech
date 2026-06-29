@@ -2,9 +2,9 @@ import { Component, inject, signal, OnInit, OnDestroy, PLATFORM_ID } from '@angu
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { ParcelleService } from '../../../core/services/parcelle.service';
+import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { GpsPoint } from '../../../core/models/parcelle.models';
+import { ExtractionResult, GpsPoint } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 
 type CaptureState = 'idle' | 'locating' | 'success' | 'error';
@@ -34,6 +34,11 @@ export class ParcelleFormComponent implements OnInit, OnDestroy {
   captureState = signal<CaptureState>('idle');
   geoError     = signal('');
   watchId: number | null = null;
+
+  // Test d'extraction Sentinel-2 (envoi du polygone GeoJSON au backend)
+  extracting       = signal(false);
+  extractionResult = signal<ExtractionResult | null>(null);
+  extractionError  = signal('');
 
   form = this.fb.nonNullable.group({
     nomParcelle: ['', [Validators.required, Validators.maxLength(100)]],
@@ -96,6 +101,33 @@ export class ParcelleFormComponent implements OnInit, OnDestroy {
 
   removePoint(i: number): void {
     this.points.update(pts => pts.filter((_, idx) => idx !== i));
+    this.extractionResult.set(null);
+  }
+
+  /** Sommets ajoutés en cliquant directement sur la carte. */
+  onMapPoints(pts: GpsPoint[]): void {
+    this.points.set([...pts]);
+    this.extractionResult.set(null);
+  }
+
+  /** Envoie le polygone courant (GeoJSON) au service d'extraction Sentinel-2. */
+  testerExtraction(): void {
+    if (this.pointCount < 3) {
+      this.extractionError.set('Tracez au moins 3 coins avant de tester l\'extraction.');
+      return;
+    }
+    this.extracting.set(true);
+    this.extractionError.set('');
+    this.extractionResult.set(null);
+
+    const geoJson = pointsToGeoJson(this.points(), this.form.controls.nomParcelle.value || 'polygone-test');
+    this.svc.extract(geoJson).subscribe({
+      next: res => { this.extractionResult.set(res); this.extracting.set(false); },
+      error: err => {
+        this.extractionError.set(err.error?.error ?? err.error?.message ?? 'Échec de l\'extraction satellite.');
+        this.extracting.set(false);
+      },
+    });
   }
 
   submit(): void {

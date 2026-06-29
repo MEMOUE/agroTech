@@ -28,6 +28,8 @@ satellite:
   nasa-power:
     base-url: https://power.larc.nasa.gov/api/temporal/daily/point
     community: AG
+  sentinel:
+    service-url: ${SENTINEL_SERVICE_URL:http://localhost:8000}
   mapbox:
     token: ${MAPBOX_TOKEN:}
 

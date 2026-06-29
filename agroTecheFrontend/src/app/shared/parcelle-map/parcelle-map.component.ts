@@ -1,5 +1,5 @@
 import {
-  Component, Input, OnChanges, AfterViewInit, OnDestroy,
+  Component, Input, Output, EventEmitter, OnChanges, AfterViewInit, OnDestroy,
   ElementRef, ViewChild, inject, PLATFORM_ID, SimpleChanges,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -17,6 +17,9 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
   @Input() height = '320px';
   @Input() satellite = true;
   @Input() editable = false;
+
+  /** Émis quand l'utilisateur clique sur la carte pour ajouter un sommet (mode editable). */
+  @Output() pointsChange = new EventEmitter<GpsPoint[]>();
 
   @ViewChild('mapEl') mapEl!: ElementRef<HTMLDivElement>;
 
@@ -66,6 +69,20 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
       'https://stamen-tiles.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png',
       { attribution: '', maxZoom: 19, opacity: 0.4 }
     ).addTo(this.map);
+
+    // Mode dessin : clic sur la carte = nouveau sommet
+    if (this.editable) {
+      this.mapEl.nativeElement.style.cursor = 'crosshair';
+      this.map.on('click', (e: any) => {
+        const pt: GpsPoint = {
+          lat: +e.latlng.lat.toFixed(6),
+          lon: +e.latlng.lng.toFixed(6),
+        };
+        this.points = [...this.points, pt];
+        this.pointsChange.emit(this.points);
+        this.render();
+      });
+    }
   }
 
   private render(): void {
@@ -108,12 +125,13 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
         fillColor: '#4ade80',
         fillOpacity: 0.2,
       }).addTo(this.map);
-      this.map.fitBounds(this.polygon.getBounds(), { padding: [30, 30] });
+      // En mode dessin, on ne recadre pas : éviterait de "sauter" à chaque clic.
+      if (!this.editable) this.map.fitBounds(this.polygon.getBounds(), { padding: [30, 30] });
     } else if (latlngs.length >= 2) {
       // Ligne si seulement 2 points
       L.polyline(latlngs, { color: '#16a34a', weight: 2.5, dashArray: '6 4' }).addTo(this.map);
-      this.map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 40] });
-    } else {
+      if (!this.editable) this.map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 40] });
+    } else if (!this.editable) {
       this.map.setView(latlngs[0], 17);
     }
   }

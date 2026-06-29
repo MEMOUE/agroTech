@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+# Clé du compte de service Google Earth Engine — NE JAMAIS committer
+secrets/
+*.json
+!*.example.json

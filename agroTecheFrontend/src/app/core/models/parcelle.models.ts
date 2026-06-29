@@ -35,6 +35,25 @@ export interface ParcelleMapResponse {
   googleMapsUrl: string;
 }
 
+export interface ExtractionRequest {
+  geoJson: unknown;
+  dateDebut?: string;
+  dateFin?: string;
+}
+
+export interface ExtractionResult {
+  statut: string;
+  source: string;
+  nombre_sommets: number;
+  superficie_ha: number;
+  bbox: number[];
+  centroide: { lat: number; lon: number };
+  periode: { debut?: string | null; fin?: string | null };
+  ndvi: { moyen: number; min: number; max: number };
+  couverture_nuageuse_pct: number;
+  message: string;
+}
+
 export interface SatelliteDataResponse {
   parcelleId: number;
   nomParcelle: string;

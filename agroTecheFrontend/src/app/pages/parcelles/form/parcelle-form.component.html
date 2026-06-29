@@ -177,24 +177,79 @@
           }
         </div>
 
-        <!-- Carte satellite en temps réel -->
-        @if (pointCount > 0) {
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h2 class="font-semibold text-gray-800 text-sm">Aperçu du champ</h2>
-              @if (pointCount >= 3) {
-                <span class="text-xs text-green-600 font-medium bg-green-50 px-2.5 py-1 rounded-full">
-                  Polygone tracé
-                </span>
-              } @else {
-                <span class="text-xs text-amber-600 font-medium bg-amber-50 px-2.5 py-1 rounded-full">
-                  {{ 3 - pointCount }} coin(s) manquant(s)
-                </span>
-              }
-            </div>
-            <app-parcelle-map [points]="points()" height="260px" />
+        <!-- Carte satellite en temps réel (cliquable pour ajouter des coins) -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="font-semibold text-gray-800 text-sm">Aperçu du champ</h2>
+            @if (pointCount >= 3) {
+              <span class="text-xs text-green-600 font-medium bg-green-50 px-2.5 py-1 rounded-full">
+                Polygone tracé
+              </span>
+            } @else {
+              <span class="text-xs text-amber-600 font-medium bg-amber-50 px-2.5 py-1 rounded-full">
+                {{ 3 - pointCount }} coin(s) manquant(s)
+              </span>
+            }
           </div>
-        }
+          <p class="text-xs text-gray-400 mb-3 flex gap-1.5">
+            <span>🖱️</span> Cliquez sur la carte pour ajouter un coin, ou utilisez le GPS ci-dessus.
+          </p>
+          <app-parcelle-map [points]="points()" [editable]="true"
+            (pointsChange)="onMapPoints($event)" height="280px" />
+
+          <!-- Test d'extraction Sentinel-2 -->
+          <button type="button" (click)="testerExtraction()"
+            [disabled]="pointCount < 3 || extracting()"
+            class="mt-4 w-full py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2"
+            [class]="pointCount >= 3 && !extracting()
+              ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm'
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+            @if (extracting()) {
+              <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+              </svg>
+              Analyse satellite en cours…
+            } @else {
+              🛰️ Tester l'extraction Sentinel-2
+            }
+          </button>
+
+          @if (extractionError()) {
+            <div class="mt-3 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm flex gap-2">
+              <span>⚠️</span> {{ extractionError() }}
+            </div>
+          }
+
+          @if (extractionResult(); as res) {
+            <div class="mt-3 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4 text-sm">
+              <div class="flex items-center gap-2 mb-3 font-semibold text-indigo-800">
+                <span>🛰️</span> Résultat de l'extraction
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white rounded-lg px-3 py-2">
+                  <p class="text-[11px] uppercase tracking-wide text-gray-400">NDVI moyen</p>
+                  <p class="text-lg font-bold text-green-600">{{ res.ndvi.moyen }}</p>
+                  <p class="text-[11px] text-gray-400">min {{ res.ndvi.min }} · max {{ res.ndvi.max }}</p>
+                </div>
+                <div class="bg-white rounded-lg px-3 py-2">
+                  <p class="text-[11px] uppercase tracking-wide text-gray-400">Couv. nuageuse</p>
+                  <p class="text-lg font-bold text-sky-600">{{ res.couverture_nuageuse_pct }} %</p>
+                </div>
+                <div class="bg-white rounded-lg px-3 py-2">
+                  <p class="text-[11px] uppercase tracking-wide text-gray-400">Superficie</p>
+                  <p class="text-lg font-bold text-gray-700">{{ res.superficie_ha }} ha</p>
+                </div>
+                <div class="bg-white rounded-lg px-3 py-2">
+                  <p class="text-[11px] uppercase tracking-wide text-gray-400">Sommets</p>
+                  <p class="text-lg font-bold text-gray-700">{{ res.nombre_sommets }}</p>
+                </div>
+              </div>
+              <p class="mt-3 text-xs text-indigo-700/80">{{ res.message }}</p>
+              <p class="mt-1 text-[11px] text-gray-400">Source : {{ res.source }}</p>
+            </div>
+          }
+        </div>
 
         <!-- Boutons -->
         <div class="flex gap-3">

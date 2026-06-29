@@ -24,9 +24,24 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123456789
       AUTH_SERVICE_URL: http://host.docker.internal:8081
+      SENTINEL_SERVICE_URL: http://sentinel-service:8000
     depends_on:
       postgres:
         condition: service_healthy
+      sentinel-service:
+        condition: service_started
+
+  sentinel-service:
+    build: ./sentinel-service
+    ports:
+      - '8000:8000'
+    environment:
+      GEE_PROJECT: ${GEE_PROJECT:-}
+      GEE_SERVICE_ACCOUNT: ${GEE_SERVICE_ACCOUNT:-}
+      GEE_PRIVATE_KEY_FILE: /secrets/gee-key.json
+    volumes:
+      # Déposez la clé du compte de service ici (montée en lecture seule).
+      - ./sentinel-service/secrets:/secrets:ro
 
 volumes:
   pgdata_parcelles:
