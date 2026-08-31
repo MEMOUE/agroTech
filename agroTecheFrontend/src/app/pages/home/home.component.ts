@@ -1,11 +1,12 @@
 import { Component, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LogoComponent } from '../../shared/logo/logo.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, LogoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

@@ -4,11 +4,12 @@ import { DecimalPipe } from '@angular/common';
 import { ParcelleService } from '../../../core/services/parcelle.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Parcelle } from '../../../core/models/parcelle.models';
+import { LogoComponent } from '../../../shared/logo/logo.component';
 
 @Component({
   selector: 'app-parcelles-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, LogoComponent],
   templateUrl: './parcelles-list.component.html',
 })
 export class ParcellesListComponent implements OnInit {

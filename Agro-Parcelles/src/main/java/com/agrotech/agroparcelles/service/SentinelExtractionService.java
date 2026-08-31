@@ -5,10 +5,12 @@ import com.agrotech.agroparcelles.exception.SatelliteDataException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,7 +25,16 @@ public class SentinelExtractionService {
     @Value("${satellite.sentinel.service-url}")
     private String sentinelServiceUrl;
 
-    private final RestClient restClient = RestClient.create();
+    // Le client JDK par défaut de RestClient.create() négocie un upgrade HTTP/2 (h2c) que
+    // uvicorn/h11 (sentinel-service) ne supporte pas et qui fait perdre le corps de la requête.
+    private final RestClient restClient = createRestClient();
+
+    private static RestClient createRestClient() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(Duration.ofSeconds(8));
+        factory.setReadTimeout(Duration.ofSeconds(60));
+        return RestClient.builder().requestFactory(factory).build();
+    }
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> extraire(ExtractionRequest request) {

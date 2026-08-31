@@ -6,10 +6,12 @@ import com.agrotech.agroparcelles.exception.SatelliteDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
@@ -26,7 +28,14 @@ public class SatelliteService {
     @Value("${satellite.nasa-power.community}")
     private String community;
 
-    private final RestClient restClient = RestClient.create();
+    private final RestClient restClient = createRestClient();
+
+    private static RestClient createRestClient() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(Duration.ofSeconds(8));
+        factory.setReadTimeout(Duration.ofSeconds(30));
+        return RestClient.builder().requestFactory(factory).build();
+    }
 
     private static final DateTimeFormatter NASA_FMT = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final String PARAMETERS = "T2M,PRECTOTCORR,RH2M,ALLSKY_SFC_SW_DWN,WS10M";

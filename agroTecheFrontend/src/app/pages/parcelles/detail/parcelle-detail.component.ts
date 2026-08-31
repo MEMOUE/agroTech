@@ -4,13 +4,14 @@ import { DecimalPipe, DatePipe } from '@angular/common';
 import { ParcelleService } from '../../../core/services/parcelle.service';
 import { Parcelle, ParcelleMapResponse, SatelliteDataResponse } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
+import { LogoComponent } from '../../../shared/logo/logo.component';
 
 interface Bar { date: string; val: number; pct: number; }
 
 @Component({
   selector: 'app-parcelle-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, DatePipe, ParcelleMapComponent],
+  imports: [RouterLink, DecimalPipe, DatePipe, ParcelleMapComponent, LogoComponent],
   templateUrl: './parcelle-detail.component.html',
 })
 export class ParcelleDetailComponent implements OnInit {

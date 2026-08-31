@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -6,13 +6,15 @@ import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcell
 import { AuthService } from '../../../core/services/auth.service';
 import { ExtractionResult, GpsPoint } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
+import { LogoComponent } from '../../../shared/logo/logo.component';
 
 type CaptureState = 'idle' | 'locating' | 'success' | 'error';
+type EntryMode = 'terrain' | 'manual';
 
 @Component({
   selector: 'app-parcelle-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ParcelleMapComponent],
+  imports: [ReactiveFormsModule, RouterLink, ParcelleMapComponent, LogoComponent],
   templateUrl: './parcelle-form.component.html',
 })
 export class ParcelleFormComponent implements OnInit, OnDestroy {
@@ -35,6 +37,17 @@ export class ParcelleFormComponent implements OnInit, OnDestroy {
   geoError     = signal('');
   watchId: number | null = null;
 
+  // Méthode d'enregistrement : sur le terrain (GPS/carte) ou coordonnées déjà connues
+  entryMode = signal<EntryMode>('terrain');
+
+  manualForm = this.fb.group({
+    lat: this.fb.control<number | null>(null, [Validators.required, Validators.min(-90), Validators.max(90)]),
+    lon: this.fb.control<number | null>(null, [Validators.required, Validators.min(-180), Validators.max(180)]),
+  });
+
+  bulkText  = signal('');
+  bulkError = signal('');
+
   // Test d'extraction Sentinel-2 (envoi du polygone GeoJSON au backend)
   extracting       = signal(false);
   extractionResult = signal<ExtractionResult | null>(null);
@@ -47,6 +60,40 @@ export class ParcelleFormComponent implements OnInit, OnDestroy {
   get pointCount()  { return this.points().length; }
   get canSubmit()   { return this.pointCount >= 3; }
   get progressPct() { return Math.min(this.pointCount / 3 * 100, 100); }
+
+  /**
+   * Détecte un polygone "nœud papillon" : des points saisis dans le désordre (fréquent en
+   * saisie manuelle) forment des côtés qui se croisent — le périmètre reste correct mais
+   * l'aire (Shoelace) s'annule. On compare l'aire du polygone à celle de sa bounding box.
+   */
+  readonly polygonSeemsCrossed = computed(() => {
+    const pts = this.points();
+    if (pts.length < 4) return false;
+    const lats = pts.map(p => p.lat);
+    const lons = pts.map(p => p.lon);
+    const bboxArea = (Math.max(...lats) - Math.min(...lats)) * (Math.max(...lons) - Math.min(...lons));
+    if (bboxArea <= 0) return false;
+    let shoelace = 0;
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i], b = pts[(i + 1) % pts.length];
+      shoelace += a.lon * b.lat - b.lon * a.lat;
+    }
+    return Math.abs(shoelace) / 2 < bboxArea * 0.15;
+  });
+
+  /** Réordonne les points par angle autour de leur centre pour obtenir un polygone simple. */
+  sortPointsAroundCentroid(): void {
+    const pts = this.points();
+    if (pts.length < 3) return;
+    const centroidLat = pts.reduce((s, p) => s + p.lat, 0) / pts.length;
+    const centroidLon = pts.reduce((s, p) => s + p.lon, 0) / pts.length;
+    const sorted = [...pts].sort((a, b) =>
+      Math.atan2(a.lat - centroidLat, a.lon - centroidLon) -
+      Math.atan2(b.lat - centroidLat, b.lon - centroidLon)
+    );
+    this.points.set(sorted);
+    this.extractionResult.set(null);
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -102,6 +149,40 @@ export class ParcelleFormComponent implements OnInit, OnDestroy {
   removePoint(i: number): void {
     this.points.update(pts => pts.filter((_, idx) => idx !== i));
     this.extractionResult.set(null);
+  }
+
+  /** Ajoute un point saisi manuellement (lat/lon connus, sans être sur place). */
+  addManualPoint(): void {
+    if (this.manualForm.invalid) { this.manualForm.markAllAsTouched(); return; }
+    const { lat, lon } = this.manualForm.getRawValue();
+    this.points.update(pts => [...pts, { lat: lat!, lon: lon! }]);
+    this.extractionResult.set(null);
+    this.manualForm.reset();
+  }
+
+  /** Colle plusieurs coordonnées d'un coup, une par ligne : "lat, lon" (virgule, espace ou tabulation). */
+  addBulkPoints(): void {
+    this.bulkError.set('');
+    const lines = this.bulkText().split('\n').map(l => l.trim()).filter(Boolean);
+    if (!lines.length) { this.bulkError.set('Collez au moins une ligne de coordonnées.'); return; }
+
+    const parsed: GpsPoint[] = [];
+    for (const [i, line] of lines.entries()) {
+      const parts = line.split(/[,;\t]+|\s+/).map(p => p.trim()).filter(Boolean);
+      const lat = Number(parts[0]);
+      const lon = Number(parts[1]);
+      const valid = parts.length === 2 && Number.isFinite(lat) && Number.isFinite(lon)
+        && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+      if (!valid) {
+        this.bulkError.set(`Ligne ${i + 1} invalide : "${line}". Format attendu : latitude, longitude`);
+        return;
+      }
+      parsed.push({ lat, lon });
+    }
+
+    this.points.update(pts => [...pts, ...parsed]);
+    this.extractionResult.set(null);
+    this.bulkText.set('');
   }
 
   /** Sommets ajoutés en cliquant directement sur la carte. */

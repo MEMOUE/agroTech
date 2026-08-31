@@ -1,0 +1,84 @@
+services:
+  # --- Base de données partagée ---
+  postgres-db:
+    image: postgres:16
+    container_name: agro-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-agro_db}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-123456789}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-agro_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Application 1: Auth ---
+  agro-auth:
+    build: ./Agro-Auth
+    container_name: agro-auth-app
+    ports:
+      - "8081:8081"
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-agro_db}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-123456789}
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  # --- Service satellite (Sentinel) utilisé par Agro-Parcelles ---
+  sentinel-service:
+    build: ./Agro-Parcelles/sentinel-service
+    container_name: agro-sentinel-service
+    ports:
+      - "8000:8000"
+    environment:
+      GEE_PROJECT: ${GEE_PROJECT:-}
+      GEE_SERVICE_ACCOUNT: ${GEE_SERVICE_ACCOUNT:-}
+      GEE_PRIVATE_KEY_FILE: /secrets/gee-key.json
+    volumes:
+      - ./Agro-Parcelles/sentinel-service/secrets:/secrets:ro
+
+  # --- Application 2: Parcelles ---
+  agro-parcelles:
+    build: ./Agro-Parcelles
+    container_name: agro-parcelles-app
+    ports:
+      - "8082:8082"
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-agro_db}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-123456789}
+      AUTH_SERVICE_URL: http://agro-auth:8081
+      SENTINEL_SERVICE_URL: http://sentinel-service:8000
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      agro-auth:
+        condition: service_started
+      sentinel-service:
+        condition: service_started
+
+  # --- Frontend Angular (SSR) ---
+  frontend:
+    build: ./agroTecheFrontend
+    container_name: agro-frontend-app
+    ports:
+      - "4200:4200"
+    depends_on:
+      agro-auth:
+        condition: service_started
+      agro-parcelles:
+        condition: service_started
+
+volumes:
+  pgdata:

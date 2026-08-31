@@ -3,8 +3,8 @@
 
     <!-- Brand -->
     <div class="text-center mb-8">
-      <img src="logo.png" alt="AgroTech" class="h-20 w-auto mx-auto mb-4" style="filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));" />
-
+      <app-logo [size]="72" class="mx-auto mb-4" style="filter: drop-shadow(0 4px 10px rgba(22,163,74,0.25));" />
+      <span class="font-bold text-gray-900 text-lg">AgroTech</span>
       <p class="text-gray-500 mt-1 text-sm">Créer votre compte agriculteur</p>
     </div>
 
@@ -78,7 +78,7 @@
             <div class="relative">
               <input id="password" [type]="showPassword() ? 'text' : 'password'"
                 formControlName="password"
-                placeholder="Minimum 6 caractères"
+                placeholder="Min. 8 caractères"
                 autocomplete="new-password"
                 class="w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition pr-12"
                 [class.border-red-400]="form.controls.password.invalid && form.controls.password.touched"
@@ -95,8 +95,10 @@
             </div>
             @if (form.controls.password.errors?.['required'] && form.controls.password.touched) {
               <p class="mt-1 text-xs text-red-500">Ce champ est requis.</p>
-            } @else if (form.controls.password.errors?.['minlength'] && form.controls.password.touched) {
-              <p class="mt-1 text-xs text-red-500">Minimum 6 caractères.</p>
+            } @else if (form.controls.password.errors?.['pattern'] && form.controls.password.touched) {
+              <p class="mt-1 text-xs text-red-500">Min. 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial (@&#36;!%*?&amp;_#-).</p>
+            } @else {
+              <p class="mt-1 text-xs text-gray-400">Min. 8 caractères, avec majuscule, minuscule, chiffre et caractère spécial.</p>
             }
           </div>
 

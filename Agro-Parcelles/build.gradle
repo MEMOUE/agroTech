@@ -53,3 +53,11 @@ tasks.named('jar') {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.named('bootRun') {
+    // Sur certains réseaux, NASA POWER (CloudFront) n'est joignable qu'en IPv6, et
+    // java.net.http (client de RestClient) ne bascule pas IPv4->IPv6 tout seul.
+    // On force la préférence IPv6. À NE PAS mettre dans le Dockerfile : un conteneur
+    // sans route IPv6 doit, lui, rester en IPv4.
+    jvmArgs = ['-Djava.net.preferIPv6Addresses=true']
+}

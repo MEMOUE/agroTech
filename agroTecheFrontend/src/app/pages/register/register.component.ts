@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, Validati
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { RegisterRequest } from '../../core/models/auth.models';
+import { LogoComponent } from '../../shared/logo/logo.component';
 
 function phoneOrEmail(control: AbstractControl): ValidationErrors | null {
   const v: string = (control.value ?? '').trim();
@@ -12,10 +13,13 @@ function phoneOrEmail(control: AbstractControl): ValidationErrors | null {
   return isEmail || isPhone ? null : { phoneOrEmail: true };
 }
 
+// Doit rester synchronisé avec RegisterRequest.password côté Agro-Auth (RegisterRequest.java)
+const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#-])[A-Za-z\d@$!%*?&_#-]{8,}$/;
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, LogoComponent],
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
@@ -25,7 +29,7 @@ export class RegisterComponent {
   form = this.fb.nonNullable.group({
     username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     contact: ['', [Validators.required, phoneOrEmail]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN)]],
   });
 
   loading = signal(false);
@@ -54,9 +58,19 @@ export class RegisterComponent {
     this.auth.register(payload).subscribe({
       next: () => this.success.set(true),
       error: err => {
-        this.error.set(err.error?.message ?? 'Une erreur est survenue');
+        this.error.set(this.extractErrorMessage(err));
         this.loading.set(false);
       },
     });
+  }
+
+  /** Le backend renvoie soit { errors: { champ: message } } (validation), soit { error: message }. */
+  private extractErrorMessage(err: any): string {
+    const body = err?.error;
+    if (body?.errors && typeof body.errors === 'object') {
+      return Object.values(body.errors as Record<string, string>).join(' ');
+    }
+    if (typeof body?.error === 'string') return body.error;
+    return 'Une erreur est survenue. Veuillez réessayer.';
   }
 }

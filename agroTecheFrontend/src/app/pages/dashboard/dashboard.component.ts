@@ -5,11 +5,12 @@ import { AuthService } from '../../core/services/auth.service';
 import { ParcelleService } from '../../core/services/parcelle.service';
 import { UserProfile } from '../../core/models/auth.models';
 import { Parcelle } from '../../core/models/parcelle.models';
+import { LogoComponent } from '../../shared/logo/logo.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, LogoComponent],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
@@ -22,6 +23,16 @@ export class DashboardComponent implements OnInit {
   totalSuperficie = computed(() =>
     this.parcelles().reduce((acc, p) => acc + p.superficie, 0)
   );
+  moyenneSuperficie = computed(() =>
+    this.parcelles().length ? this.totalSuperficie() / this.parcelles().length : 0
+  );
+
+  readonly greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Bonjour';
+    if (h < 18) return 'Bon après-midi';
+    return 'Bonsoir';
+  })();
 
   readonly roleLabels: Record<string, string> = {
     AGRICULTEUR: 'Agriculteur',
