@@ -114,6 +114,9 @@ public class SatelliteService {
                 .build();
     }
 
+    /** Valeur de remplissage de NASA POWER pour une donnée indisponible (dernier(s) jour(s), latence de publication). */
+    private static final double NASA_FILL_VALUE = -999.0;
+
     @SuppressWarnings("unchecked")
     private Map<String, Double> extractDoubleMap(Map<String, Object> parameter, String key) {
         Object raw = parameter.get(key);
@@ -121,7 +124,9 @@ public class SatelliteService {
         Map<String, Object> values = (Map<String, Object>) raw;
         Map<String, Double> result = new LinkedHashMap<>();
         values.forEach((k, v) -> {
-            if (v instanceof Number n) result.put(k, n.doubleValue());
+            if (v instanceof Number n && n.doubleValue() != NASA_FILL_VALUE) {
+                result.put(k, n.doubleValue());
+            }
         });
         return result;
     }

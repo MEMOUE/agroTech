@@ -32,7 +32,10 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
 
   async ngAfterViewInit(): Promise<void> {
     if (!this.isBrowser) return;
-    this.L = await import('leaflet');
+    const mod: any = await import('leaflet');
+    // Leaflet est un module CommonJS : selon l'interop ESM du bundler, l'API
+    // réelle peut se retrouver sous `mod.default` plutôt que sur `mod`.
+    this.L = mod.Icon ? mod : mod.default;
     this.initMap();
     this.render();
   }
