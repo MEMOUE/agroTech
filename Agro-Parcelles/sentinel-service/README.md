@@ -101,6 +101,25 @@ Réponse type :
 }
 ```
 
+### Bloc Sentinel-1 (radar)
+
+La réponse contient aussi une clé `sentinel1` (collection `COPERNICUS/S1_GRD`, mode IW, VV+VH),
+calculée sur la même période :
+
+```json
+"sentinel1": {
+  "statut": "ok",
+  "nombre_images": 9,
+  "vv_db": -11.2, "vh_db": -17.8, "ratio_vh_vv_db": -6.6,
+  "rvi": 0.41
+}
+```
+
+- `vv_db` / `vh_db` : rétrodiffusion moyenne (moyenne faite en linéaire, restituée en dB).
+- `rvi` : Radar Vegetation Index `4·VH/(VV+VH)` (≈0 sol nu → 1 végétation dense).
+- Le radar traverse les nuages : utile quand le NDVI est `no_data`.
+- Une erreur Sentinel-1 donne `sentinel1.statut = "erreur"` sans faire échouer le NDVI.
+
 ## Codes d'erreur
 
 - **400** : GeoJSON invalide (pas un Polygon, < 3 sommets).

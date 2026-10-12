@@ -52,6 +52,18 @@ export interface ExtractionResult {
   ndvi: { moyen: number; min: number; max: number };
   couverture_nuageuse_pct: number;
   message: string;
+  sentinel1?: Sentinel1Result;
+}
+
+export interface Sentinel1Result {
+  statut: 'ok' | 'no_data' | 'erreur';
+  source?: string;
+  nombre_images?: number;
+  vv_db?: number | null;
+  vh_db?: number | null;
+  ratio_vh_vv_db?: number | null;
+  rvi?: number | null;
+  message: string;
 }
 
 export interface SatelliteDataResponse {

@@ -1,9 +1,10 @@
 """
-Service d'extraction Sentinel-2 (Agro-Parcelles).
+Service d'extraction Sentinel-1 + Sentinel-2 (Agro-Parcelles).
 
 Reçoit un polygone GeoJSON depuis le backend Spring, le valide
 (bbox / centroïde / superficie / nombre de sommets) puis calcule le NDVI réel
-et la couverture nuageuse à partir de l'imagerie Sentinel-2 (COPERNICUS/S2_SR_HARMONIZED)
+et la couverture nuageuse à partir de l'imagerie Sentinel-2 (COPERNICUS/S2_SR_HARMONIZED),
+ainsi que la rétrodiffusion radar VV/VH et le RVI à partir de Sentinel-1 (COPERNICUS/S1_GRD),
 via Google Earth Engine.
 
 Authentification GEE : compte de service (service account). Les identifiants sont
@@ -43,6 +44,8 @@ M2_TO_HA = 1.0 / 10_000.0
 
 # Collection Sentinel-2 niveau 2A (réflectance de surface), version harmonisée.
 S2_COLLECTION = "COPERNICUS/S2_SR_HARMONIZED"
+# Sentinel-1 GRD (radar bande C), déjà calibré en dB dans GEE.
+S1_COLLECTION = "COPERNICUS/S1_GRD"
 # Classes SCL considérées comme nuage / ombre / cirrus à masquer.
 SCL_NUAGES = [3, 8, 9, 10]  # 3=ombre, 8=nuage moyen, 9=nuage haute proba, 10=cirrus
 # Période par défaut si aucune date fournie (Sentinel-2 revisite ~5 j ; 90 j ≈ marge anti-nuages).
@@ -262,6 +265,72 @@ def _extraire_sentinel2(ring: list[list[float]],
     }
 
 
+def _extraire_sentinel1(ring: list[list[float]],
+                        date_debut: Optional[str],
+                        date_fin: Optional[str]) -> dict[str, Any]:
+    """
+    Statistiques radar Sentinel-1 (SAR, bande C) sur le polygone : rétrodiffusion VV/VH
+    en dB, rapport VH/VV et indice RVI. Le radar traverse les nuages : complète le NDVI
+    optique quand Sentinel-2 est masqué. Moyenne calculée en linéaire puis reconvertie en dB.
+    """
+    import ee
+
+    debut, fin = _periode(date_debut, date_fin)
+    anneau_ferme = ring + [ring[0]]
+    geom = ee.Geometry.Polygon([anneau_ferme], proj="EPSG:4326", geodesic=False)
+    source = f"Sentinel-1 ({S1_COLLECTION}) via Google Earth Engine"
+
+    collection = (
+        ee.ImageCollection(S1_COLLECTION)
+        .filterBounds(geom)
+        .filterDate(debut, fin)
+        .filter(ee.Filter.eq("instrumentMode", "IW"))
+        .filter(ee.Filter.listContains("transmitterReceiverPolarisation", "VV"))
+        .filter(ee.Filter.listContains("transmitterReceiverPolarisation", "VH"))
+        .select(["VV", "VH"])
+    )
+
+    nb_images = collection.size().getInfo()
+    vide = {
+        "statut": "no_data",
+        "source": source,
+        "periode": {"debut": debut, "fin": fin},
+        "nombre_images": nb_images,
+        "vv_db": None, "vh_db": None, "ratio_vh_vv_db": None, "rvi": None,
+    }
+    if nb_images == 0:
+        return {**vide, "message": "Aucune image Sentinel-1 sur cette zone et cette période. "
+                                   "Élargissez la plage de dates."}
+
+    # dB -> linéaire (10^(dB/10)), moyenne temporelle, puis stats spatiales sur le polygone.
+    lineaire = collection.map(
+        lambda img: ee.Image(10).pow(img.divide(10)).copyProperties(img, ["system:time_start"])
+    ).mean()
+    stats = lineaire.reduceRegion(
+        reducer=ee.Reducer.mean(), geometry=geom, scale=10,
+        maxPixels=int(1e9), bestEffort=True,
+    ).getInfo()
+
+    vv, vh = stats.get("VV"), stats.get("VH")
+    if not vv or not vh or vv <= 0 or vh <= 0:
+        return {**vide, "message": "Pixels Sentinel-1 non exploitables sur ce polygone."}
+
+    vv_db = 10 * math.log10(vv)
+    vh_db = 10 * math.log10(vh)
+    return {
+        "statut": "ok",
+        "source": source,
+        "periode": {"debut": debut, "fin": fin},
+        "nombre_images": nb_images,
+        "vv_db": round(vv_db, 2),
+        "vh_db": round(vh_db, 2),
+        "ratio_vh_vv_db": round(vh_db - vv_db, 2),
+        # Radar Vegetation Index (Kim & van Zyl) : ~0 sol nu, ->1 végétation dense.
+        "rvi": round(4 * vh / (vv + vh), 3),
+        "message": f"Rétrodiffusion moyenne de {nb_images} image(s) Sentinel-1 (IW, VV+VH).",
+    }
+
+
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
@@ -287,10 +356,17 @@ def extract(req: ExtractionRequest) -> dict[str, Any]:
     except Exception as e:  # erreurs Earth Engine (quota, géométrie, réseau…)
         raise HTTPException(status_code=502, detail=f"Erreur Earth Engine : {e}")
 
+    # Sentinel-1 est complémentaire : son échec ne doit pas faire perdre le NDVI Sentinel-2.
+    try:
+        radar = _extraire_sentinel1(ring, req.date_debut, req.date_fin)
+    except Exception as e:
+        radar = {"statut": "erreur", "message": f"Erreur Earth Engine (Sentinel-1) : {e}"}
+
     return {
         "nombre_sommets": len(ring),
         "superficie_ha": round(_superficie_ha(ring), 4),
         "bbox": _bbox(ring),
         "centroide": _centroide(ring),
         **indices,
+        "sentinel1": radar,
     }
