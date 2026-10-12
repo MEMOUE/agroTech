@@ -32,12 +32,21 @@ public class SentinelExtractionService {
     private static RestClient createRestClient() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(Duration.ofSeconds(8));
-        factory.setReadTimeout(Duration.ofSeconds(60));
+        factory.setReadTimeout(Duration.ofSeconds(120));
         return RestClient.builder().requestFactory(factory).build();
     }
 
-    @SuppressWarnings("unchecked")
     public Map<String, Object> extraire(ExtractionRequest request) {
+        return appeler("/extract", request);
+    }
+
+    /** Vignettes PNG (Sentinel-2 couleurs réelles, NDVI, radar Sentinel-1) en data URI. */
+    public Map<String, Object> images(ExtractionRequest request) {
+        return appeler("/images", request);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> appeler(String chemin, ExtractionRequest request) {
         // Le service Python attend des clés snake_case : geojson / date_debut / date_fin
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("geojson", request.getGeoJson());
@@ -46,20 +55,20 @@ public class SentinelExtractionService {
 
         try {
             Map<String, Object> response = restClient.post()
-                    .uri(sentinelServiceUrl + "/extract")
+                    .uri(sentinelServiceUrl + chemin)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(payload)
                     .retrieve()
                     .body(Map.class);
 
             if (response == null) {
-                throw new SatelliteDataException("Réponse vide du service d'extraction Sentinel-2");
+                throw new SatelliteDataException("Réponse vide du service d'extraction Sentinel");
             }
             return response;
         } catch (RestClientException e) {
-            log.error("Erreur service extraction Sentinel-2 ({}): {}", sentinelServiceUrl, e.getMessage());
+            log.error("Erreur service extraction Sentinel ({}{}): {}", sentinelServiceUrl, chemin, e.getMessage());
             throw new SatelliteDataException(
-                    "Service d'extraction Sentinel-2 indisponible : " + e.getMessage());
+                    "Service d'extraction Sentinel indisponible : " + e.getMessage());
         }
     }
 }

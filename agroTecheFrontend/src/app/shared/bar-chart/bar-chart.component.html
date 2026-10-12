@@ -1,0 +1,78 @@
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+  <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
+    <div>
+      <h3 class="font-semibold text-gray-800">{{ title() }}</h3>
+      @if (subtitle()) { <p class="text-xs text-gray-400 mt-0.5">{{ subtitle() }}</p> }
+    </div>
+    @if (stats(); as s) {
+      <div class="flex gap-2 text-center">
+        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+          <p class="text-[10px] uppercase tracking-wide text-gray-400">Min</p>
+          <p class="text-sm font-semibold text-gray-700">{{ s.min | number:'1.1-1' }}</p>
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+          <p class="text-[10px] uppercase tracking-wide text-gray-400">Moy.</p>
+          <p class="text-sm font-semibold text-gray-700">{{ s.avg | number:'1.1-1' }}</p>
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+          <p class="text-[10px] uppercase tracking-wide text-gray-400">Max</p>
+          <p class="text-sm font-semibold text-gray-700">{{ s.max | number:'1.1-1' }}</p>
+        </div>
+        @if (baseZero()) {
+          <div class="px-3 py-1.5 rounded-lg" [style.background]="from() + '55'">
+            <p class="text-[10px] uppercase tracking-wide text-gray-500">Cumul</p>
+            <p class="text-sm font-semibold text-gray-800">{{ s.total | number:'1.1-1' }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (bars().length) {
+    <div class="flex gap-2">
+      <!-- Axe Y -->
+      <div class="relative shrink-0 w-10 text-right" [style.height.px]="height()">
+        @for (t of ticks(); track t.pct) {
+          <span class="absolute right-0 -translate-y-1/2 text-[10px] text-gray-400 tabular-nums"
+                [style.top.%]="t.pct">{{ t.value | number:'1.0-1' }}</span>
+        }
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <!-- Zone du graphe -->
+        <div class="relative" [style.height.px]="height()">
+          @for (t of ticks(); track t.pct) {
+            <div class="absolute inset-x-0 border-t border-gray-100" [class.border-dashed]="t.pct < 100"
+                 [style.top.%]="t.pct"></div>
+          }
+          <div class="absolute inset-0 flex items-end gap-1.5">
+            @for (b of bars(); track b.date) {
+              <div class="group relative flex-1 h-full flex items-end">
+                <span class="absolute left-1/2 -translate-x-1/2 z-10 bg-gray-800 text-white text-xs px-2 py-1 rounded-md
+                             opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none shadow"
+                      [style.bottom]="'calc(' + b.pct + '% + 6px)'">
+                  {{ b.date }} · <b>{{ b.val | number:'1.1-1' }}</b> {{ unit() }}
+                </span>
+                <div class="w-full rounded-t-md transition-all group-hover:brightness-110"
+                     [class.ring-2]="b.last" [class.ring-offset-1]="b.last"
+                     [style.height.%]="b.pct"
+                     [style.background]="'linear-gradient(to top,' + to() + ',' + from() + ')'"
+                     [style.--tw-ring-color]="to()"></div>
+              </div>
+            }
+          </div>
+        </div>
+        <!-- Dates (une sur deux sur petit écran) -->
+        <div class="flex gap-1.5 mt-2">
+          @for (b of bars(); track b.date; let i = $index) {
+            <div class="flex-1 text-center text-[9px] text-gray-400 tabular-nums"
+                 [class.hidden]="i % 2 === 1" [class.sm:block]="i % 2 === 1">{{ b.date }}</div>
+          }
+        </div>
+        <p class="text-[10px] text-gray-400 mt-2 text-right">Dernière mesure encadrée · unité : {{ unit() }}</p>
+      </div>
+    </div>
+  } @else {
+    <p class="text-sm text-gray-400 text-center py-8">Aucune donnée disponible.</p>
+  }
+</div>

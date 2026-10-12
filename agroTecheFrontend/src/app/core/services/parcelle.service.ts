@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  ExtractionResult, GpsPoint, Parcelle, ParcelleDtoRequest,
+  ExtractionImages, ExtractionResult, GpsPoint, Parcelle, ParcelleDtoRequest,
   ParcelleMapResponse, SatelliteDataResponse,
 } from '../models/parcelle.models';
 
@@ -55,6 +55,11 @@ export class ParcelleService {
     if (debut) params = params.set('debut', debut);
     if (fin) params = params.set('fin', fin);
     return this.http.get<SatelliteDataResponse>(`${API}/${id}/satellite`, { params });
+  }
+
+  /** Vignettes Sentinel-2 (couleurs réelles, NDVI) et Sentinel-1 (radar) du polygone. */
+  extractImages(geoJson: unknown, dateDebut?: string, dateFin?: string): Observable<ExtractionImages> {
+    return this.http.post<ExtractionImages>(`${EXTRACTION_API}/images`, { geoJson, dateDebut, dateFin });
   }
 
   /** Envoie un polygone GeoJSON au service d'extraction Sentinel-2. */

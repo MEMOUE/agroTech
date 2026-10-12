@@ -332,6 +332,100 @@ def _extraire_sentinel1(ring: list[list[float]],
 
 
 # ---------------------------------------------------------------------------
+# Images (vignettes PNG)
+# ---------------------------------------------------------------------------
+NDVI_PALETTE = ["8B0000", "D2691E", "F0E68C", "9ACD32", "228B22", "006400"]
+IMAGE_TAILLE_PX = 512
+
+
+def _png_data_uri(image, region) -> str:
+    """Génère une vignette PNG via Earth Engine et la renvoie en data URI (URL GEE éphémère)."""
+    import base64
+    import urllib.request
+
+    url = image.getThumbURL({"region": region, "dimensions": IMAGE_TAILLE_PX, "format": "png"})
+    with urllib.request.urlopen(url, timeout=90) as r:
+        return "data:image/png;base64," + base64.b64encode(r.read()).decode("ascii")
+
+
+def _generer_images(ring: list[list[float]],
+                    date_debut: Optional[str],
+                    date_fin: Optional[str]) -> dict[str, Any]:
+    """
+    3 vignettes centrées sur la parcelle (contour jaune) :
+      - sentinel2_rgb : couleurs réelles (B4/B3/B2), composite médian sans nuages
+      - ndvi          : carte NDVI colorée
+      - sentinel1     : radar en fausses couleurs (R=VV, G=VH, B=VV-VH)
+    Chaque image échoue indépendamment (None + message).
+    """
+    import ee
+
+    debut, fin = _periode(date_debut, date_fin)
+    geom = ee.Geometry.Polygon([ring + [ring[0]]], proj="EPSG:4326", geodesic=False)
+    # Marge autour de la parcelle pour voir le contexte (≈ 25 % de la plus grande dimension).
+    minx, miny, maxx, maxy = _bbox(ring)
+    marge_m = max(max(maxx - minx, maxy - miny) * 111_320 * 0.25, 30)
+    region = geom.buffer(marge_m).bounds()
+
+    contour = (
+        ee.Image().byte()
+        .paint(ee.FeatureCollection([ee.Feature(geom)]), 1, 2)
+        .selfMask()
+        .visualize(palette=["FFFF00"])
+    )
+
+    resultat: dict[str, Any] = {
+        "periode": {"debut": debut, "fin": fin},
+        "sentinel2_rgb": None, "ndvi": None, "sentinel1": None, "erreurs": {},
+    }
+
+    # --- Sentinel-2 (RGB + NDVI) ---
+    try:
+        s2 = (
+            ee.ImageCollection(S2_COLLECTION)
+            .filterBounds(geom).filterDate(debut, fin)
+            .filter(ee.Filter.lte("CLOUDY_PIXEL_PERCENTAGE", SEUIL_NUAGE_SCENE_PCT))
+        )
+        if s2.size().getInfo() == 0:
+            raise RuntimeError("Aucune image Sentinel-2 exploitable sur la période.")
+
+        def _masque(img):
+            nuage = img.select("SCL").remap(SCL_NUAGES, [1] * len(SCL_NUAGES), 0).eq(0)
+            ndvi = img.normalizedDifference(["B8", "B4"]).rename("NDVI")
+            return img.select(["B4", "B3", "B2"]).addBands(ndvi).updateMask(nuage)
+
+        composite = s2.map(_masque).median()
+        rgb = composite.visualize(bands=["B4", "B3", "B2"], min=0, max=3000, gamma=1.3)
+        carte_ndvi = composite.select("NDVI").visualize(min=-0.1, max=0.9, palette=NDVI_PALETTE)
+        resultat["sentinel2_rgb"] = _png_data_uri(rgb.blend(contour), region)
+        resultat["ndvi"] = _png_data_uri(carte_ndvi.blend(contour), region)
+    except Exception as e:
+        resultat["erreurs"]["sentinel2"] = str(e)
+
+    # --- Sentinel-1 (radar fausses couleurs) ---
+    try:
+        s1 = (
+            ee.ImageCollection(S1_COLLECTION)
+            .filterBounds(geom).filterDate(debut, fin)
+            .filter(ee.Filter.eq("instrumentMode", "IW"))
+            .filter(ee.Filter.listContains("transmitterReceiverPolarisation", "VV"))
+            .filter(ee.Filter.listContains("transmitterReceiverPolarisation", "VH"))
+            .select(["VV", "VH"])
+        )
+        if s1.size().getInfo() == 0:
+            raise RuntimeError("Aucune image Sentinel-1 sur la période.")
+        med = s1.median()
+        fausse_couleur = ee.Image.cat([
+            med.select("VV"), med.select("VH"), med.select("VV").subtract(med.select("VH")),
+        ]).visualize(min=[-20, -25, 0], max=[0, -5, 15])
+        resultat["sentinel1"] = _png_data_uri(fausse_couleur.blend(contour), region)
+    except Exception as e:
+        resultat["erreurs"]["sentinel1"] = str(e)
+
+    return resultat
+
+
+# ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
 @app.get("/health")
@@ -370,3 +464,22 @@ def extract(req: ExtractionRequest) -> dict[str, Any]:
         **indices,
         "sentinel1": radar,
     }
+
+
+@app.post("/images")
+def images(req: ExtractionRequest) -> dict[str, Any]:
+    """Vignettes PNG (data URI) : Sentinel-2 couleurs réelles, carte NDVI, radar Sentinel-1."""
+    try:
+        ring = _sommets_distincts(_extraire_anneau(req.geojson))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        _init_gee()
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+    try:
+        return _generer_images(ring, req.date_debut, req.date_fin)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Erreur Earth Engine : {e}")

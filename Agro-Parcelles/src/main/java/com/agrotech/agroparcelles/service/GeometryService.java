@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.service;
 import com.agrotech.agroparcelles.entity.Parcelle.GpsPoint;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -34,6 +35,47 @@ GeometryService {
             aire += (x1 * y2) - (x2 * y1);
         }
         return Math.abs(aire) / 2.0 * M2_TO_HECTARES;
+    }
+
+    /**
+     * Si des côtés non adjacents se croisent (points saisis en zigzag → "nœud papillon",
+     * aire nulle), réordonne les sommets par angle autour du centroïde pour obtenir un
+     * polygone simple. Un polygone déjà simple est renvoyé tel quel.
+     */
+    public List<GpsPoint> ordonnerSiCroise(List<GpsPoint> points) {
+        if (points == null || points.size() < 4 || !seCroise(points)) return points;
+
+        double cLat = centroideLatitude(points);
+        double cLon = centroideLongitude(points);
+        return points.stream()
+                .sorted(Comparator.comparingDouble(p -> Math.atan2(p.lat() - cLat, p.lon() - cLon)))
+                .toList();
+    }
+
+    private boolean seCroise(List<GpsPoint> pts) {
+        int n = pts.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                // ignore les côtés adjacents (partagent un sommet)
+                if (j == i + 1 || (i == 0 && j == n - 1)) continue;
+                if (segmentsSecants(pts.get(i), pts.get((i + 1) % n), pts.get(j), pts.get((j + 1) % n))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean segmentsSecants(GpsPoint a, GpsPoint b, GpsPoint c, GpsPoint d) {
+        double d1 = orientation(c, d, a);
+        double d2 = orientation(c, d, b);
+        double d3 = orientation(a, b, c);
+        double d4 = orientation(a, b, d);
+        return d1 * d2 < 0 && d3 * d4 < 0;
+    }
+
+    private double orientation(GpsPoint p, GpsPoint q, GpsPoint r) {
+        return (q.lon() - p.lon()) * (r.lat() - p.lat()) - (q.lat() - p.lat()) * (r.lon() - p.lon());
     }
 
     /**

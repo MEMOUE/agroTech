@@ -42,4 +42,14 @@ public class ExtractionController {
     public ResponseEntity<Map<String, Object>> extraire(@Valid @RequestBody ExtractionRequest request) {
         return ResponseEntity.ok(sentinelExtractionService.extraire(request));
     }
+
+    @Operation(
+        summary = "Images satellite d'un polygone",
+        description = "Retourne 3 vignettes PNG (data URI) : Sentinel-2 couleurs réelles, carte NDVI " +
+                      "et radar Sentinel-1, avec le contour du polygone."
+    )
+    @PostMapping("/images")
+    public ResponseEntity<Map<String, Object>> images(@Valid @RequestBody ExtractionRequest request) {
+        return ResponseEntity.ok(sentinelExtractionService.images(request));
+    }
 }

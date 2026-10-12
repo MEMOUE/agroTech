@@ -51,8 +51,17 @@ export interface ExtractionResult {
   periode: { debut?: string | null; fin?: string | null };
   ndvi: { moyen: number; min: number; max: number };
   couverture_nuageuse_pct: number;
+  nombre_images?: number;
   message: string;
   sentinel1?: Sentinel1Result;
+}
+
+export interface ExtractionImages {
+  periode: { debut?: string | null; fin?: string | null };
+  sentinel2_rgb: string | null;
+  ndvi: string | null;
+  sentinel1: string | null;
+  erreurs: Record<string, string>;
 }
 
 export interface Sentinel1Result {

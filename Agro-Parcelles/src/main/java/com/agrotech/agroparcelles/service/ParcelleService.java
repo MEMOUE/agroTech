@@ -80,7 +80,8 @@ public class ParcelleService {
     }
 
     private void enrichirGeometrie(Parcelle parcelle) {
-        List<Parcelle.GpsPoint> pts = parcelle.getCoordonneesGps();
+        List<Parcelle.GpsPoint> pts = geometryService.ordonnerSiCroise(parcelle.getCoordonneesGps());
+        parcelle.setCoordonneesGps(pts);
         parcelle.setSuperficie(geometryService.calculerSuperficie(pts));
         parcelle.setPerimetre(geometryService.calculerPerimetre(pts));
         parcelle.setCentroideLat(geometryService.centroideLatitude(pts));

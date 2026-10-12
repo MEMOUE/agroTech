@@ -1,17 +1,16 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe } from '@angular/common';
-import { ParcelleService } from '../../../core/services/parcelle.service';
-import { Parcelle, ParcelleMapResponse, SatelliteDataResponse } from '../../../core/models/parcelle.models';
+import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
+import { ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
+import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
-
-interface Bar { date: string; val: number; pct: number; }
 
 @Component({
   selector: 'app-parcelle-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, DatePipe, ParcelleMapComponent, LogoComponent],
+  imports: [RouterLink, DecimalPipe, DatePipe, ParcelleMapComponent, LogoComponent, BarChartComponent],
   templateUrl: './parcelle-detail.component.html',
 })
 export class ParcelleDetailComponent implements OnInit {
@@ -25,6 +24,21 @@ export class ParcelleDetailComponent implements OnInit {
   loadingSat = signal(false);
   error      = signal('');
   satError   = signal('');
+  extraction    = signal<ExtractionResult | null>(null);
+  loadingExtr   = signal(false);
+  extractionErr = signal('');
+  images        = signal<ExtractionImages | null>(null);
+  loadingImages = signal(false);
+
+  /** Interprétation lisible du NDVI moyen (seuils usuels en agronomie). */
+  readonly ndviLabel = computed(() => {
+    const v = this.extraction()?.ndvi?.moyen;
+    if (v == null) return null;
+    if (v < 0.2) return { text: 'Sol nu / très faible couvert', cls: 'text-red-600' };
+    if (v < 0.4) return { text: 'Végétation clairsemée', cls: 'text-amber-600' };
+    if (v < 0.6) return { text: 'Végétation modérée', cls: 'text-lime-600' };
+    return { text: 'Végétation dense et saine', cls: 'text-green-600' };
+  });
 
   readonly satIndicators = computed(() => {
     const s = this.satellite();
@@ -45,14 +59,9 @@ export class ParcelleDetailComponent implements OnInit {
   readonly tempBars = computed(() => this.buildBars(this.satellite()?.temperatureMoyenne ?? {}));
   readonly rainBars = computed(() => this.buildBars(this.satellite()?.precipitations ?? {}));
 
-  private buildBars(obj: Record<string, number>): Bar[] {
-    const entries = Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)).slice(-14);
-    const max = Math.max(...entries.map(([, v]) => v), 1);
-    return entries.map(([k, v]) => ({
-      date: `${k.substring(6, 8)}/${k.substring(4, 6)}`,
-      val: v,
-      pct: Math.round((v / max) * 100),
-    }));
+  private buildBars(obj: Record<string, number>): ChartPoint[] {
+    return Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)).slice(-14)
+      .map(([k, v]) => ({ date: `${k.substring(6, 8)}/${k.substring(4, 6)}`, val: v }));
   }
 
   ngOnInit(): void {
@@ -62,6 +71,7 @@ export class ParcelleDetailComponent implements OnInit {
         this.parcelle.set(p);
         this.loading.set(false);
         this.loadSatellite(id);
+        this.loadExtraction(p);
         this.loadMap(id);
       },
       error: () => { this.error.set('Parcelle introuvable.'); this.loading.set(false); }
@@ -73,6 +83,26 @@ export class ParcelleDetailComponent implements OnInit {
     this.svc.getSatelliteData(id).subscribe({
       next:  s => { this.satellite.set(s); this.loadingSat.set(false); },
       error: () => { this.satError.set('Données satellite indisponibles.'); this.loadingSat.set(false); }
+    });
+  }
+
+  /** Sentinel-1 + Sentinel-2 (via Spring → service Python → Earth Engine), 180 derniers jours. */
+  private loadExtraction(p: Parcelle): void {
+    if (!p.coordonneesGps?.length) return;
+    const fin = new Date();
+    const debut = new Date(fin.getTime() - 180 * 86_400_000);
+    const iso = (d: Date) => d.toISOString().substring(0, 10);
+    this.loadingExtr.set(true);
+    this.svc.extract(pointsToGeoJson(p.coordonneesGps, p.nomParcelle), iso(debut), iso(fin)).subscribe({
+      next:  r => { this.extraction.set(r); this.loadingExtr.set(false); },
+      error: () => { this.extractionErr.set('Données Sentinel indisponibles.'); this.loadingExtr.set(false); }
+    });
+
+    // Vignettes : requête séparée (plus lente), n'empêche pas l'affichage des chiffres.
+    this.loadingImages.set(true);
+    this.svc.extractImages(pointsToGeoJson(p.coordonneesGps, p.nomParcelle), iso(debut), iso(fin)).subscribe({
+      next:  i => { this.images.set(i); this.loadingImages.set(false); },
+      error: () => this.loadingImages.set(false)
     });
   }
 

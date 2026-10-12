@@ -115,4 +115,24 @@ class GeometryServiceTest {
         double[] bbox = {0.0, 0.0, 1.0, 1.0};
         assertThat(service.zoomRecommande(bbox)).isLessThanOrEqualTo(10);
     }
+
+    @Test
+    void ordonnerSiCroise_noeudPapillon_donneAireNonNulle() {
+        // Points saisis en zigzag : HG, HD, BG, BD (Champ01)
+        List<GpsPoint> zigzag = List.of(
+                new GpsPoint(5.38516, -4.05233), new GpsPoint(5.38516, -4.03000),
+                new GpsPoint(5.36500, -4.05233), new GpsPoint(5.36500, -4.03000));
+        assertThat(service.calculerSuperficie(zigzag)).isLessThan(0.01);
+
+        List<GpsPoint> corrige = service.ordonnerSiCroise(zigzag);
+        assertThat(corrige).hasSameSizeAs(zigzag);
+        assertThat(service.calculerSuperficie(corrige)).isGreaterThan(400.0);
+    }
+
+    @Test
+    void ordonnerSiCroise_polygoneSimpleInchange() {
+        List<GpsPoint> carre = List.of(
+                new GpsPoint(0, 0), new GpsPoint(0, 1), new GpsPoint(1, 1), new GpsPoint(1, 0));
+        assertThat(service.ordonnerSiCroise(carre)).isEqualTo(carre);
+    }
 }
