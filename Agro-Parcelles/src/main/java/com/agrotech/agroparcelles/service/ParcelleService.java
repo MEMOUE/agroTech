@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.service;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
+import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.entity.Parcelle;
 import com.agrotech.agroparcelles.exception.ResourceNotFoundException;
@@ -23,6 +24,7 @@ public class ParcelleService {
     private final GeometryService geometryService;
     private final MapVisualizationService mapVisualizationService;
     private final SatelliteService satelliteService;
+    private final SoilService soilService;
 
     public ParcelleDtoReponse findById(Long id) {
         return parcelleMapper.toDto(getParcelle(id));
@@ -72,6 +74,10 @@ public class ParcelleService {
 
     public SatelliteDataResponse getSatelliteData(Long id, LocalDate debut, LocalDate fin) {
         return satelliteService.fetchDonneesParcelle(getParcelle(id), debut, fin);
+    }
+
+    public SolDataResponse getSolData(Long id) {
+        return soilService.analyser(getParcelle(id));
     }
 
     private Parcelle getParcelle(Long id) {

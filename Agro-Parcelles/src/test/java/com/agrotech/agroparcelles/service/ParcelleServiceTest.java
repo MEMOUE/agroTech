@@ -29,6 +29,7 @@ class ParcelleServiceTest {
     @Mock private GeometryService geometryService;
     @Mock private MapVisualizationService mapVisualizationService;
     @Mock private SatelliteService satelliteService;
+    @Mock private SoilService soilService;
 
     @InjectMocks
     private ParcelleService parcelleService;

@@ -90,3 +90,31 @@ export interface SatelliteDataResponse {
   source: string;
   unite: string;
 }
+
+export interface SolIndicateur {
+  code: string;
+  nom: string;
+  valeur: number;
+  unite: string;
+  niveau: 'bas' | 'moyen' | 'bon' | 'eleve';
+  interpretation: string;
+  detail?: string | null;
+}
+
+export interface SolTexture {
+  argilePct: number;
+  limonPct: number;
+  sablePct: number;
+  classe: string;
+}
+
+export interface SolDataResponse {
+  parcelleId: number;
+  nomParcelle: string;
+  profondeur: string;
+  indicateurs: SolIndicateur[];
+  texture: SolTexture;
+  source: string;
+  resolution: string;
+  avertissements: string[];
+}

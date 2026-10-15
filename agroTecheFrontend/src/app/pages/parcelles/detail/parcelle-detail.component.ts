@@ -2,7 +2,7 @@ import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse } from '../../../core/models/parcelle.models';
+import { ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -27,6 +27,19 @@ export class ParcelleDetailComponent implements OnInit {
   extraction    = signal<ExtractionResult | null>(null);
   loadingExtr   = signal(false);
   extractionErr = signal('');
+  sol           = signal<SolDataResponse | null>(null);
+  loadingSol    = signal(false);
+  solError      = signal('');
+
+  /** Style d'un niveau (bas = rouge, moyen = ambre, bon = vert, élevé = violet) et segments de jauge. */
+  readonly niveauStyle: Record<string, { label: string; badge: string; bar: string; segments: number }> = {
+    bas:   { label: 'Faible',  badge: 'bg-red-50 text-red-700',       bar: 'bg-red-500',     segments: 1 },
+    moyen: { label: 'Moyen',   badge: 'bg-amber-50 text-amber-700',   bar: 'bg-amber-500',   segments: 2 },
+    bon:   { label: 'Bon',     badge: 'bg-green-50 text-green-700',   bar: 'bg-green-500',   segments: 3 },
+    eleve: { label: 'Élevé',   badge: 'bg-violet-50 text-violet-700', bar: 'bg-violet-500',  segments: 3 },
+  };
+  readonly gaugeSegments = [1, 2, 3];
+
   images        = signal<ExtractionImages | null>(null);
   loadingImages = signal(false);
 
@@ -72,6 +85,7 @@ export class ParcelleDetailComponent implements OnInit {
         this.loading.set(false);
         this.loadSatellite(id);
         this.loadExtraction(p);
+        this.loadSol(id);
         this.loadMap(id);
       },
       error: () => { this.error.set('Parcelle introuvable.'); this.loading.set(false); }
@@ -103,6 +117,18 @@ export class ParcelleDetailComponent implements OnInit {
     this.svc.extractImages(pointsToGeoJson(p.coordonneesGps, p.nomParcelle), iso(debut), iso(fin)).subscribe({
       next:  i => { this.images.set(i); this.loadingImages.set(false); },
       error: () => this.loadingImages.set(false)
+    });
+  }
+
+  /** Composition du sol (SoilGrids, ~10 s au premier appel puis en cache côté serveur). */
+  private loadSol(id: number): void {
+    this.loadingSol.set(true);
+    this.svc.getSolData(id).subscribe({
+      next:  r => { this.sol.set(r); this.loadingSol.set(false); },
+      error: e => {
+        this.solError.set(e?.error?.error ?? 'Composition du sol indisponible.');
+        this.loadingSol.set(false);
+      }
     });
   }
 

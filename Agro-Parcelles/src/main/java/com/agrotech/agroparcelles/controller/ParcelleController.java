@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.controller;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
+import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.service.ParcelleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -124,5 +125,22 @@ public class ParcelleController {
                 : parcelleService.getSatelliteData(id);
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(
+        summary = "Composition du sol (nutriments)",
+        description = "Estime pour le centroïde de la parcelle, sur 0-30 cm : pH, azote total, " +
+                      "matière organique, capacité d'échange cationique et texture (argile/limon/sable), " +
+                      "via SoilGrids (ISRIC). Chaque indicateur est accompagné d'un niveau et d'un conseil. " +
+                      "Le phosphore et le potassium ne sont pas disponibles par satellite."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Composition du sol retournée",
+            content = @Content(schema = @Schema(implementation = SolDataResponse.class))),
+        @ApiResponse(responseCode = "502", description = "Erreur API SoilGrids", content = @Content)
+    })
+    @GetMapping("/{id}/sol")
+    public ResponseEntity<SolDataResponse> getSolData(@PathVariable Long id) {
+        return ResponseEntity.ok(parcelleService.getSolData(id));
     }
 }

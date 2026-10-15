@@ -244,6 +244,87 @@
             </div>
           }
 
+          <!-- Composition du sol (SoilGrids) -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-gray-800">🌱 Composition du sol — nutriments</h3>
+                @if (sol(); as so) {
+                  <p class="text-xs text-gray-400 mt-0.5">Couche {{ so.profondeur }} · {{ so.source }} · {{ so.resolution }}</p>
+                } @else {
+                  <p class="text-xs text-gray-400 mt-0.5">SoilGrids (ISRIC)</p>
+                }
+              </div>
+              @if (loadingSol()) {
+                <svg class="animate-spin w-5 h-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
+              }
+            </div>
+
+            @if (solError()) {
+              <div class="px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex gap-2">
+                <span>⚠️</span> {{ solError() }}
+              </div>
+            } @else if (sol(); as so) {
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                @for (ind of so.indicateurs; track ind.code) {
+                  <div class="rounded-xl border border-gray-100 p-4">
+                    <div class="flex items-start justify-between gap-2">
+                      <p class="text-xs text-gray-500">{{ ind.nom }}</p>
+                      <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full" [class]="niveauStyle[ind.niveau].badge">
+                        {{ niveauStyle[ind.niveau].label }}
+                      </span>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">
+                      {{ ind.valeur | number:'1.0-2' }}
+                      @if (ind.unite) { <span class="text-xs font-normal text-gray-400 ml-0.5">{{ ind.unite }}</span> }
+                    </p>
+                    <div class="flex gap-1 mt-2">
+                      @for (seg of gaugeSegments; track seg) {
+                        <div class="h-1.5 flex-1 rounded-full"
+                          [class]="seg <= niveauStyle[ind.niveau].segments ? niveauStyle[ind.niveau].bar : 'bg-gray-100'"></div>
+                      }
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2 leading-snug">{{ ind.interpretation }}</p>
+                    @if (ind.detail) { <p class="text-[11px] text-gray-400 mt-1">{{ ind.detail }}</p> }
+                  </div>
+                }
+              </div>
+
+              <!-- Texture -->
+              <div class="mt-4 rounded-xl border border-gray-100 p-4">
+                <div class="flex items-baseline justify-between mb-2">
+                  <p class="text-xs text-gray-500">Texture du sol</p>
+                  <p class="text-sm font-semibold text-gray-800">{{ so.texture.classe }}</p>
+                </div>
+                <div class="flex h-3 rounded-full overflow-hidden">
+                  <div class="bg-orange-700" [style.width.%]="so.texture.argilePct" title="Argile"></div>
+                  <div class="bg-amber-400"  [style.width.%]="so.texture.limonPct"  title="Limon"></div>
+                  <div class="bg-yellow-200" [style.width.%]="so.texture.sablePct"  title="Sable"></div>
+                </div>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-[11px] text-gray-500">
+                  <span class="inline-flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-orange-700"></i>Argile {{ so.texture.argilePct | number:'1.0-1' }} %</span>
+                  <span class="inline-flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-amber-400"></i>Limon {{ so.texture.limonPct | number:'1.0-1' }} %</span>
+                  <span class="inline-flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-yellow-200"></i>Sable {{ so.texture.sablePct | number:'1.0-1' }} %</span>
+                </div>
+              </div>
+
+              <!-- Limites -->
+              <div class="mt-4 rounded-xl bg-sky-50 border border-sky-100 px-4 py-3">
+                <p class="text-xs font-semibold text-sky-800 mb-1">À savoir</p>
+                <ul class="space-y-1">
+                  @for (a of so.avertissements; track a) {
+                    <li class="text-xs text-sky-900/80 leading-snug">• {{ a }}</li>
+                  }
+                </ul>
+              </div>
+            } @else if (loadingSol()) {
+              <p class="text-sm text-gray-400 text-center py-6">Analyse du sol en cours… (jusqu'à 15 s la première fois)</p>
+            }
+          </div>
+
           <!-- Indicateurs satellite -->
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
             <div class="flex items-center justify-between mb-4">
