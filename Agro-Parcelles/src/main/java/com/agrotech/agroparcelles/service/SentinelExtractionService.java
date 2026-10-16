@@ -11,8 +11,10 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Relaie le polygone GeoJSON vers le microservice Python d'extraction Sentinel-2
@@ -39,6 +41,23 @@ public class SentinelExtractionService {
     public Map<String, Object> extraire(ExtractionRequest request) {
         return appeler("/extract", request);
     }
+
+    /**
+     * Capteurs virtuels (humidité du sol radar, ET0, bilan hydrique). Calcul lent (≈ 15 s) mais
+     * les entrées changent au rythme des passages satellites : résultat mis en cache pour la journée.
+     */
+    public Map<String, Object> capteursVirtuels(ExtractionRequest request) {
+        String cle = LocalDate.now() + "|" + request.getGeoJson().hashCode();
+        Map<String, Object> enCache = cacheCapteurs.get(cle);
+        if (enCache != null) return enCache;
+
+        Map<String, Object> resultat = appeler("/virtual-sensors", request);
+        if (cacheCapteurs.size() >= 200) cacheCapteurs.clear();
+        cacheCapteurs.put(cle, resultat);
+        return resultat;
+    }
+
+    private final Map<String, Map<String, Object>> cacheCapteurs = new ConcurrentHashMap<>();
 
     /** Vignettes PNG (Sentinel-2 couleurs réelles, NDVI, radar Sentinel-1) en data URI. */
     public Map<String, Object> images(ExtractionRequest request) {

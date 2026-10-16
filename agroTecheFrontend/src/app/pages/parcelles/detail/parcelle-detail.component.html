@@ -140,7 +140,11 @@
           @if (loadingImages() || images()) {
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <h3 class="font-semibold text-gray-800 mb-1">🛰️ Images satellite</h3>
-              <p class="text-xs text-gray-400 mb-4">Contour jaune = votre parcelle</p>
+              <p class="text-xs text-gray-400 mb-4">
+                Contour jaune = votre parcelle
+                @if (images()?.cote_m; as c) { · zone affichée ≈ {{ c }} m × {{ c }} m }
+                · 1 pixel Sentinel = 10 m × 10 m
+              </p>
               @if (loadingImages()) {
                 <p class="text-sm text-gray-400 text-center py-6">Génération des images…</p>
               } @else if (images(); as im) {
@@ -152,7 +156,12 @@
                   ]; track card.titre) {
                     <figure class="rounded-xl overflow-hidden border border-gray-100">
                       @if (card.src) {
-                        <img [src]="card.src" [alt]="card.titre" class="w-full aspect-square object-cover bg-gray-100">
+                        <button type="button" class="block w-full cursor-zoom-in group relative"
+                          (click)="lightbox.set({ src: card.src, titre: card.titre + ' — ' + card.sous })"
+                          [attr.aria-label]="'Agrandir : ' + card.titre">
+                          <img [src]="card.src" [alt]="card.titre" class="w-full aspect-square object-cover bg-gray-100">
+                          <span class="absolute bottom-2 right-2 text-[10px] font-semibold bg-black/55 text-white px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition">Agrandir</span>
+                        </button>
                       } @else {
                         <div class="w-full aspect-square bg-gray-50 flex items-center justify-center text-xs text-gray-400 px-3 text-center">
                           {{ card.err || 'Image indisponible' }}
@@ -165,6 +174,15 @@
                     </figure>
                   }
                 </div>
+                @if (im.avertissement_resolution; as avert) {
+                  <div class="mt-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 leading-snug flex gap-2">
+                    <span>⚠️</span><span>{{ avert }}</span>
+                  </div>
+                }
+                <p class="mt-3 text-[11px] text-gray-400 leading-snug">
+                  Ces images sont des composites de plusieurs passages sans nuages : en saison des pluies,
+                  elles peuvent présenter des zones en « marches ». Une période plus longue ou la saison sèche donne un rendu plus régulier.
+                </p>
               }
             </div>
           }
@@ -242,6 +260,82 @@
                 <p class="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">{{ s1.message }}</p>
               }
             </div>
+          }
+
+          @if (capteursVirtuelsActifs) {
+          <!-- Capteurs virtuels (indices satellites) -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="font-semibold text-gray-800">📟 Capteurs virtuels</h3>
+              @if (loadingCapt()) {
+                <svg class="animate-spin w-5 h-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
+              }
+            </div>
+            <p class="text-xs text-gray-400 mb-4">Estimés depuis les satellites — sans capteur sur le terrain</p>
+
+            @if (capteursErr()) {
+              <div class="px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex gap-2">
+                <span>⚠️</span> {{ capteursErr() }}
+              </div>
+            } @else if (capteurs(); as cv) {
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                @for (c of cv.capteurs; track c.code) {
+                  <div class="rounded-xl p-4 border flex flex-col" [class]="tileStyle(c).box">
+                    <div class="flex items-start justify-between gap-1">
+                      <span class="text-2xl leading-none">{{ capteurIcons[c.code] || '📟' }}</span>
+                      @if (tileStyle(c).badge; as bd) {
+                        <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-white/70" [class]="tileStyle(c).text">{{ bd }}</span>
+                      }
+                    </div>
+                    <p class="text-xs text-gray-600 mt-3 leading-tight">{{ c.nom }}</p>
+                    <p class="text-2xl font-bold mt-0.5" [class]="tileStyle(c).text">
+                      {{ c.valeur | number:'1.0-1' }}<span class="text-xs font-medium ml-1 opacity-70">{{ c.unite }}</span>
+                    </p>
+                    <p class="text-[11px] text-gray-500 mt-auto pt-2 leading-snug">{{ c.note }}</p>
+                  </div>
+                }
+
+                <!-- Capteurs indisponibles : tuile explicite plutôt qu'une ligne grise -->
+                @for (e of (cv.erreurs | keyvalue); track e.key) {
+                  <div class="rounded-xl p-4 border border-dashed border-gray-300 bg-gray-50 flex flex-col col-span-2">
+                    <div class="flex items-start justify-between gap-1">
+                      <span class="text-2xl leading-none grayscale opacity-60">{{ capteurIcons[e.key] || '📟' }}</span>
+                      <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-600">Non disponible</span>
+                    </div>
+                    <p class="text-xs text-gray-700 font-medium mt-3">{{ capteurNoms[e.key] || e.key }}</p>
+                    <p class="text-[11px] text-gray-500 mt-1 leading-snug">{{ e.value }}</p>
+                  </div>
+                }
+              </div>
+
+              <details class="mt-4 group">
+                <summary class="text-xs text-gray-500 cursor-pointer select-none hover:text-gray-700">Méthodes et niveau de confiance</summary>
+                <ul class="mt-2 space-y-1.5">
+                  @for (c of cv.capteurs; track c.code) {
+                    <li class="text-[11px] text-gray-500 leading-snug">
+                      <b class="text-gray-700">{{ c.nom }}</b> — {{ c.methode }} ·
+                      <span class="font-semibold" [class]="confianceStyle[c.confiance].cls.split(' ')[1]">{{ confianceStyle[c.confiance].label.toLowerCase() }}</span>
+                      · {{ c.date_mesure }}
+                    </li>
+                  }
+                </ul>
+              </details>
+
+              <p class="mt-3 text-[11px] text-gray-400 leading-snug">{{ cv.avertissement }}</p>
+            } @else if (loadingCapt()) {
+              <p class="text-sm text-gray-400 text-center py-6">Calcul des capteurs virtuels… (jusqu'à 20 s la première fois)</p>
+            }
+          </div>
+
+          <!-- Graphe simple : pluie vs évapotranspiration -->
+          @if (pluieSerie().length && et0Serie().length) {
+            <app-bar-chart title="Pluie et évapotranspiration" subtitle="14 derniers jours · NASA POWER" unit="mm"
+              [data]="pluieSerie()" [data2]="et0Serie()" label="Pluie" label2="ET0"
+              from="#93c5fd" to="#2563eb" from2="#fdba74" to2="#ea580c" [height]="150" />
+          }
           }
 
           <!-- Composition du sol (SoilGrids) -->
@@ -375,4 +469,18 @@
       </div>
     }
   </main>
+
+  @if (lightbox(); as lb) {
+    <div class="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 cursor-zoom-out"
+      (click)="lightbox.set(null)" (keydown.escape)="lightbox.set(null)" role="dialog" aria-modal="true" tabindex="-1">
+      <figure class="max-w-[min(92vw,820px)] w-full" (click)="$event.stopPropagation()">
+        <img [src]="lb.src" [alt]="lb.titre" class="w-full max-h-[80vh] object-contain rounded-xl bg-gray-900">
+        <figcaption class="flex items-center justify-between mt-3 text-sm text-white/90">
+          <span>{{ lb.titre }}</span>
+          <button type="button" (click)="lightbox.set(null)"
+            class="px-3 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-medium transition">Fermer</button>
+        </figcaption>
+      </figure>
+    </div>
+  }
 </div>

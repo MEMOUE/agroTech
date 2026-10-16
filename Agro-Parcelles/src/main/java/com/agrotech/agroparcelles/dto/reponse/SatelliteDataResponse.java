@@ -27,7 +27,7 @@ public class SatelliteDataResponse {
     /** Humidité relative (%) */
     private Map<String, Double> humiditeRelative;
 
-    /** Rayonnement solaire (kWh/m²/jour) */
+    /** Rayonnement solaire (MJ/m²/jour) */
     private Map<String, Double> rayonnementSolaire;
 
     /** Vitesse du vent à 10m (m/s) */

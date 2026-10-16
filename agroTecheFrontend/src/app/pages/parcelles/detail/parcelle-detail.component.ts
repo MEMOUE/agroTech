@@ -1,8 +1,8 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DecimalPipe, DatePipe } from '@angular/common';
+import { DecimalPipe, DatePipe, KeyValuePipe } from '@angular/common';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
+import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -10,7 +10,7 @@ import { LogoComponent } from '../../../shared/logo/logo.component';
 @Component({
   selector: 'app-parcelle-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, DatePipe, ParcelleMapComponent, LogoComponent, BarChartComponent],
+  imports: [RouterLink, DecimalPipe, DatePipe, KeyValuePipe, ParcelleMapComponent, LogoComponent, BarChartComponent],
   templateUrl: './parcelle-detail.component.html',
 })
 export class ParcelleDetailComponent implements OnInit {
@@ -27,6 +27,43 @@ export class ParcelleDetailComponent implements OnInit {
   extraction    = signal<ExtractionResult | null>(null);
   loadingExtr   = signal(false);
   extractionErr = signal('');
+  /** Interrupteur : passer à true pour réactiver les capteurs virtuels (bloc + appel API). */
+  readonly capteursVirtuelsActifs = false;
+
+  capteurs      = signal<CapteursVirtuelsResponse | null>(null);
+  loadingCapt   = signal(false);
+  capteursErr   = signal('');
+  readonly confianceStyle: Record<string, { label: string; cls: string }> = {
+    faible:  { label: 'Confiance faible',   cls: 'bg-red-50 text-red-700' },
+    moyenne: { label: 'Confiance moyenne',  cls: 'bg-amber-50 text-amber-700' },
+    bonne:   { label: 'Bonne confiance',    cls: 'bg-green-50 text-green-700' },
+  };
+  readonly capteurIcons: Record<string, string> = {
+    humidite_sol: '💧', et0: '☀️', pluie: '🌧️', bilan_hydrique_7j: '⚖️', bilan_hydrique_14j: '⚖️',
+  };
+  /** Noms lisibles des capteurs indisponibles (clés de `erreurs`). */
+  readonly capteurNoms: Record<string, string> = {
+    humidite_sol: 'Humidité du sol', et0: 'ET0 et bilan hydrique',
+  };
+
+  /** Style d'une tuile : couleur fixe par capteur, ou selon le signe pour les bilans hydriques. */
+  tileStyle(c: CapteurVirtuel): { box: string; text: string; badge: string | null } {
+    if (c.code.startsWith('bilan_hydrique')) {
+      if (c.valeur > 10)  return { box: 'bg-sky-50 border-sky-100',     text: 'text-sky-700',     badge: 'Excédent' };
+      if (c.valeur < -10) return { box: 'bg-amber-50 border-amber-100', text: 'text-amber-700',   badge: 'Déficit' };
+      return                     { box: 'bg-green-50 border-green-100', text: 'text-green-700',   badge: 'Équilibre' };
+    }
+    if (c.code === 'pluie') return { box: 'bg-blue-50 border-blue-100',     text: 'text-blue-700',   badge: null };
+    if (c.code === 'et0')   return { box: 'bg-orange-50 border-orange-100', text: 'text-orange-700', badge: null };
+    return { box: 'bg-cyan-50 border-cyan-100', text: 'text-cyan-700', badge: null };
+  }
+
+  private serieDe(code: string): ChartPoint[] {
+    const c = this.capteurs()?.capteurs.find(x => x.code === code);
+    return c ? this.chartPoints(c) : [];
+  }
+  readonly pluieSerie = computed(() => this.serieDe('pluie'));
+  readonly et0Serie   = computed(() => this.serieDe('et0'));
   sol           = signal<SolDataResponse | null>(null);
   loadingSol    = signal(false);
   solError      = signal('');
@@ -40,6 +77,8 @@ export class ParcelleDetailComponent implements OnInit {
   };
   readonly gaugeSegments = [1, 2, 3];
 
+  /** Image affichée en grand (clic sur une vignette). */
+  lightbox      = signal<{ src: string; titre: string } | null>(null);
   images        = signal<ExtractionImages | null>(null);
   loadingImages = signal(false);
 
@@ -64,7 +103,7 @@ export class ParcelleDetailComponent implements OnInit {
       { icon: '🌡️', label: 'Température',   value: last(s.temperatureMoyenne), unit: '°C',      bg: 'bg-orange-50', text: 'text-orange-700' },
       { icon: '🌧️', label: 'Précipitations', value: last(s.precipitations),     unit: 'mm/j',    bg: 'bg-blue-50',   text: 'text-blue-700'   },
       { icon: '💧', label: 'Humidité',       value: last(s.humiditeRelative),   unit: '%',       bg: 'bg-cyan-50',   text: 'text-cyan-700'   },
-      { icon: '☀️', label: 'Rayonnement',    value: last(s.rayonnementSolaire), unit: 'kWh/m²',  bg: 'bg-yellow-50', text: 'text-yellow-700' },
+      { icon: '☀️', label: 'Rayonnement',    value: last(s.rayonnementSolaire), unit: 'MJ/m²',  bg: 'bg-yellow-50', text: 'text-yellow-700' },
       { icon: '💨', label: 'Vent',           value: last(s.vitesseVent),        unit: 'm/s',     bg: 'bg-gray-50',   text: 'text-gray-700'   },
     ];
   });
@@ -86,6 +125,7 @@ export class ParcelleDetailComponent implements OnInit {
         this.loadSatellite(id);
         this.loadExtraction(p);
         this.loadSol(id);
+        if (this.capteursVirtuelsActifs) this.loadCapteurs(id);
         this.loadMap(id);
       },
       error: () => { this.error.set('Parcelle introuvable.'); this.loading.set(false); }
@@ -130,6 +170,19 @@ export class ParcelleDetailComponent implements OnInit {
         this.loadingSol.set(false);
       }
     });
+  }
+
+  /** Capteurs virtuels (≈ 15 s au premier appel, puis en cache pour la journée côté serveur). */
+  private loadCapteurs(id: number): void {
+    this.loadingCapt.set(true);
+    this.svc.getCapteursVirtuels(id).subscribe({
+      next:  r => { this.capteurs.set(r); this.loadingCapt.set(false); },
+      error: () => { this.capteursErr.set('Capteurs virtuels indisponibles.'); this.loadingCapt.set(false); }
+    });
+  }
+
+  chartPoints(c: { serie: { date: string; valeur: number }[] | null }): ChartPoint[] {
+    return (c.serie ?? []).map(p => ({ date: p.date.substring(8, 10) + '/' + p.date.substring(5, 7), val: p.valeur }));
   }
 
   private loadMap(id: number): void {

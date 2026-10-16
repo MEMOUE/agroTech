@@ -3,26 +3,47 @@
     <div>
       <h3 class="font-semibold text-gray-800">{{ title() }}</h3>
       @if (subtitle()) { <p class="text-xs text-gray-400 mt-0.5">{{ subtitle() }}</p> }
+      @if (dual()) {
+        <div class="flex gap-4 mt-2 text-xs text-gray-600">
+          <span class="inline-flex items-center gap-1.5">
+            <i class="w-2.5 h-2.5 rounded-sm" [style.background]="to()"></i>{{ label() }}
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <i class="w-2.5 h-2.5 rounded-sm" [style.background]="to2()"></i>{{ label2() }}
+          </span>
+        </div>
+      }
     </div>
     @if (stats(); as s) {
       <div class="flex gap-2 text-center">
-        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
-          <p class="text-[10px] uppercase tracking-wide text-gray-400">Min</p>
-          <p class="text-sm font-semibold text-gray-700">{{ s.min | number:'1.1-1' }}</p>
-        </div>
-        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
-          <p class="text-[10px] uppercase tracking-wide text-gray-400">Moy.</p>
-          <p class="text-sm font-semibold text-gray-700">{{ s.avg | number:'1.1-1' }}</p>
-        </div>
-        <div class="px-3 py-1.5 rounded-lg bg-gray-50">
-          <p class="text-[10px] uppercase tracking-wide text-gray-400">Max</p>
-          <p class="text-sm font-semibold text-gray-700">{{ s.max | number:'1.1-1' }}</p>
-        </div>
-        @if (baseZero()) {
+        @if (dual()) {
           <div class="px-3 py-1.5 rounded-lg" [style.background]="from() + '55'">
-            <p class="text-[10px] uppercase tracking-wide text-gray-500">Cumul</p>
-            <p class="text-sm font-semibold text-gray-800">{{ s.total | number:'1.1-1' }}</p>
+            <p class="text-[10px] uppercase tracking-wide text-gray-500">{{ label() }}</p>
+            <p class="text-sm font-semibold text-gray-800">{{ s.total | number:'1.0-1' }} {{ unit() }}</p>
           </div>
+          <div class="px-3 py-1.5 rounded-lg" [style.background]="from2() + '55'">
+            <p class="text-[10px] uppercase tracking-wide text-gray-500">{{ label2() }}</p>
+            <p class="text-sm font-semibold text-gray-800">{{ s.total2 | number:'1.0-1' }} {{ unit() }}</p>
+          </div>
+        } @else {
+          <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+            <p class="text-[10px] uppercase tracking-wide text-gray-400">Min</p>
+            <p class="text-sm font-semibold text-gray-700">{{ s.min | number:'1.1-1' }}</p>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+            <p class="text-[10px] uppercase tracking-wide text-gray-400">Moy.</p>
+            <p class="text-sm font-semibold text-gray-700">{{ s.avg | number:'1.1-1' }}</p>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-gray-50">
+            <p class="text-[10px] uppercase tracking-wide text-gray-400">Max</p>
+            <p class="text-sm font-semibold text-gray-700">{{ s.max | number:'1.1-1' }}</p>
+          </div>
+          @if (baseZero()) {
+            <div class="px-3 py-1.5 rounded-lg" [style.background]="from() + '55'">
+              <p class="text-[10px] uppercase tracking-wide text-gray-500">Cumul</p>
+              <p class="text-sm font-semibold text-gray-800">{{ s.total | number:'1.1-1' }}</p>
+            </div>
+          }
         }
       </div>
     }
@@ -47,17 +68,26 @@
           }
           <div class="absolute inset-0 flex items-end gap-1.5">
             @for (b of bars(); track b.date) {
-              <div class="group relative flex-1 h-full flex items-end">
+              <div class="group relative flex-1 h-full flex items-end" [class.gap-0.5]="dual()">
                 <span class="absolute left-1/2 -translate-x-1/2 z-10 bg-gray-800 text-white text-xs px-2 py-1 rounded-md
                              opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none shadow"
-                      [style.bottom]="'calc(' + b.pct + '% + 6px)'">
-                  {{ b.date }} · <b>{{ b.val | number:'1.1-1' }}</b> {{ unit() }}
+                      [style.bottom]="'calc(' + (b.pct > b.pct2 ? b.pct : b.pct2) + '% + 6px)'">
+                  @if (dual()) {
+                    {{ b.date }} · {{ label() }} <b>{{ b.val | number:'1.1-1' }}</b> · {{ label2() }} <b>{{ b.val2 | number:'1.1-1' }}</b> {{ unit() }}
+                  } @else {
+                    {{ b.date }} · <b>{{ b.val | number:'1.1-1' }}</b> {{ unit() }}
+                  }
                 </span>
                 <div class="w-full rounded-t-md transition-all group-hover:brightness-110"
-                     [class.ring-2]="b.last" [class.ring-offset-1]="b.last"
+                     [class.ring-2]="b.last && !dual()" [class.ring-offset-1]="b.last && !dual()"
                      [style.height.%]="b.pct"
                      [style.background]="'linear-gradient(to top,' + to() + ',' + from() + ')'"
                      [style.--tw-ring-color]="to()"></div>
+                @if (dual()) {
+                  <div class="w-full rounded-t-md transition-all group-hover:brightness-110"
+                       [style.height.%]="b.pct2"
+                       [style.background]="'linear-gradient(to top,' + to2() + ',' + from2() + ')'"></div>
+                }
               </div>
             }
           </div>
@@ -69,7 +99,9 @@
                  [class.hidden]="i % 2 === 1" [class.sm:block]="i % 2 === 1">{{ b.date }}</div>
           }
         </div>
-        <p class="text-[10px] text-gray-400 mt-2 text-right">Dernière mesure encadrée · unité : {{ unit() }}</p>
+        <p class="text-[10px] text-gray-400 mt-2 text-right">
+          @if (!dual()) { Dernière mesure encadrée · }unité : {{ unit() }}
+        </p>
       </div>
     </div>
   } @else {

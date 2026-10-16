@@ -104,7 +104,7 @@ public class ParcelleController {
         summary = "Données agro-climatiques satellite (NASA POWER)",
         description = "Récupère les données journalières NASA POWER pour le centroïde de la parcelle : " +
                       "température (°C), précipitations (mm/j), humidité relative (%), " +
-                      "rayonnement solaire (kWh/m²/j), vitesse du vent (m/s). " +
+                      "rayonnement solaire (MJ/m²/j), vitesse du vent (m/s). " +
                       "Par défaut : 30 derniers jours."
     )
     @ApiResponses({
@@ -142,5 +142,21 @@ public class ParcelleController {
     @GetMapping("/{id}/sol")
     public ResponseEntity<SolDataResponse> getSolData(@PathVariable Long id) {
         return ResponseEntity.ok(parcelleService.getSolData(id));
+    }
+
+    @Operation(
+        summary = "Capteurs virtuels (indices satellites)",
+        description = "Indices proches de ce que mesureraient des capteurs : humidité du sol de surface " +
+                      "(radar Sentinel-1), évapotranspiration ET0 (FAO-56, NASA POWER) et bilan hydrique. " +
+                      "Chaque valeur précise son type (indice/calcul), sa confiance et sa méthode. " +
+                      "Ce ne sont pas des mesures : ils seront remplacés par un modèle entraîné sur capteurs physiques."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Capteurs virtuels retournés"),
+        @ApiResponse(responseCode = "502", description = "Service satellite indisponible", content = @Content)
+    })
+    @GetMapping("/{id}/capteurs-virtuels")
+    public ResponseEntity<java.util.Map<String, Object>> getCapteursVirtuels(@PathVariable Long id) {
+        return ResponseEntity.ok(parcelleService.getCapteursVirtuels(id));
     }
 }

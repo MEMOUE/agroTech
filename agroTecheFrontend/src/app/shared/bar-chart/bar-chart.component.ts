@@ -3,7 +3,10 @@ import { DecimalPipe } from '@angular/common';
 
 export interface ChartPoint { date: string; val: number; }
 
-/** Histogramme avec axe gradué, lignes de repère, survol et stats (min / moyenne / max). */
+/**
+ * Histogramme avec axe gradué, lignes de repère, survol et stats.
+ * Une série par défaut ; avec `data2`, deux barres côte à côte par date (ex. pluie vs ET0).
+ */
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
@@ -22,11 +25,20 @@ export class BarChartComponent {
   baseZero = input(true);
   height   = input(160);
 
+  /** Seconde série optionnelle, alignée sur `data` (même ordre de dates). */
+  data2    = input<ChartPoint[]>([]);
+  label    = input('');
+  label2   = input('');
+  from2    = input('#fdba74');
+  to2      = input('#f97316');
+
+  readonly dual = computed(() => this.data2().length > 0);
+
   private readonly range = computed(() => {
-    const vals = this.data().map(d => d.val);
+    const vals = [...this.data(), ...this.data2()].map(d => d.val);
     if (!vals.length) return { min: 0, max: 1 };
     const lo = Math.min(...vals), hi = Math.max(...vals);
-    if (this.baseZero()) return { min: 0, max: this.niceCeil(hi) };
+    if (this.baseZero() || this.dual()) return { min: 0, max: this.niceCeil(hi) };
     const pad = Math.max((hi - lo) * 0.25, 1);
     return { min: Math.floor(lo - pad), max: Math.ceil(hi + pad) };
   });
@@ -40,13 +52,20 @@ export class BarChartComponent {
     }));
   });
 
-  readonly bars = computed(() => {
+  private pct(v: number): number {
     const { min, max } = this.range();
     const span = max - min || 1;
+    return Math.max(((v - min) / span) * 100, v > min ? 2 : 0);
+  }
+
+  readonly bars = computed(() => {
     const last = this.data().length - 1;
+    const d2 = this.data2();
     return this.data().map((d, i) => ({
       ...d,
-      pct: Math.max(((d.val - min) / span) * 100, d.val > min ? 2 : 0),
+      pct: this.pct(d.val),
+      val2: d2[i]?.val ?? null,
+      pct2: d2[i] ? this.pct(d2[i].val) : 0,
       last: i === last,
     }));
   });
@@ -55,7 +74,8 @@ export class BarChartComponent {
     const vals = this.data().map(d => d.val);
     if (!vals.length) return null;
     const total = vals.reduce((s, v) => s + v, 0);
-    return { min: Math.min(...vals), max: Math.max(...vals), avg: total / vals.length, total };
+    const total2 = this.data2().reduce((s, d) => s + d.val, 0);
+    return { min: Math.min(...vals), max: Math.max(...vals), avg: total / vals.length, total, total2 };
   });
 
   private niceCeil(v: number): number {

@@ -1,0 +1,6 @@
+# La clé du compte de service ne doit jamais être copiée dans l'image : elle est montée en volume (/secrets).
+secrets/
+.env
+.venv/
+__pycache__/
+tests/

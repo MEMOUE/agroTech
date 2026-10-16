@@ -4,6 +4,7 @@ import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
+import com.agrotech.agroparcelles.dto.request.ExtractionRequest;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.entity.Parcelle;
 import com.agrotech.agroparcelles.exception.ResourceNotFoundException;
@@ -11,6 +12,9 @@ import com.agrotech.agroparcelles.mapper.ParcelleMapper;
 import com.agrotech.agroparcelles.repository.ParcelleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +29,7 @@ public class ParcelleService {
     private final MapVisualizationService mapVisualizationService;
     private final SatelliteService satelliteService;
     private final SoilService soilService;
+    private final SentinelExtractionService sentinelExtractionService;
 
     public ParcelleDtoReponse findById(Long id) {
         return parcelleMapper.toDto(getParcelle(id));
@@ -78,6 +83,20 @@ public class ParcelleService {
 
     public SolDataResponse getSolData(Long id) {
         return soilService.analyser(getParcelle(id));
+    }
+
+    /** Capteurs virtuels (phase 0) calculés sur le polygone de la parcelle. */
+    public Map<String, Object> getCapteursVirtuels(Long id) {
+        Parcelle p = getParcelle(id);
+        List<List<Double>> anneau = new ArrayList<>();
+        for (Parcelle.GpsPoint pt : p.getCoordonneesGps()) {
+            anneau.add(List.of(pt.lon(), pt.lat()));          // GeoJSON = [lon, lat]
+        }
+        if (!anneau.isEmpty()) anneau.add(anneau.get(0));      // fermeture
+        Map<String, Object> geometry = Map.of("type", "Polygon", "coordinates", List.of(anneau));
+        Map<String, Object> feature = Map.of("type", "Feature", "geometry", geometry);
+
+        return sentinelExtractionService.capteursVirtuels(ExtractionRequest.builder().geoJson(feature).build());
     }
 
     private Parcelle getParcelle(Long id) {

@@ -110,7 +110,7 @@ public class SatelliteService {
                 .rayonnementSolaire(extractDoubleMap(parameter, "ALLSKY_SFC_SW_DWN"))
                 .vitesseVent(extractDoubleMap(parameter, "WS10M"))
                 .source("NASA POWER (power.larc.nasa.gov)")
-                .unite("T2M=°C, PRECTOTCORR=mm/j, RH2M=%, ALLSKY_SFC_SW_DWN=kWh/m²/j, WS10M=m/s")
+                .unite("T2M=°C, PRECTOTCORR=mm/j, RH2M=%, ALLSKY_SFC_SW_DWN=MJ/m²/j, WS10M=m/s")
                 .build();
     }
 

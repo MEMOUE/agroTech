@@ -30,6 +30,7 @@ class ParcelleServiceTest {
     @Mock private MapVisualizationService mapVisualizationService;
     @Mock private SatelliteService satelliteService;
     @Mock private SoilService soilService;
+    @Mock private SentinelExtractionService sentinelExtractionService;
 
     @InjectMocks
     private ParcelleService parcelleService;

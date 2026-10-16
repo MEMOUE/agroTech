@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   ExtractionImages, ExtractionResult, GpsPoint, Parcelle, ParcelleDtoRequest,
-  ParcelleMapResponse, SatelliteDataResponse, SolDataResponse,
+  CapteursVirtuelsResponse, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse,
 } from '../models/parcelle.models';
 
 const API = 'http://localhost:8082/api/parcelles';
@@ -48,6 +48,11 @@ export class ParcelleService {
 
   getMapData(id: number): Observable<ParcelleMapResponse> {
     return this.http.get<ParcelleMapResponse>(`${API}/${id}/map`);
+  }
+
+  /** Capteurs virtuels (indices satellites : humidité du sol radar, ET0, bilan hydrique). */
+  getCapteursVirtuels(id: number): Observable<CapteursVirtuelsResponse> {
+    return this.http.get<CapteursVirtuelsResponse>(`${API}/${id}/capteurs-virtuels`);
   }
 
   /** Composition du sol (pH, azote, matière organique, CEC, texture) — SoilGrids. */

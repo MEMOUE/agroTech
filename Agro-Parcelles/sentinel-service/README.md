@@ -120,6 +120,20 @@ calculée sur la même période :
 - Le radar traverse les nuages : utile quand le NDVI est `no_data`.
 - Une erreur Sentinel-1 donne `sentinel1.statut = "erreur"` sans faire échouer le NDVI.
 
+## Capteurs virtuels (phase 0) — `POST /virtual-sensors`
+
+Indices calculés **sans apprentissage**, en attendant un modèle IA entraîné sur des capteurs physiques
+(`type` passera alors de `indice`/`calcul` à `modele`) :
+
+| Code | Méthode | Limites |
+|---|---|---|
+| `humidite_sol` | Radar Sentinel-1 VV, détection de changement sur 12 mois (une seule orbite et une seule plateforme) | Refusé si le signal varie de moins de 1 dB (forêt/couvert dense). Confiance selon le NDVI. |
+| `et0` | FAO-56 Penman-Monteith (NASA POWER, altitude SRTM) | Grille NASA ~50 km. À multiplier par le Kc de la culture. |
+| `bilan_hydrique_7j` / `_14j` | Pluie NASA POWER − ET0 | Indicatif. |
+
+Les calculs purs sont dans `virtual_sensors.py` ; tests : `python -m pytest tests`
+(inclut l'exemple officiel FAO-56 : ET0 = 3,88 mm/j).
+
 ## Codes d'erreur
 
 - **400** : GeoJSON invalide (pas un Polygon, < 3 sommets).

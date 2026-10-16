@@ -62,6 +62,10 @@ export interface ExtractionImages {
   ndvi: string | null;
   sentinel1: string | null;
   erreurs: Record<string, string>;
+  /** Côté de la zone affichée (m), nombre de pixels Sentinel dans la parcelle, alerte si trop peu. */
+  cote_m?: number;
+  pixels_10m?: number;
+  avertissement_resolution?: string;
 }
 
 export interface Sentinel1Result {
@@ -117,4 +121,25 @@ export interface SolDataResponse {
   source: string;
   resolution: string;
   avertissements: string[];
+}
+
+export interface CapteurVirtuel {
+  code: string;
+  nom: string;
+  valeur: number;
+  unite: string;
+  date_mesure: string;
+  serie: { date: string; valeur: number }[] | null;
+  /** indice / calcul aujourd'hui ; "modele" quand le modèle IA entraîné sur capteurs sera en place */
+  type: 'indice' | 'calcul' | 'donnee' | 'modele';
+  confiance: 'faible' | 'moyenne' | 'bonne';
+  methode: string;
+  note: string;
+}
+
+export interface CapteursVirtuelsResponse {
+  statut: 'ok' | 'no_data';
+  capteurs: CapteurVirtuel[];
+  erreurs: Record<string, string>;
+  avertissement: string;
 }

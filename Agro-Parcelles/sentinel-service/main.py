@@ -335,7 +335,21 @@ def _extraire_sentinel1(ring: list[list[float]],
 # Images (vignettes PNG)
 # ---------------------------------------------------------------------------
 NDVI_PALETTE = ["8B0000", "D2691E", "F0E68C", "9ACD32", "228B22", "006400"]
-IMAGE_TAILLE_PX = 512
+IMAGE_TAILLE_PX = 640
+# Sous ce nombre de pixels Sentinel (10 m = 100 m²) dans la parcelle, on prévient l'utilisateur.
+SEUIL_PIXELS_FAIBLE = 200
+
+
+def _info_resolution(ring: list[list[float]]) -> dict[str, Any]:
+    """Nombre de pixels Sentinel (10 m) couvrant la parcelle + avertissement si trop peu."""
+    pixels = round(_superficie_ha(ring) * 100)  # 1 ha = 100 pixels de 10 m × 10 m
+    info: dict[str, Any] = {"pixels_10m": pixels}
+    if pixels < SEUIL_PIXELS_FAIBLE:
+        info["avertissement_resolution"] = (
+            f"Parcelle d'environ {pixels} pixels Sentinel (1 pixel = 10 m × 10 m) : les images sont "
+            "floues par nature et les indices (NDVI, radar) restent indicatifs, surtout près des bords."
+        )
+    return info
 
 
 def _png_data_uri(image, region) -> str:
@@ -362,21 +376,26 @@ def _generer_images(ring: list[list[float]],
 
     debut, fin = _periode(date_debut, date_fin)
     geom = ee.Geometry.Polygon([ring + [ring[0]]], proj="EPSG:4326", geodesic=False)
-    # Marge autour de la parcelle pour voir le contexte (≈ 25 % de la plus grande dimension).
+    # Cadrage CARRÉ centré sur la parcelle : côté = 1,8 × sa plus grande dimension, au moins 250 m,
+    # pour garder du contexte même sur une petite parcelle (l'image n'est plus recadrée par la page).
     minx, miny, maxx, maxy = _bbox(ring)
-    marge_m = max(max(maxx - minx, maxy - miny) * 111_320 * 0.25, 30)
-    region = geom.buffer(marge_m).bounds()
+    lat0, lon0 = (miny + maxy) / 2, (minx + maxx) / 2
+    cos_lat = math.cos(math.radians(lat0))
+    dim_m = max((maxx - minx) * 111_320 * cos_lat, (maxy - miny) * 111_320)
+    cote_m = max(dim_m * 1.8, 250.0)
+    d_lat = cote_m / 2 / 111_320
+    d_lon = d_lat / max(cos_lat, 0.01)
+    region = ee.Geometry.Rectangle([lon0 - d_lon, lat0 - d_lat, lon0 + d_lon, lat0 + d_lat])
 
-    contour = (
-        ee.Image().byte()
-        .paint(ee.FeatureCollection([ee.Feature(geom)]), 1, 2)
-        .selfMask()
-        .visualize(palette=["FFFF00"])
-    )
+    fc = ee.FeatureCollection([ee.Feature(geom)])
+    halo = ee.Image().byte().paint(fc, 1, 5).selfMask().visualize(palette=["000000"], opacity=0.55)
+    trait = ee.Image().byte().paint(fc, 1, 2).selfMask().visualize(palette=["FFFF00"])
+    contour = halo.blend(trait)
 
     resultat: dict[str, Any] = {
         "periode": {"debut": debut, "fin": fin},
         "sentinel2_rgb": None, "ndvi": None, "sentinel1": None, "erreurs": {},
+        "cote_m": round(cote_m), **_info_resolution(ring),
     }
 
     # --- Sentinel-2 (RGB + NDVI) ---
@@ -390,6 +409,7 @@ def _generer_images(ring: list[list[float]],
             raise RuntimeError("Aucune image Sentinel-2 exploitable sur la période.")
 
         def _masque(img):
+            img = img.resample("bilinear")
             nuage = img.select("SCL").remap(SCL_NUAGES, [1] * len(SCL_NUAGES), 0).eq(0)
             ndvi = img.normalizedDifference(["B8", "B4"]).rename("NDVI")
             return img.select(["B4", "B3", "B2"]).addBands(ndvi).updateMask(nuage)
@@ -414,7 +434,7 @@ def _generer_images(ring: list[list[float]],
         )
         if s1.size().getInfo() == 0:
             raise RuntimeError("Aucune image Sentinel-1 sur la période.")
-        med = s1.median()
+        med = s1.map(lambda i: i.resample("bilinear")).median()
         fausse_couleur = ee.Image.cat([
             med.select("VV"), med.select("VH"), med.select("VV").subtract(med.select("VH")),
         ]).visualize(min=[-20, -25, 0], max=[0, -5, 15])
@@ -463,6 +483,7 @@ def extract(req: ExtractionRequest) -> dict[str, Any]:
         "centroide": _centroide(ring),
         **indices,
         "sentinel1": radar,
+        **_info_resolution(ring),
     }
 
 
@@ -483,3 +504,27 @@ def images(req: ExtractionRequest) -> dict[str, Any]:
         return _generer_images(ring, req.date_debut, req.date_fin)
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Erreur Earth Engine : {e}")
+
+
+@app.post("/virtual-sensors")
+def virtual_sensors(req: ExtractionRequest) -> dict[str, Any]:
+    """Capteurs virtuels (phase 0) : humidité du sol radar, ET0 FAO-56, bilan hydrique."""
+    try:
+        ring = _sommets_distincts(_extraire_anneau(req.geojson))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        _init_gee()
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+    try:
+        import virtual_sensors as vs
+
+        # NDVI récent : sert à estimer la confiance du radar (canopée dense = sol peu visible).
+        fin = date.today()
+        s2 = _extraire_sentinel2(ring, (fin - timedelta(days=60)).isoformat(), fin.isoformat())
+        return vs.calculer(ring, (s2.get("ndvi") or {}).get("moyen"))
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Erreur capteurs virtuels : {e}")
