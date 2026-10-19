@@ -1,5 +1,6 @@
 package com.agrotech.agroparcelles.controller;
 
+import com.agrotech.agroparcelles.dto.reponse.HistoriqueParcelleResponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
@@ -142,6 +143,18 @@ public class ParcelleController {
     @GetMapping("/{id}/sol")
     public ResponseEntity<SolDataResponse> getSolData(@PathVariable Long id) {
         return ResponseEntity.ok(parcelleService.getSolData(id));
+    }
+
+    @Operation(summary = "Historique des mesures enregistrées",
+               description = "Météo journalière et indices Sentinel stockés en base. Par défaut : 90 derniers jours.")
+    @GetMapping("/{id}/historique")
+    public ResponseEntity<HistoriqueParcelleResponse> getHistorique(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debut,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
+        LocalDate f = fin != null ? fin : LocalDate.now();
+        LocalDate d = debut != null ? debut : f.minusDays(90);
+        return ResponseEntity.ok(parcelleService.getHistorique(id, d, f));
     }
 
     @Operation(

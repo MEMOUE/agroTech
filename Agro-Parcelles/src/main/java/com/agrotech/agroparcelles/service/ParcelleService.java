@@ -2,6 +2,7 @@ package com.agrotech.agroparcelles.service;
 
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
+import com.agrotech.agroparcelles.dto.reponse.HistoriqueParcelleResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.request.ExtractionRequest;
@@ -30,6 +31,7 @@ public class ParcelleService {
     private final SatelliteService satelliteService;
     private final SoilService soilService;
     private final SentinelExtractionService sentinelExtractionService;
+    private final CollecteService collecteService;
 
     public ParcelleDtoReponse findById(Long id) {
         return parcelleMapper.toDto(getParcelle(id));
@@ -44,7 +46,9 @@ public class ParcelleService {
     public ParcelleDtoReponse save(ParcelleDtoRequest request) {
         Parcelle parcelle = parcelleMapper.toEntity(request);
         enrichirGeometrie(parcelle);
-        return parcelleMapper.toDto(parcelleRepository.save(parcelle));
+        Parcelle sauvee = parcelleRepository.save(parcelle);
+        collecteService.collecterAsync(sauvee.getId());   // historique des 90 derniers jours
+        return parcelleMapper.toDto(sauvee);
     }
 
     public ParcelleDtoReponse update(Long id, ParcelleDtoRequest request) {
@@ -67,6 +71,7 @@ public class ParcelleService {
             throw new ResourceNotFoundException("Parcelle introuvable : " + id);
         }
         parcelleRepository.deleteById(id);
+        collecteService.supprimerMesures(id);
     }
 
     public ParcelleMapResponse getMapData(Long id) {
@@ -97,6 +102,11 @@ public class ParcelleService {
         Map<String, Object> feature = Map.of("type", "Feature", "geometry", geometry);
 
         return sentinelExtractionService.capteursVirtuels(ExtractionRequest.builder().geoJson(feature).build());
+    }
+
+    public HistoriqueParcelleResponse getHistorique(Long id, LocalDate debut, LocalDate fin) {
+        getParcelle(id);
+        return collecteService.historique(id, debut, fin);
     }
 
     private Parcelle getParcelle(Long id) {
