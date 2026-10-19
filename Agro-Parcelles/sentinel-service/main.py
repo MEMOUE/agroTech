@@ -30,8 +30,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Le backend Spring est le seul appelant attendu, mais on autorise aussi
-# un appel direct depuis le front en développement.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:8082", "http://localhost:4200", "http://localhost:3000"],
@@ -42,20 +40,14 @@ app.add_middleware(
 EARTH_RADIUS_M = 6_371_000.0
 M2_TO_HA = 1.0 / 10_000.0
 
-# Collection Sentinel-2 niveau 2A (réflectance de surface), version harmonisée.
 S2_COLLECTION = "COPERNICUS/S2_SR_HARMONIZED"
-# Sentinel-1 GRD (radar bande C), déjà calibré en dB dans GEE.
 S1_COLLECTION = "COPERNICUS/S1_GRD"
-# Classes SCL considérées comme nuage / ombre / cirrus à masquer.
-SCL_NUAGES = [3, 8, 9, 10]  # 3=ombre, 8=nuage moyen, 9=nuage haute proba, 10=cirrus
-# Période par défaut si aucune date fournie (Sentinel-2 revisite ~5 j ; 90 j ≈ marge anti-nuages).
+SCL_NUAGES = [3, 8, 9, 10]
 PERIODE_DEFAUT_JOURS = 90
-# On ignore les scènes trop nuageuses globalement avant même le masquage par pixel.
 SEUIL_NUAGE_SCENE_PCT = 80
 
 
 class ExtractionRequest(BaseModel):
-    """Payload envoyé par Spring : un GeoJSON + une période optionnelle."""
     geojson: dict[str, Any] = Field(..., description="Feature / geometry / FeatureCollection GeoJSON")
     date_debut: Optional[str] = None
     date_fin: Optional[str] = None
@@ -184,8 +176,6 @@ def _extraire_sentinel2(ring: list[list[float]],
 
     debut, fin = _periode(date_debut, date_fin)
 
-    # GeoJSON est en [lon, lat] ; ee.Geometry.Polygon attend une liste d'anneaux.
-    # geodesic=False : on traite les coordonnées comme planaires (lat/lon importées).
     anneau_ferme = ring + [ring[0]]
     geom = ee.Geometry.Polygon([anneau_ferme], proj="EPSG:4326", geodesic=False)
 
