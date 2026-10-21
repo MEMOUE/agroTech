@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   ExtractionImages, ExtractionResult, GpsPoint, Parcelle, ParcelleDtoRequest,
-  CapteursVirtuelsResponse, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse,
+  CapteursVirtuelsResponse, ParcelleMapResponse, RecommandationsResponse, SatelliteDataResponse, SolDataResponse,
 } from '../models/parcelle.models';
 
 const API = 'http://localhost:8082/api/parcelles';
@@ -58,6 +58,11 @@ export class ParcelleService {
   /** Composition du sol (pH, azote, matière organique, CEC, texture) — SoilGrids. */
   getSolData(id: number): Observable<SolDataResponse> {
     return this.http.get<SolDataResponse>(`${API}/${id}/sol`);
+  }
+
+  /** Cultures adaptées au climat et au sol de la parcelle, avec rendement de référence (calcul par règles). */
+  getRecommandations(id: number, limite = 10): Observable<RecommandationsResponse> {
+    return this.http.get<RecommandationsResponse>(`${API}/${id}/recommandations`, { params: { limite } });
   }
 
   getSatelliteData(id: number, debut?: string, fin?: string): Observable<SatelliteDataResponse> {

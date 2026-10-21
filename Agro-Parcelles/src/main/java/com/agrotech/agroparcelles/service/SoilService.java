@@ -4,7 +4,10 @@ import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse.Indicateur;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse.Texture;
 import com.agrotech.agroparcelles.entity.Parcelle;
+import com.agrotech.agroparcelles.entity.SolMesure;
+import com.agrotech.agroparcelles.repository.SolMesureRepository;
 import com.agrotech.agroparcelles.exception.SatelliteDataException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -15,21 +18,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
  * Composition du sol via SoilGrids (ISRIC, https://soilgrids.org) : cartes mondiales
  * modélisées à 250 m, gratuites et sans clé API.
  * <p>
- * Le sol varie très peu dans le temps : les résultats sont mis en cache par position
- * (~100 m), ce qui évite l'API lente (≈10 s) et sa limite de débit.
+ * Le sol varie très peu dans le temps : chaque position (~100 m) est enregistrée en base à la
+ * première récupération réussie, ce qui évite l'API lente (≈10 s), instable et limitée en débit.
+ * L'API est rappelée quelques fois en cas d'erreur temporaire (504, délai dépassé).
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SoilService {
+
+    private final SolMesureRepository repository;
 
     @Value("${satellite.soilgrids.base-url}")
     private String baseUrl;
@@ -39,7 +48,7 @@ public class SoilService {
     private static RestClient createRestClient() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(Duration.ofSeconds(8));
-        factory.setReadTimeout(Duration.ofSeconds(45));
+        factory.setReadTimeout(Duration.ofSeconds(25));
         return RestClient.builder().requestFactory(factory).build();
     }
 
@@ -91,15 +100,66 @@ public class SoilService {
 
     // ------------------------------------------------------------------ API SoilGrids
 
+    private static final int TENTATIVES = 3;
+    private static final long DELAI_MS = 2_000;
+
+    private final Map<String, Object> verrous = new ConcurrentHashMap<>();
+
     private Map<String, Double> valeurs(double lat, double lon) {
         String cle = String.format(Locale.ROOT, "%.3f,%.3f", lat, lon);
         Map<String, Double> enCache = cache.get(cle);
         if (enCache != null) return enCache;
 
-        Map<String, Double> resultat = appelerSoilGrids(lat, lon);
-        if (cache.size() >= CACHE_MAX) cache.clear();
-        cache.put(cle, resultat);
-        return resultat;
+        // Un seul appel à la fois par position (la page demande le sol et les recommandations en même temps).
+        synchronized (verrous.computeIfAbsent(cle, k -> new Object())) {
+            enCache = cache.get(cle);
+            if (enCache != null) return enCache;
+
+            Map<String, Double> resultat = repository.findByClePosition(cle)
+                    .map(SoilService::versValeurs)
+                    .orElse(null);
+            if (resultat == null) {
+                resultat = appelerSoilGrids(lat, lon);
+                repository.save(versEntite(cle, resultat));
+            }
+            if (cache.size() >= CACHE_MAX) cache.clear();
+            cache.put(cle, resultat);
+            return resultat;
+        }
+    }
+
+    private static Map<String, Double> versValeurs(SolMesure m) {
+        return Map.of("phh2o", m.getPh(), "nitrogen", m.getAzote(), "soc", m.getCarbone(), "cec", m.getCec(),
+                "clay", m.getArgile(), "sand", m.getSable(), "silt", m.getLimon());
+    }
+
+    private static SolMesure versEntite(String cle, Map<String, Double> v) {
+        return SolMesure.builder().clePosition(cle)
+                .ph(v.get("phh2o")).azote(v.get("nitrogen")).carbone(v.get("soc")).cec(v.get("cec"))
+                .argile(v.get("clay")).sable(v.get("sand")).limon(v.get("silt"))
+                .collecteLe(LocalDateTime.now()).build();
+    }
+
+    /** Rejoue l'opération si l'API répond une erreur temporaire (504, délai dépassé...). */
+    static <T> T avecReprises(Supplier<T> operation, int tentatives, long delaiMs) {
+        RestClientException derniere = null;
+        for (int essai = 1; essai <= tentatives; essai++) {
+            try {
+                return operation.get();
+            } catch (RestClientException e) {
+                derniere = e;
+                log.warn("SoilGrids : tentative {}/{} échouée ({})", essai, tentatives, e.getMessage());
+                if (essai < tentatives && delaiMs > 0) {
+                    try {
+                        Thread.sleep(delaiMs * essai);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+            }
+        }
+        throw derniere;
     }
 
     @SuppressWarnings("unchecked")
@@ -114,10 +174,12 @@ public class SoilService {
 
         Map<String, Object> raw;
         try {
-            raw = restClient.get().uri(uri).retrieve().body(Map.class);
+            raw = avecReprises(() -> restClient.get().uri(uri).retrieve().body(Map.class), TENTATIVES, DELAI_MS);
         } catch (RestClientException e) {
-            log.error("Erreur SoilGrids: {}", e.getMessage());
-            throw new SatelliteDataException("Impossible de récupérer la composition du sol : " + e.getMessage());
+            log.error("Erreur SoilGrids après {} tentatives: {}", TENTATIVES, e.getMessage());
+            throw new SatelliteDataException(
+                    "Le service SoilGrids (ISRIC) est momentanément indisponible. "
+                  + "Le sol sera récupéré automatiquement dès qu'il répondra ; réessayez dans quelques minutes.");
         }
         if (raw == null || !(raw.get("properties") instanceof Map<?, ?> props)
                 || !(props.get("layers") instanceof List<?> layers)) {

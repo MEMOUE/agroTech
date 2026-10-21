@@ -1,0 +1,5364 @@
+[
+ {
+  "nom": "Olivier",
+  "nomScientifique": "Olea europaea",
+  "type": "arbre fruitier",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 5.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 34.0,
+  "tempMax": 40.0,
+  "pluieMin": 200.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 700.0,
+  "pluieMax": 1200.0,
+  "phMin": 5.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Olives",
+   "correspondance": "exacte",
+   "ymax": 10.195,
+   "nObservations": 55,
+   "nPays": 5,
+   "p25": 0.704,
+   "mediane": 1.318,
+   "p75": 1.962
+  }
+ },
+ {
+  "nom": "Anacardier (noix de cajou)",
+  "nomScientifique": "Anacardium occidentale",
+  "type": "culture de rente",
+  "cycleJoursMin": 190.0,
+  "cycleJoursMax": 260.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 35.0,
+  "tempMax": 46.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 4000.0,
+  "phMin": 3.8,
+  "phOptMin": 4.5,
+  "phOptMax": 6.5,
+  "phMax": 8.7,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Cashew nuts, in shell",
+   "correspondance": "exacte",
+   "ymax": 2.131,
+   "nObservations": 189,
+   "nPays": 18,
+   "p25": 0.463,
+   "mediane": 0.739,
+   "p75": 1.477
+  }
+ },
+ {
+  "nom": "Cacao",
+  "nomScientifique": "Theobroma cacao",
+  "type": "culture de rente",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 900.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 7600.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Cocoa beans",
+   "correspondance": "exacte",
+   "ymax": 0.893,
+   "nObservations": 209,
+   "nPays": 19,
+   "p25": 0.162,
+   "mediane": 0.377,
+   "p75": 0.52
+  }
+ },
+ {
+  "nom": "Café arabica",
+  "nomScientifique": "Coffea arabica",
+  "type": "culture de rente",
+  "cycleJoursMin": 210.0,
+  "cycleJoursMax": 330.0,
+  "tempMin": 10.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 28.0,
+  "tempMax": 34.0,
+  "pluieMin": 750.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 2300.0,
+  "pluieMax": 4200.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 8.4,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Coffee, green",
+   "correspondance": "approximative",
+   "ymax": 1.6,
+   "nObservations": 319,
+   "nPays": 29,
+   "p25": 0.277,
+   "mediane": 0.407,
+   "p75": 0.94
+  }
+ },
+ {
+  "nom": "Café liberica",
+  "nomScientifique": "Coffea liberica",
+  "type": "culture de rente",
+  "cycleJoursMin": 240.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 18.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 30.0,
+  "tempMax": 36.0,
+  "pluieMin": 1100.0,
+  "pluieOptMin": 1600.0,
+  "pluieOptMax": 2400.0,
+  "pluieMax": 3500.0,
+  "phMin": 4.3,
+  "phOptMin": 5.3,
+  "phOptMax": 6.2,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Coffee, green",
+   "correspondance": "approximative",
+   "ymax": 1.6,
+   "nObservations": 319,
+   "nPays": 29,
+   "p25": 0.277,
+   "mediane": 0.407,
+   "p75": 0.94
+  }
+ },
+ {
+  "nom": "Café robusta",
+  "nomScientifique": "Coffea canephora",
+  "type": "culture de rente",
+  "cycleJoursMin": 270.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 12.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 36.0,
+  "pluieMin": 900.0,
+  "pluieOptMin": 1700.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 6.3,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Coffee, green",
+   "correspondance": "approximative",
+   "ymax": 1.6,
+   "nObservations": 319,
+   "nPays": 29,
+   "p25": 0.277,
+   "mediane": 0.407,
+   "p75": 0.94
+  }
+ },
+ {
+  "nom": "Canne à sucre",
+  "nomScientifique": "Saccharum officinarum",
+  "type": "culture de rente",
+  "cycleJoursMin": 210.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 15.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 37.0,
+  "tempMax": 41.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 8.0,
+  "phMax": 9.0,
+  "textures": [],
+  "zonesClimatiques": [],
+  "rendement": {
+   "produitFao": "Sugar cane",
+   "correspondance": "exacte",
+   "ymax": 111.111,
+   "nObservations": 429,
+   "nPays": 39,
+   "p25": 35.319,
+   "mediane": 59.959,
+   "p75": 77.817
+  }
+ },
+ {
+  "nom": "Coton",
+  "nomScientifique": "Gossypium barbadense",
+  "type": "culture de rente",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 210.0,
+  "tempMin": 15.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 1250.0,
+  "pluieMax": 1500.0,
+  "phMin": 5.0,
+  "phOptMin": 5.2,
+  "phOptMax": 7.2,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Seed cotton, unginned",
+   "correspondance": "approximative",
+   "ymax": 2.742,
+   "nObservations": 396,
+   "nPays": 36,
+   "p25": 0.587,
+   "mediane": 0.961,
+   "p75": 1.508
+  }
+ },
+ {
+  "nom": "Coton",
+  "nomScientifique": "Gossypium hirsutum",
+  "type": "culture de rente",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 200.0,
+  "tempMin": 15.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 36.0,
+  "tempMax": 42.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1500.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 9.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Seed cotton, unginned",
+   "correspondance": "approximative",
+   "ymax": 2.742,
+   "nObservations": 396,
+   "nPays": 36,
+   "p25": 0.587,
+   "mediane": 0.961,
+   "p75": 1.508
+  }
+ },
+ {
+  "nom": "Hévéa (caoutchouc)",
+  "nomScientifique": "Hevea brasiliensis",
+  "type": "culture de rente",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 33.0,
+  "tempMax": 45.0,
+  "pluieMin": 1200.0,
+  "pluieOptMin": 2000.0,
+  "pluieOptMax": 4000.0,
+  "pluieMax": 6000.0,
+  "phMin": 3.5,
+  "phOptMin": 4.5,
+  "phOptMax": 6.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Natural rubber in primary forms",
+   "correspondance": "exacte",
+   "ymax": 1.644,
+   "nObservations": 115,
+   "nPays": 11,
+   "p25": 0.803,
+   "mediane": 0.91,
+   "p75": 1.271
+  }
+ },
+ {
+  "nom": "Kola",
+  "nomScientifique": "Cola acuminata",
+  "type": "culture de rente",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 18.0,
+  "tempOptMin": 23.0,
+  "tempOptMax": 28.0,
+  "tempMax": 32.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 2000.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 4300.0,
+  "phMin": 4.3,
+  "phOptMin": 5.0,
+  "phOptMax": 6.0,
+  "phMax": 6.8,
+  "textures": [
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Kola nuts",
+   "correspondance": "approximative",
+   "ymax": 0.8,
+   "nObservations": 66,
+   "nPays": 6,
+   "p25": 0.284,
+   "mediane": 0.37,
+   "p75": 0.69
+  }
+ },
+ {
+  "nom": "Kola",
+  "nomScientifique": "Cola nitida",
+  "type": "culture de rente",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 1200.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 2500.0,
+  "pluieMax": 3500.0,
+  "phMin": 4.3,
+  "phOptMin": 5.0,
+  "phOptMax": 6.0,
+  "phMax": 7.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Kola nuts",
+   "correspondance": "approximative",
+   "ymax": 0.8,
+   "nObservations": 66,
+   "nPays": 6,
+   "p25": 0.284,
+   "mediane": 0.37,
+   "p75": 0.69
+  }
+ },
+ {
+  "nom": "Palmier à huile",
+  "nomScientifique": "Elaeis guineensis",
+  "type": "culture de rente",
+  "cycleJoursMin": 300.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 38.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 8000.0,
+  "phMin": 3.2,
+  "phOptMin": 4.5,
+  "phOptMax": 6.0,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Oil palm fruit",
+   "correspondance": "exacte",
+   "ymax": 15.594,
+   "nObservations": 242,
+   "nPays": 22,
+   "p25": 7.785,
+   "mediane": 9.875,
+   "p75": 11.626
+  }
+ },
+ {
+  "nom": "Tabac",
+  "nomScientifique": "Nicotiana tabacum",
+  "type": "culture de rente",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 350.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 750.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Unmanufactured tobacco",
+   "correspondance": "exacte",
+   "ymax": 14.18,
+   "nObservations": 380,
+   "nPays": 35,
+   "p25": 0.585,
+   "mediane": 0.999,
+   "p75": 1.533
+  }
+ },
+ {
+  "nom": "Thé",
+  "nomScientifique": "Camellia sinensis",
+  "type": "culture de rente",
+  "cycleJoursMin": 240.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 8.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.0,
+  "phOptMin": 4.5,
+  "phOptMax": 5.5,
+  "phMax": 6.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Tea leaves",
+   "correspondance": "exacte",
+   "ymax": 14.981,
+   "nObservations": 187,
+   "nPays": 18,
+   "p25": 1.123,
+   "mediane": 6.489,
+   "p75": 10.45
+  }
+ },
+ {
+  "nom": "Thé",
+  "nomScientifique": "Camellia sinensis var. assamica",
+  "type": "culture de rente",
+  "cycleJoursMin": 300.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 2000.0,
+  "pluieOptMin": 3000.0,
+  "pluieOptMax": 4000.0,
+  "pluieMax": 4500.0,
+  "phMin": 4.0,
+  "phOptMin": 4.5,
+  "phOptMax": 5.5,
+  "phMax": 6.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Tea leaves",
+   "correspondance": "exacte",
+   "ymax": 14.981,
+   "nObservations": 187,
+   "nPays": 18,
+   "p25": 1.123,
+   "mediane": 6.489,
+   "p75": 10.45
+  }
+ },
+ {
+  "nom": "Thé",
+  "nomScientifique": "Camellia sinensis var. sinensis",
+  "type": "culture de rente",
+  "cycleJoursMin": 240.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 8.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4500.0,
+  "phMin": 4.0,
+  "phOptMin": 4.5,
+  "phOptMax": 5.5,
+  "phMax": 6.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Tea leaves",
+   "correspondance": "exacte",
+   "ymax": 14.981,
+   "nObservations": 187,
+   "nPays": 18,
+   "p25": 1.123,
+   "mediane": 6.489,
+   "p75": 10.45
+  }
+ },
+ {
+  "nom": "Avoine",
+  "nomScientifique": "Avena sativa",
+  "type": "céréale",
+  "cycleJoursMin": 110.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 5.0,
+  "tempOptMin": 16.0,
+  "tempOptMax": 20.0,
+  "tempMax": 30.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 6.0,
+  "phMax": 7.5,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Oats",
+   "correspondance": "exacte",
+   "ymax": 2.524,
+   "nObservations": 99,
+   "nPays": 9,
+   "p25": 0.884,
+   "mediane": 1.113,
+   "p75": 1.675
+  }
+ },
+ {
+  "nom": "Blé dur",
+  "nomScientifique": "Triticum durum",
+  "type": "céréale",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 6.0,
+  "tempOptMin": 17.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 700.0,
+  "pluieMax": 800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Wheat",
+   "correspondance": "exacte",
+   "ymax": 6.47,
+   "nObservations": 348,
+   "nPays": 32,
+   "p25": 1.102,
+   "mediane": 1.667,
+   "p75": 2.642
+  }
+ },
+ {
+  "nom": "Blé tendre",
+  "nomScientifique": "Triticum aestivum",
+  "type": "céréale",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 250.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 23.0,
+  "tempMax": 27.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 1600.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Wheat",
+   "correspondance": "exacte",
+   "ymax": 6.47,
+   "nObservations": 348,
+   "nPays": 32,
+   "p25": 1.102,
+   "mediane": 1.667,
+   "p75": 2.642
+  }
+ },
+ {
+  "nom": "Fonio blanc",
+  "nomScientifique": "Digitaria exilis",
+  "type": "céréale",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 130.0,
+  "tempMin": 18.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 27.0,
+  "tempMax": 31.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 7.1,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B"
+  ],
+  "rendement": {
+   "produitFao": "Fonio",
+   "correspondance": "exacte",
+   "ymax": 1.322,
+   "nObservations": 118,
+   "nPays": 11,
+   "p25": 0.621,
+   "mediane": 0.721,
+   "p75": 0.82
+  }
+ },
+ {
+  "nom": "Maïs",
+  "nomScientifique": "Zea mays",
+  "type": "céréale",
+  "cycleJoursMin": 65.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 33.0,
+  "tempMax": 47.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [],
+  "zonesClimatiques": [],
+  "rendement": {
+   "produitFao": "Maize (corn)",
+   "correspondance": "exacte",
+   "ymax": 4.998,
+   "nObservations": 550,
+   "nPays": 50,
+   "p25": 0.964,
+   "mediane": 1.521,
+   "p75": 2.029
+  }
+ },
+ {
+  "nom": "Maïs",
+  "nomScientifique": "Zea mays ssp. mays",
+  "type": "céréale",
+  "cycleJoursMin": 65.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 33.0,
+  "tempMax": 47.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Maize (corn)",
+   "correspondance": "exacte",
+   "ymax": 4.998,
+   "nObservations": 550,
+   "nPays": 50,
+   "p25": 0.964,
+   "mediane": 1.521,
+   "p75": 2.029
+  }
+ },
+ {
+  "nom": "Maïs",
+  "nomScientifique": "Zea mays ssp. saccharata",
+  "type": "céréale",
+  "cycleJoursMin": 65.0,
+  "cycleJoursMax": 100.0,
+  "tempMin": 12.0,
+  "tempOptMin": 16.0,
+  "tempOptMax": 24.0,
+  "tempMax": 38.0,
+  "pluieMin": 600.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Maize (corn)",
+   "correspondance": "exacte",
+   "ymax": 4.998,
+   "nObservations": 550,
+   "nPays": 50,
+   "p25": 0.964,
+   "mediane": 1.521,
+   "p75": 2.029
+  }
+ },
+ {
+  "nom": "Mil à chandelle",
+  "nomScientifique": "Pennisetum glaucum",
+  "type": "céréale",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 12.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 200.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 1700.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Millet",
+   "correspondance": "approximative",
+   "ymax": 1.63,
+   "nObservations": 418,
+   "nPays": 38,
+   "p25": 0.508,
+   "mediane": 0.826,
+   "p75": 1.096
+  }
+ },
+ {
+  "nom": "Orge",
+  "nomScientifique": "Hordeum vulgare",
+  "type": "céréale",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 2.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 20.0,
+  "tempMax": 40.0,
+  "pluieMin": 200.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2000.0,
+  "phMin": 6.0,
+  "phOptMin": 6.5,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Barley",
+   "correspondance": "exacte",
+   "ymax": 6.6,
+   "nObservations": 165,
+   "nPays": 15,
+   "p25": 0.842,
+   "mediane": 1.896,
+   "p75": 3.542
+  }
+ },
+ {
+  "nom": "Riz",
+  "nomScientifique": "Oryza sativa",
+  "type": "céréale",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 36.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 9.0,
+  "textures": [
+   "wide"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Rice",
+   "correspondance": "exacte",
+   "ymax": 6.0,
+   "nObservations": 467,
+   "nPays": 43,
+   "p25": 1.314,
+   "mediane": 2.04,
+   "p75": 3.239
+  }
+ },
+ {
+  "nom": "Riz",
+  "nomScientifique": "Oryza sativa ssp. indica",
+  "type": "céréale",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 200.0,
+  "tempMin": 16.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 35.0,
+  "tempMax": 38.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4000.0,
+  "phMin": 3.5,
+  "phOptMin": 5.0,
+  "phOptMax": 8.0,
+  "phMax": 9.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Rice",
+   "correspondance": "exacte",
+   "ymax": 6.0,
+   "nObservations": 467,
+   "nPays": 43,
+   "p25": 1.314,
+   "mediane": 2.04,
+   "p75": 3.239
+  }
+ },
+ {
+  "nom": "Riz",
+  "nomScientifique": "Oryza sativa ssp. javanica",
+  "type": "céréale",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 16.0,
+  "tempOptMin": 23.0,
+  "tempOptMax": 35.0,
+  "tempMax": 38.0,
+  "pluieMin": 800.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 9.0,
+  "textures": [
+   "heavy"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Rice",
+   "correspondance": "exacte",
+   "ymax": 6.0,
+   "nObservations": 467,
+   "nPays": 43,
+   "p25": 1.314,
+   "mediane": 2.04,
+   "p75": 3.239
+  }
+ },
+ {
+  "nom": "Seigle",
+  "nomScientifique": "Secale cereale",
+  "type": "céréale",
+  "cycleJoursMin": 110.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 3.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 20.0,
+  "tempMax": 31.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.0,
+  "phMax": 8.2,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Rye",
+   "correspondance": "exacte",
+   "ymax": 2.0,
+   "nObservations": 33,
+   "nPays": 3,
+   "p25": 0.652,
+   "mediane": 1.097,
+   "p75": 1.998
+  }
+ },
+ {
+  "nom": "Sorgho",
+  "nomScientifique": "Sorghum bicolor",
+  "type": "céréale",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 8.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 600.0,
+  "pluieMax": 700.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Sorghum",
+   "correspondance": "exacte",
+   "ymax": 3.346,
+   "nObservations": 473,
+   "nPays": 43,
+   "p25": 0.563,
+   "mediane": 0.88,
+   "p75": 1.085
+  }
+ },
+ {
+  "nom": "Sorgho",
+  "nomScientifique": "Sorghum bicolor var. sweet",
+  "type": "céréale",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 8.0,
+  "tempOptMin": 27.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 3000.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Sorghum",
+   "correspondance": "exacte",
+   "ymax": 3.346,
+   "nObservations": 473,
+   "nPays": 43,
+   "p25": 0.563,
+   "mediane": 0.88,
+   "p75": 1.085
+  }
+ },
+ {
+  "nom": "Teff",
+  "nomScientifique": "Eragrostis tef",
+  "type": "céréale",
+  "cycleJoursMin": 65.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 2.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 28.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 2500.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "ymax": 1.811
+  }
+ },
+ {
+  "nom": "Éleusine (mil des oiseaux)",
+  "nomScientifique": "Eleusine coracana ssp. coracana",
+  "type": "céréale",
+  "cycleJoursMin": 75.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 8.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1100.0,
+  "pluieMax": 4300.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.2,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Millet",
+   "correspondance": "approximative",
+   "ymax": 1.63,
+   "nObservations": 418,
+   "nPays": 38,
+   "p25": 0.508,
+   "mediane": 0.826,
+   "p75": 1.096
+  }
+ },
+ {
+  "nom": "Kénaf",
+  "nomScientifique": "Hibiscus cannabinus",
+  "type": "fibre",
+  "cycleJoursMin": 100.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 10.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 28.0,
+  "tempMax": 35.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Kenaf, and other textile bast fibres, raw or retted",
+   "correspondance": "approximative",
+   "ymax": 1.39,
+   "nObservations": 99,
+   "nPays": 9,
+   "p25": 0.383,
+   "mediane": 0.569,
+   "p75": 0.711
+  }
+ },
+ {
+  "nom": "Sisal",
+  "nomScientifique": "Agave sisalana",
+  "type": "fibre",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 10.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 27.0,
+  "tempMax": 45.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1250.0,
+  "pluieMax": 1800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Sisal, raw",
+   "correspondance": "exacte",
+   "ymax": 1.667,
+   "nObservations": 132,
+   "nPays": 12,
+   "p25": 0.29,
+   "mediane": 0.635,
+   "p75": 0.942
+  }
+ },
+ {
+  "nom": "Abricotier",
+  "nomScientifique": "Prunus armeniaca",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 7.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 800.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 1470.0,
+  "phMin": 5.0,
+  "phOptMin": 6.5,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Apricots",
+   "correspondance": "exacte",
+   "ymax": 15.469,
+   "nObservations": 110,
+   "nPays": 10,
+   "p25": 4.967,
+   "mediane": 5.696,
+   "p75": 8.185
+  }
+ },
+ {
+  "nom": "Ananas",
+  "nomScientifique": "Ananas comosus",
+  "type": "fruit",
+  "cycleJoursMin": 330.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 30.0,
+  "tempMax": 36.0,
+  "pluieMin": 550.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 2500.0,
+  "pluieMax": 3500.0,
+  "phMin": 3.5,
+  "phOptMin": 4.5,
+  "phOptMax": 8.0,
+  "phMax": 9.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Pineapples",
+   "correspondance": "exacte",
+   "ymax": 65.0,
+   "nObservations": 330,
+   "nPays": 30,
+   "p25": 5.018,
+   "mediane": 8.479,
+   "p75": 24.505
+  }
+ },
+ {
+  "nom": "Avocatier",
+  "nomScientifique": "Persea americana",
+  "type": "fruit",
+  "cycleJoursMin": null,
+  "cycleJoursMax": null,
+  "tempMin": 10.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 40.0,
+  "tempMax": 45.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 2500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 5.8,
+  "phMax": 7.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Avocados",
+   "correspondance": "exacte",
+   "ymax": 29.935,
+   "nObservations": 204,
+   "nPays": 20,
+   "p25": 5.241,
+   "mediane": 7.237,
+   "p75": 11.548
+  }
+ },
+ {
+  "nom": "Avocatier",
+  "nomScientifique": "Persea americana ssp. guatemalan",
+  "type": "fruit",
+  "cycleJoursMin": 300.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 24.0,
+  "tempMax": 30.0,
+  "pluieMin": 660.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.3,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Avocados",
+   "correspondance": "exacte",
+   "ymax": 29.935,
+   "nObservations": 204,
+   "nPays": 20,
+   "p25": 5.241,
+   "mediane": 7.237,
+   "p75": 11.548
+  }
+ },
+ {
+  "nom": "Avocatier",
+  "nomScientifique": "Persea americana ssp. mexican",
+  "type": "fruit",
+  "cycleJoursMin": 270.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 22.0,
+  "tempMax": 28.0,
+  "pluieMin": 660.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.3,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.3,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Avocados",
+   "correspondance": "exacte",
+   "ymax": 29.935,
+   "nObservations": 204,
+   "nPays": 20,
+   "p25": 5.241,
+   "mediane": 7.237,
+   "p75": 11.548
+  }
+ },
+ {
+  "nom": "Avocatier",
+  "nomScientifique": "Persea americana ssp. west indian",
+  "type": "fruit",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 26.0,
+  "tempMax": 34.0,
+  "pluieMin": 660.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Avocados",
+   "correspondance": "exacte",
+   "ymax": 29.935,
+   "nObservations": 204,
+   "nPays": 20,
+   "p25": 5.241,
+   "mediane": 7.237,
+   "p75": 11.548
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa acuminata",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 23.0,
+  "tempOptMax": 33.0,
+  "tempMax": 42.0,
+  "pluieMin": 650.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 3600.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.4,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa acuminata x balbisiana",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 15.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 2400.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa balbisiana",
+  "type": "fruit",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 16.0,
+  "tempOptMin": 23.0,
+  "tempOptMax": 28.0,
+  "tempMax": 38.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1300.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa halabanensis",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 15.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa salaccensis",
+  "type": "fruit",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 15.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Banane / plantain",
+  "nomScientifique": "Musa sp.",
+  "type": "fruit",
+  "cycleJoursMin": null,
+  "cycleJoursMax": null,
+  "tempMin": 13.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 2000.0,
+  "pluieOptMin": 2400.0,
+  "pluieOptMax": 2700.0,
+  "pluieMax": 3500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Bananas",
+   "correspondance": "approximative",
+   "ymax": 44.44,
+   "nObservations": 440,
+   "nPays": 40,
+   "p25": 6.818,
+   "mediane": 13.005,
+   "p75": 24.654
+  }
+ },
+ {
+  "nom": "Caroubier",
+  "nomScientifique": "Ceratonia siliqua",
+  "type": "fruit",
+  "cycleJoursMin": 210.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 32.0,
+  "tempMax": 39.0,
+  "pluieMin": 200.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2000.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 9.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Locust beans (carobs)",
+   "correspondance": "exacte",
+   "ymax": 4.827,
+   "nObservations": 33,
+   "nPays": 3,
+   "p25": 2.04,
+   "mediane": 2.116,
+   "p75": 4.499
+  }
+ },
+ {
+  "nom": "Cerisier",
+  "nomScientifique": "Prunus avium",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 6.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 28.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 1500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 7.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cherries",
+   "correspondance": "approximative",
+   "ymax": 6.379,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 1.871,
+   "mediane": 3.222,
+   "p75": 4.482
+  }
+ },
+ {
+  "nom": "Citronnier",
+  "nomScientifique": "Citrus limon",
+  "type": "fruit",
+  "cycleJoursMin": 210.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 28.0,
+  "tempMax": 36.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 2300.0,
+  "pluieMax": 4000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.5,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Lemons and limes",
+   "correspondance": "approximative",
+   "ymax": 22.053,
+   "nObservations": 275,
+   "nPays": 25,
+   "p25": 5.573,
+   "mediane": 8.548,
+   "p75": 15.053
+  }
+ },
+ {
+  "nom": "Cognassier",
+  "nomScientifique": "Cydonia oblonga",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 7.0,
+  "tempOptMin": 10.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 1100.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.5,
+  "phMax": 7.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Quinces",
+   "correspondance": "exacte",
+   "ymax": 13.621,
+   "nObservations": 55,
+   "nPays": 5,
+   "p25": 7.209,
+   "mediane": 9.433,
+   "p75": 11.231
+  }
+ },
+ {
+  "nom": "Figuier",
+  "nomScientifique": "Ficus carica",
+  "type": "fruit",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 4.0,
+  "tempOptMin": 16.0,
+  "tempOptMax": 26.0,
+  "tempMax": 38.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2700.0,
+  "phMin": 4.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.6,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Figs",
+   "correspondance": "exacte",
+   "ymax": 6.96,
+   "nObservations": 77,
+   "nPays": 7,
+   "p25": 2.311,
+   "mediane": 2.897,
+   "p75": 3.572
+  }
+ },
+ {
+  "nom": "Fraisier",
+  "nomScientifique": "Fragaria chiloensis",
+  "type": "fruit",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 5.0,
+  "tempOptMin": 11.0,
+  "tempOptMax": 18.0,
+  "tempMax": 27.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 1700.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 7.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Strawberries",
+   "correspondance": "approximative",
+   "ymax": 45.309,
+   "nObservations": 74,
+   "nPays": 7,
+   "p25": 4.674,
+   "mediane": 12.205,
+   "p75": 37.017
+  }
+ },
+ {
+  "nom": "Fraisier",
+  "nomScientifique": "Fragaria vesca",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 5.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 20.0,
+  "tempMax": 28.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 6.0,
+  "phMax": 6.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Strawberries",
+   "correspondance": "approximative",
+   "ymax": 45.309,
+   "nObservations": 74,
+   "nPays": 7,
+   "p25": 4.674,
+   "mediane": 12.205,
+   "p75": 37.017
+  }
+ },
+ {
+  "nom": "Fraisier",
+  "nomScientifique": "Fragaria virginiana",
+  "type": "fruit",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 5.0,
+  "tempOptMin": 11.0,
+  "tempOptMax": 18.0,
+  "tempMax": 27.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1700.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Strawberries",
+   "correspondance": "approximative",
+   "ymax": 45.309,
+   "nObservations": 74,
+   "nPays": 7,
+   "p25": 4.674,
+   "mediane": 12.205,
+   "p75": 37.017
+  }
+ },
+ {
+  "nom": "Fraisier",
+  "nomScientifique": "Fragaria x ananassa",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 6.0,
+  "tempOptMin": 11.0,
+  "tempOptMax": 24.0,
+  "tempMax": 28.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 1700.0,
+  "phMin": 4.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.8,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Strawberries",
+   "correspondance": "approximative",
+   "ymax": 45.309,
+   "nObservations": 74,
+   "nPays": 7,
+   "p25": 4.674,
+   "mediane": 12.205,
+   "p75": 37.017
+  }
+ },
+ {
+  "nom": "Mandarinier",
+  "nomScientifique": "Citrus reticulata",
+  "type": "fruit",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 23.0,
+  "tempOptMax": 34.0,
+  "tempMax": 38.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 1800.0,
+  "pluieMax": 4000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.8,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Tangerines, mandarins, clementines",
+   "correspondance": "exacte",
+   "ymax": 26.792,
+   "nObservations": 187,
+   "nPays": 17,
+   "p25": 4.149,
+   "mediane": 8.675,
+   "p75": 14.889
+  }
+ },
+ {
+  "nom": "Manguier",
+  "nomScientifique": "Mangifera indica",
+  "type": "fruit",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 8.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 30.0,
+  "tempMax": 48.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2600.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Mangoes, guavas and mangosteens",
+   "correspondance": "approximative",
+   "ymax": 20.523,
+   "nObservations": 395,
+   "nPays": 36,
+   "p25": 4.744,
+   "mediane": 7.214,
+   "p75": 12.371
+  }
+ },
+ {
+  "nom": "Noyer",
+  "nomScientifique": "Juglans regia",
+  "type": "fruit",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 30.0,
+  "tempMax": 40.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1700.0,
+  "pluieMax": 2200.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Walnuts, in shell",
+   "correspondance": "exacte",
+   "ymax": 5.356,
+   "nObservations": 33,
+   "nPays": 3,
+   "p25": 1.493,
+   "mediane": 1.694,
+   "p75": 5.202
+  }
+ },
+ {
+  "nom": "Oranger",
+  "nomScientifique": "Citrus sinensis",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 13.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 38.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 2700.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 6.0,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Oranges",
+   "correspondance": "exacte",
+   "ymax": 35.406,
+   "nObservations": 384,
+   "nPays": 35,
+   "p25": 5.004,
+   "mediane": 9.415,
+   "p75": 15.432
+  }
+ },
+ {
+  "nom": "Palmier dattier",
+  "nomScientifique": "Phoenix dactylifera",
+  "type": "fruit",
+  "cycleJoursMin": 365.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 26.0,
+  "tempOptMax": 45.0,
+  "tempMax": 52.0,
+  "pluieMin": 100.0,
+  "pluieOptMin": 200.0,
+  "pluieOptMax": 300.0,
+  "pluieMax": 400.0,
+  "phMin": 6.0,
+  "phOptMin": 6.5,
+  "phOptMax": 8.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Dates",
+   "correspondance": "exacte",
+   "ymax": 28.063,
+   "nObservations": 187,
+   "nPays": 17,
+   "p25": 2.443,
+   "mediane": 3.18,
+   "p75": 5.427
+  }
+ },
+ {
+  "nom": "Pamplemoussier",
+  "nomScientifique": "Citrus paradisi",
+  "type": "fruit",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 13.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 32.0,
+  "tempMax": 42.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2300.0,
+  "pluieMax": 4000.0,
+  "phMin": 6.0,
+  "phOptMin": 6.5,
+  "phOptMax": 7.3,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Pomelos and grapefruits",
+   "correspondance": "approximative",
+   "ymax": 27.32,
+   "nObservations": 209,
+   "nPays": 19,
+   "p25": 7.867,
+   "mediane": 11.024,
+   "p75": 15.872
+  }
+ },
+ {
+  "nom": "Papayer",
+  "nomScientifique": "Carica papaya",
+  "type": "fruit",
+  "cycleJoursMin": 330.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 30.0,
+  "tempMax": 44.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2500.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Papayas",
+   "correspondance": "exacte",
+   "ymax": 27.016,
+   "nObservations": 178,
+   "nPays": 17,
+   "p25": 9.127,
+   "mediane": 12.017,
+   "p75": 16.926
+  }
+ },
+ {
+  "nom": "Pistachier",
+  "nomScientifique": "Pistacia vera",
+  "type": "fruit",
+  "cycleJoursMin": 150.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 12.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 700.0,
+  "pluieMax": 1100.0,
+  "phMin": 6.0,
+  "phOptMin": 7.0,
+  "phOptMax": 8.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pistachios, in shell",
+   "correspondance": "exacte",
+   "ymax": 2.854,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 0.315,
+   "mediane": 0.866,
+   "p75": 2.124
+  }
+ },
+ {
+  "nom": "Poirier",
+  "nomScientifique": "Pyrus communis",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 37.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 900.0,
+  "pluieMax": 2100.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.3,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pears",
+   "correspondance": "exacte",
+   "ymax": 31.187,
+   "nObservations": 121,
+   "nPays": 11,
+   "p25": 4.88,
+   "mediane": 7.458,
+   "p75": 11.041
+  }
+ },
+ {
+  "nom": "Pommier",
+  "nomScientifique": "Malus domestica",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 320.0,
+  "tempMin": 8.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 27.0,
+  "tempMax": 33.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 2500.0,
+  "pluieMax": 3200.0,
+  "phMin": 4.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Apples",
+   "correspondance": "approximative",
+   "ymax": 41.274,
+   "nObservations": 110,
+   "nPays": 10,
+   "p25": 4.585,
+   "mediane": 16.257,
+   "p75": 25.18
+  }
+ },
+ {
+  "nom": "Prunier",
+  "nomScientifique": "Prunus domestica",
+  "type": "fruit",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 210.0,
+  "tempMin": 6.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 33.0,
+  "tempMax": 36.0,
+  "pluieMin": 600.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.1,
+  "phMax": 7.4,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Plums and sloes",
+   "correspondance": "approximative",
+   "ymax": 13.779,
+   "nObservations": 140,
+   "nPays": 13,
+   "p25": 5.079,
+   "mediane": 5.834,
+   "p75": 8.092
+  }
+ },
+ {
+  "nom": "Pêcher",
+  "nomScientifique": "Prunus persica",
+  "type": "fruit",
+  "cycleJoursMin": 240.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 7.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 33.0,
+  "tempMax": 35.0,
+  "pluieMin": 750.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1100.0,
+  "pluieMax": 1600.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.3,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Peaches and nectarines",
+   "correspondance": "approximative",
+   "ymax": 18.926,
+   "nObservations": 132,
+   "nPays": 12,
+   "p25": 6.619,
+   "mediane": 9.081,
+   "p75": 15.55
+  }
+ },
+ {
+  "nom": "Vigne",
+  "nomScientifique": "Vitis vinifera",
+  "type": "fruit",
+  "cycleJoursMin": 160.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 10.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 30.0,
+  "tempMax": 38.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 850.0,
+  "pluieMax": 1200.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Grapes",
+   "correspondance": "exacte",
+   "ymax": 21.236,
+   "nObservations": 129,
+   "nPays": 12,
+   "p25": 4.5,
+   "mediane": 6.65,
+   "p75": 8.61
+  }
+ },
+ {
+  "nom": "Ail",
+  "nomScientifique": "Allium sativum",
+  "type": "légume",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 7.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 2700.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 6.6,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Green garlic",
+   "correspondance": "approximative",
+   "ymax": 22.486,
+   "nObservations": 191,
+   "nPays": 18,
+   "p25": 5.697,
+   "mediane": 8.21,
+   "p75": 13.056
+  }
+ },
+ {
+  "nom": "Artichaut",
+  "nomScientifique": "Cynara scolymus",
+  "type": "légume",
+  "cycleJoursMin": 210.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1500.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Artichokes",
+   "correspondance": "exacte",
+   "ymax": 23.16,
+   "nObservations": 66,
+   "nPays": 6,
+   "p25": 7.066,
+   "mediane": 13.555,
+   "p75": 19.108
+  }
+ },
+ {
+  "nom": "Aubergine",
+  "nomScientifique": "Solanum melongena",
+  "type": "légume",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 9.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 800.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Eggplants (aubergines)",
+   "correspondance": "exacte",
+   "ymax": 28.004,
+   "nObservations": 218,
+   "nPays": 21,
+   "p25": 7.7,
+   "mediane": 13.649,
+   "p75": 19.773
+  }
+ },
+ {
+  "nom": "Betterave / bette",
+  "nomScientifique": "Beta vulgaris",
+  "type": "légume",
+  "cycleJoursMin": 160.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 4.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 800.0,
+  "pluieMax": 1000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Sugar beet",
+   "correspondance": "approximative",
+   "ymax": 64.589,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 39.314,
+   "mediane": 51.954,
+   "p75": 59.583
+  }
+ },
+ {
+  "nom": "Betterave / bette",
+  "nomScientifique": "Beta vulgaris var. cicla",
+  "type": "légume",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 800.0,
+  "pluieMax": 1000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Sugar beet",
+   "correspondance": "approximative",
+   "ymax": 64.589,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 39.314,
+   "mediane": 51.954,
+   "p75": 59.583
+  }
+ },
+ {
+  "nom": "Betterave / bette",
+  "nomScientifique": "Beta vulgaris var. crassa",
+  "type": "légume",
+  "cycleJoursMin": 55.0,
+  "cycleJoursMax": 90.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2500.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 6.8,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Sugar beet",
+   "correspondance": "approximative",
+   "ymax": 64.589,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 39.314,
+   "mediane": 51.954,
+   "p75": 59.583
+  }
+ },
+ {
+  "nom": "Betterave / bette",
+  "nomScientifique": "Beta vulgaris var. flavescens",
+  "type": "légume",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 160.0,
+  "tempMin": 15.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 750.0,
+  "pluieMax": 1800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Sugar beet",
+   "correspondance": "approximative",
+   "ymax": 64.589,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 39.314,
+   "mediane": 51.954,
+   "p75": 59.583
+  }
+ },
+ {
+  "nom": "Betterave / bette",
+  "nomScientifique": "Beta vulgaris var. saccharifera",
+  "type": "légume",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 140.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 700.0,
+  "pluieMax": 1000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.8,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Sugar beet",
+   "correspondance": "approximative",
+   "ymax": 64.589,
+   "nObservations": 44,
+   "nPays": 4,
+   "p25": 39.314,
+   "mediane": 51.954,
+   "p75": 59.583
+  }
+ },
+ {
+  "nom": "Carotte",
+  "nomScientifique": "Daucus carota",
+  "type": "légume",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 3.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 24.0,
+  "tempMax": 30.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.2,
+  "phOptMin": 5.8,
+  "phOptMax": 6.8,
+  "phMax": 8.7,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Carrots and turnips",
+   "correspondance": "approximative",
+   "ymax": 32.069,
+   "nObservations": 285,
+   "nPays": 27,
+   "p25": 7.086,
+   "mediane": 15.985,
+   "p75": 25.248
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. acephala",
+  "type": "légume",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 85.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 22.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 450.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.4,
+  "phOptMax": 6.0,
+  "phMax": 8.3,
+  "textures": [
+   "heavy",
+   "medium",
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. botrytis",
+  "type": "légume",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 5.0,
+  "tempOptMin": 10.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1100.0,
+  "pluieMax": 1900.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. capitata",
+  "type": "légume",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 200.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 24.0,
+  "tempMax": 32.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2500.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. gemmifera",
+  "type": "légume",
+  "cycleJoursMin": 100.0,
+  "cycleJoursMax": 130.0,
+  "tempMin": 7.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 20.0,
+  "tempMax": 25.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.8,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. gongyloides",
+  "type": "légume",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 70.0,
+  "tempMin": 5.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 18.0,
+  "tempMax": 25.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 1700.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Chou",
+  "nomScientifique": "Brassica oleracea var. italica",
+  "type": "légume",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 3.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 24.0,
+  "tempMax": 35.0,
+  "pluieMin": 350.0,
+  "pluieOptMin": 900.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 6.8,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cabbages",
+   "correspondance": "approximative",
+   "ymax": 41.474,
+   "nObservations": 307,
+   "nPays": 29,
+   "p25": 13.234,
+   "mediane": 18.45,
+   "p75": 28.003
+  }
+ },
+ {
+  "nom": "Concombre",
+  "nomScientifique": "Cucumis sativus",
+  "type": "légume",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 6.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 4300.0,
+  "phMin": 4.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.7,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cucumbers and gherkins",
+   "correspondance": "exacte",
+   "ymax": 37.538,
+   "nObservations": 252,
+   "nPays": 24,
+   "p25": 8.192,
+   "mediane": 14.059,
+   "p75": 21.974
+  }
+ },
+ {
+  "nom": "Courges",
+  "nomScientifique": "Cucurbita ficifolia",
+  "type": "légume",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 6.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 21.0,
+  "tempMax": 35.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1700.0,
+  "phMin": 5.3,
+  "phOptMin": 6.4,
+  "phOptMax": 7.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Pumpkins, squash and gourds",
+   "correspondance": "approximative",
+   "ymax": 36.253,
+   "nObservations": 236,
+   "nPays": 23,
+   "p25": 8.767,
+   "mediane": 15.825,
+   "p75": 21.984
+  }
+ },
+ {
+  "nom": "Courges",
+  "nomScientifique": "Cucurbita maxima",
+  "type": "légume",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 140.0,
+  "tempMin": 9.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 38.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2700.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.5,
+  "textures": [
+   "heavy",
+   "medium",
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pumpkins, squash and gourds",
+   "correspondance": "approximative",
+   "ymax": 36.253,
+   "nObservations": 236,
+   "nPays": 23,
+   "p25": 8.767,
+   "mediane": 15.825,
+   "p75": 21.984
+  }
+ },
+ {
+  "nom": "Courges",
+  "nomScientifique": "Cucurbita mixta",
+  "type": "légume",
+  "cycleJoursMin": 170.0,
+  "cycleJoursMax": 190.0,
+  "tempMin": 10.0,
+  "tempOptMin": 16.0,
+  "tempOptMax": 28.0,
+  "tempMax": 38.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 2800.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 7.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pumpkins, squash and gourds",
+   "correspondance": "approximative",
+   "ymax": 36.253,
+   "nObservations": 236,
+   "nPays": 23,
+   "p25": 8.767,
+   "mediane": 15.825,
+   "p75": 21.984
+  }
+ },
+ {
+  "nom": "Courges",
+  "nomScientifique": "Cucurbita moschata",
+  "type": "légume",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 140.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1600.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pumpkins, squash and gourds",
+   "correspondance": "approximative",
+   "ymax": 36.253,
+   "nObservations": 236,
+   "nPays": 23,
+   "p25": 8.767,
+   "mediane": 15.825,
+   "p75": 21.984
+  }
+ },
+ {
+  "nom": "Courges",
+  "nomScientifique": "Cucurbita pepo",
+  "type": "légume",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 100.0,
+  "tempMin": 6.0,
+  "tempOptMin": 17.0,
+  "tempOptMax": 30.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Pumpkins, squash and gourds",
+   "correspondance": "approximative",
+   "ymax": 36.253,
+   "nObservations": 236,
+   "nPays": 23,
+   "p25": 8.767,
+   "mediane": 15.825,
+   "p75": 21.984
+  }
+ },
+ {
+  "nom": "Gombo",
+  "nomScientifique": "Abelmoschus esculentus",
+  "type": "légume",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 12.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 2500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 8.7,
+  "textures": [
+   "heavy",
+   "medium",
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Okra",
+   "correspondance": "exacte",
+   "ymax": 20.904,
+   "nObservations": 210,
+   "nPays": 21,
+   "p25": 2.53,
+   "mediane": 6.052,
+   "p75": 11.546
+  }
+ },
+ {
+  "nom": "Laitue",
+  "nomScientifique": "Lactuca sativa var. capitata",
+  "type": "légume",
+  "cycleJoursMin": 35.0,
+  "cycleJoursMax": 85.0,
+  "tempMin": 5.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 21.0,
+  "tempMax": 30.0,
+  "pluieMin": 900.0,
+  "pluieOptMin": 1100.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 4100.0,
+  "phMin": 4.2,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Lettuce and chicory",
+   "correspondance": "approximative",
+   "ymax": 39.559,
+   "nObservations": 184,
+   "nPays": 17,
+   "p25": 9.708,
+   "mediane": 16.375,
+   "p75": 21.65
+  }
+ },
+ {
+  "nom": "Melon",
+  "nomScientifique": "Cucumis melo",
+  "type": "légume",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 9.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 900.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 2500.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.7,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cantaloupes and other melons",
+   "correspondance": "exacte",
+   "ymax": 28.635,
+   "nObservations": 165,
+   "nPays": 15,
+   "p25": 9.789,
+   "mediane": 15.234,
+   "p75": 23.189
+  }
+ },
+ {
+  "nom": "Oignon",
+  "nomScientifique": "Allium cepa",
+  "type": "légume",
+  "cycleJoursMin": 85.0,
+  "cycleJoursMax": 175.0,
+  "tempMin": 4.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 350.0,
+  "pluieOptMax": 600.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Onions and shallots, dry (excluding dehydrated)",
+   "correspondance": "approximative",
+   "ymax": 35.169,
+   "nObservations": 371,
+   "nPays": 34,
+   "p25": 10.135,
+   "mediane": 18.084,
+   "p75": 24.968
+  }
+ },
+ {
+  "nom": "Oignon",
+  "nomScientifique": "Allium cepa var. aggregatum",
+  "type": "légume",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 100.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 450.0,
+  "pluieOptMax": 600.0,
+  "pluieMax": 1000.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Onions and shallots, dry (excluding dehydrated)",
+   "correspondance": "approximative",
+   "ymax": 35.169,
+   "nObservations": 371,
+   "nPays": 34,
+   "p25": 10.135,
+   "mediane": 18.084,
+   "p75": 24.968
+  }
+ },
+ {
+  "nom": "Oignon",
+  "nomScientifique": "Allium cepa var. cepa",
+  "type": "légume",
+  "cycleJoursMin": 85.0,
+  "cycleJoursMax": 175.0,
+  "tempMin": 4.0,
+  "tempOptMin": 12.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 350.0,
+  "pluieOptMax": 600.0,
+  "pluieMax": 2800.0,
+  "phMin": 4.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Onions and shallots, dry (excluding dehydrated)",
+   "correspondance": "approximative",
+   "ymax": 35.169,
+   "nObservations": 371,
+   "nPays": 34,
+   "p25": 10.135,
+   "mediane": 18.084,
+   "p75": 24.968
+  }
+ },
+ {
+  "nom": "Pastèque",
+  "nomScientifique": "Citrullus lanatus",
+  "type": "légume",
+  "cycleJoursMin": null,
+  "cycleJoursMax": null,
+  "tempMin": 15.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 700.0,
+  "pluieMax": 1800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Watermelons",
+   "correspondance": "exacte",
+   "ymax": 44.781,
+   "nObservations": 235,
+   "nPays": 22,
+   "p25": 12.226,
+   "mediane": 20.049,
+   "p75": 32.825
+  }
+ },
+ {
+  "nom": "Tomate",
+  "nomScientifique": "Lycopersicon esculentum",
+  "type": "légume",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 7.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 27.0,
+  "tempMax": 35.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 1800.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Tomatoes",
+   "correspondance": "exacte",
+   "ymax": 58.954,
+   "nObservations": 471,
+   "nPays": 43,
+   "p25": 7.877,
+   "mediane": 13.145,
+   "p75": 21.051
+  }
+ },
+ {
+  "nom": "Épinard",
+  "nomScientifique": "Spinacia oleracea",
+  "type": "légume",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 2.0,
+  "tempOptMin": 13.0,
+  "tempOptMax": 20.0,
+  "tempMax": 27.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 1700.0,
+  "phMin": 5.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.3,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Spinach",
+   "correspondance": "exacte",
+   "ymax": 19.694,
+   "nObservations": 54,
+   "nPays": 5,
+   "p25": 11.748,
+   "mediane": 13.063,
+   "p75": 16.391
+  }
+ },
+ {
+  "nom": "Arachide",
+  "nomScientifique": "Arachis hypogaea",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 10.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 32.0,
+  "tempMax": 45.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Groundnuts, excluding shelled",
+   "correspondance": "exacte",
+   "ymax": 2.625,
+   "nObservations": 519,
+   "nPays": 48,
+   "p25": 0.669,
+   "mediane": 0.887,
+   "p75": 1.252
+  }
+ },
+ {
+  "nom": "Dolique lablab",
+  "nomScientifique": "Lablab purpureus",
+  "type": "légumineuse",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 3.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 200.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "ymax": 2.307
+  }
+ },
+ {
+  "nom": "Fève",
+  "nomScientifique": "Vicia faba",
+  "type": "légumineuse",
+  "cycleJoursMin": 100.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 5.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 28.0,
+  "tempMax": 32.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 650.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2600.0,
+  "phMin": 4.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.6,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Broad beans and horse beans, dry",
+   "correspondance": "exacte",
+   "ymax": 3.574,
+   "nObservations": 110,
+   "nPays": 10,
+   "p25": 0.889,
+   "mediane": 1.381,
+   "p75": 2.016
+  }
+ },
+ {
+  "nom": "Haricot commun",
+  "nomScientifique": "Phaseolus vulgaris",
+  "type": "légumineuse",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 7.0,
+  "tempOptMin": 16.0,
+  "tempOptMax": 25.0,
+  "tempMax": 32.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4300.0,
+  "phMin": 4.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 9.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Beans, dry",
+   "correspondance": "approximative",
+   "ymax": 3.14,
+   "nObservations": 385,
+   "nPays": 35,
+   "p25": 0.525,
+   "mediane": 0.809,
+   "p75": 1.264
+  }
+ },
+ {
+  "nom": "Lentille",
+  "nomScientifique": "Lens culinaris",
+  "type": "légumineuse",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 29.0,
+  "tempMax": 32.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.2,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Lentils, dry",
+   "correspondance": "exacte",
+   "ymax": 2.039,
+   "nObservations": 101,
+   "nPays": 10,
+   "p25": 0.521,
+   "mediane": 0.771,
+   "p75": 1.077
+  }
+ },
+ {
+  "nom": "Lupin blanc",
+  "nomScientifique": "Lupinus albus",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 6.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 24.0,
+  "tempMax": 32.0,
+  "pluieMin": 360.0,
+  "pluieOptMin": 400.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.8,
+  "phOptMin": 5.5,
+  "phOptMax": 6.4,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Lupins",
+   "correspondance": "approximative",
+   "ymax": 2.069,
+   "nObservations": 33,
+   "nPays": 3,
+   "p25": 0.668,
+   "mediane": 1.0,
+   "p75": 1.817
+  }
+ },
+ {
+  "nom": "Mucuna",
+  "nomScientifique": "Mucuna pruriens",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 34.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 3100.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "ymax": 2.015
+  }
+ },
+ {
+  "nom": "Mucuna",
+  "nomScientifique": "Mucuna pruriens var utilis",
+  "type": "légumineuse",
+  "cycleJoursMin": null,
+  "cycleJoursMax": null,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "ymax": 2.015
+  }
+ },
+ {
+  "nom": "Niébé",
+  "nomScientifique": "Vigna unguiculata",
+  "type": "légumineuse",
+  "cycleJoursMin": 30.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 15.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 4100.0,
+  "phMin": 4.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.8,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Cow peas, dry",
+   "correspondance": "exacte",
+   "ymax": 1.691,
+   "nObservations": 257,
+   "nPays": 24,
+   "p25": 0.413,
+   "mediane": 0.491,
+   "p75": 0.822
+  }
+ },
+ {
+  "nom": "Niébé",
+  "nomScientifique": "Vigna unguiculata ssp. biflora",
+  "type": "légumineuse",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 80.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 34.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1100.0,
+  "pluieOptMax": 1300.0,
+  "pluieMax": 1730.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 7.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Cow peas, dry",
+   "correspondance": "exacte",
+   "ymax": 1.691,
+   "nObservations": 257,
+   "nPays": 24,
+   "p25": 0.413,
+   "mediane": 0.491,
+   "p75": 0.822
+  }
+ },
+ {
+  "nom": "Niébé",
+  "nomScientifique": "Vigna unguiculata ssp. sesquipedalis",
+  "type": "légumineuse",
+  "cycleJoursMin": 50.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 14.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 38.0,
+  "pluieMin": 650.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 4100.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Cow peas, dry",
+   "correspondance": "exacte",
+   "ymax": 1.691,
+   "nObservations": 257,
+   "nPays": 24,
+   "p25": 0.413,
+   "mediane": 0.491,
+   "p75": 0.822
+  }
+ },
+ {
+  "nom": "Niébé",
+  "nomScientifique": "Vigna unguiculata ssp. unguiculata",
+  "type": "légumineuse",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 240.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 4100.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.8,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Cow peas, dry",
+   "correspondance": "exacte",
+   "ymax": 1.691,
+   "nObservations": 257,
+   "nPays": 24,
+   "p25": 0.413,
+   "mediane": 0.491,
+   "p75": 0.822
+  }
+ },
+ {
+  "nom": "Petit pois",
+  "nomScientifique": "Pisum sativum",
+  "type": "légumineuse",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 140.0,
+  "tempMin": 4.0,
+  "tempOptMin": 10.0,
+  "tempOptMax": 24.0,
+  "tempMax": 30.0,
+  "pluieMin": 350.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 2500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 8.3,
+  "textures": [
+   "heavy",
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Peas, dry",
+   "correspondance": "exacte",
+   "ymax": 8.79,
+   "nObservations": 220,
+   "nPays": 20,
+   "p25": 0.441,
+   "mediane": 0.809,
+   "p75": 1.218
+  }
+ },
+ {
+  "nom": "Pois chiche",
+  "nomScientifique": "Cicer arietinum",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 29.0,
+  "tempMax": 35.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.7,
+  "phOptMin": 6.0,
+  "phOptMax": 8.5,
+  "phMax": 9.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Chick peas, dry",
+   "correspondance": "exacte",
+   "ymax": 2.188,
+   "nObservations": 165,
+   "nPays": 15,
+   "p25": 0.572,
+   "mediane": 0.825,
+   "p75": 1.756
+  }
+ },
+ {
+  "nom": "Pois d'Angole",
+  "nomScientifique": "Cajanus cajan",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 38.0,
+  "tempMax": 45.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.4,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Pigeon peas, dry",
+   "correspondance": "exacte",
+   "ymax": 1.746,
+   "nObservations": 88,
+   "nPays": 8,
+   "p25": 0.623,
+   "mediane": 0.883,
+   "p75": 1.142
+  }
+ },
+ {
+  "nom": "Pois de terre (Hausa groundnut)",
+  "nomScientifique": "Kerstingiella geocarpa",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 12.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 34.0,
+  "tempMax": 38.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1200.0,
+  "pluieMax": 3000.0,
+  "phMin": 6.0,
+  "phOptMin": 7.0,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B"
+  ],
+  "rendement": {
+   "ymax": 0.868
+  }
+ },
+ {
+  "nom": "Soja",
+  "nomScientifique": "Glycine max",
+  "type": "légumineuse",
+  "cycleJoursMin": 75.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 33.0,
+  "tempMax": 38.0,
+  "pluieMin": 450.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 1800.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.4,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Soya beans",
+   "correspondance": "exacte",
+   "ymax": 2.667,
+   "nObservations": 286,
+   "nPays": 27,
+   "p25": 0.637,
+   "mediane": 1.022,
+   "p75": 1.465
+  }
+ },
+ {
+  "nom": "Voandzou (pois bambara)",
+  "nomScientifique": "Vigna subterranea",
+  "type": "légumineuse",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 16.0,
+  "tempOptMin": 19.0,
+  "tempOptMax": 30.0,
+  "tempMax": 38.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.3,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 7.0,
+  "textures": [
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Bambara beans, dry",
+   "correspondance": "exacte",
+   "ymax": 1.584,
+   "nObservations": 99,
+   "nPays": 9,
+   "p25": 0.49,
+   "mediane": 0.675,
+   "p75": 0.918
+  }
+ },
+ {
+  "nom": "Carthame",
+  "nomScientifique": "Carthamus tinctorius",
+  "type": "oléagineux",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 245.0,
+  "tempMin": 5.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 32.0,
+  "tempMax": 45.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1400.0,
+  "phMin": 5.0,
+  "phOptMin": 6.5,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Safflower seed",
+   "correspondance": "exacte",
+   "ymax": 1.206,
+   "nObservations": 22,
+   "nPays": 2,
+   "p25": 0.554,
+   "mediane": 0.789,
+   "p75": 1.2
+  }
+ },
+ {
+  "nom": "Cocotier",
+  "nomScientifique": "Cocos nucifera",
+  "type": "oléagineux",
+  "cycleJoursMin": 270.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 14.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 34.0,
+  "tempMax": 38.0,
+  "pluieMin": 650.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 2400.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.3,
+  "phOptMin": 5.0,
+  "phOptMax": 8.0,
+  "phMax": 8.7,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Coconuts, in shell",
+   "correspondance": "exacte",
+   "ymax": 5.97,
+   "nObservations": 253,
+   "nPays": 23,
+   "p25": 2.688,
+   "mediane": 3.231,
+   "p75": 4.156
+  }
+ },
+ {
+  "nom": "Colza",
+  "nomScientifique": "Brassica napus",
+  "type": "oléagineux",
+  "cycleJoursMin": 85.0,
+  "cycleJoursMax": 340.0,
+  "tempMin": 5.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 41.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.5,
+  "phOptMax": 7.6,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Rape or colza seed",
+   "correspondance": "exacte",
+   "ymax": 29.361,
+   "nObservations": 59,
+   "nPays": 6,
+   "p25": 1.152,
+   "mediane": 1.7,
+   "p75": 1.945
+  }
+ },
+ {
+  "nom": "Colza",
+  "nomScientifique": "Brassica napus var. napobrassica",
+  "type": "oléagineux",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 5.0,
+  "tempOptMin": 14.0,
+  "tempOptMax": 24.0,
+  "tempMax": 35.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 700.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1700.0,
+  "phMin": 4.8,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 7.8,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "B",
+   "C",
+   "D",
+   "E"
+  ],
+  "rendement": {
+   "produitFao": "Rape or colza seed",
+   "correspondance": "exacte",
+   "ymax": 29.361,
+   "nObservations": 59,
+   "nPays": 6,
+   "p25": 1.152,
+   "mediane": 1.7,
+   "p75": 1.945
+  }
+ },
+ {
+  "nom": "Karité",
+  "nomScientifique": "Vitellaria paradoxa",
+  "type": "oléagineux",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": null,
+  "tempMin": 18.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 38.0,
+  "tempMax": 43.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1800.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "heavy",
+   "medium",
+   "light",
+   "wide",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B"
+  ],
+  "rendement": {
+   "produitFao": "Karite nuts (sheanuts)",
+   "correspondance": "exacte",
+   "ymax": 3.987,
+   "nObservations": 77,
+   "nPays": 7,
+   "p25": 1.062,
+   "mediane": 1.4,
+   "p75": 2.511
+  }
+ },
+ {
+  "nom": "Ricin",
+  "nomScientifique": "Ricinus communis",
+  "type": "oléagineux",
+  "cycleJoursMin": 140.0,
+  "cycleJoursMax": 210.0,
+  "tempMin": 15.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 39.0,
+  "pluieMin": 400.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 2000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.0,
+  "phOptMax": 6.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Castor oil seeds",
+   "correspondance": "exacte",
+   "ymax": 1.038,
+   "nObservations": 143,
+   "nPays": 13,
+   "p25": 0.333,
+   "mediane": 0.5,
+   "p75": 0.726
+  }
+ },
+ {
+  "nom": "Sésame",
+  "nomScientifique": "Sesamum indicum",
+  "type": "oléagineux",
+  "cycleJoursMin": 40.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 30.0,
+  "tempMax": 40.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1500.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Sesame seed",
+   "correspondance": "exacte",
+   "ymax": 1.286,
+   "nObservations": 321,
+   "nPays": 30,
+   "p25": 0.329,
+   "mediane": 0.515,
+   "p75": 0.737
+  }
+ },
+ {
+  "nom": "Tournesol",
+  "nomScientifique": "Helianthus annuus",
+  "type": "oléagineux",
+  "cycleJoursMin": 70.0,
+  "cycleJoursMax": 200.0,
+  "tempMin": 5.0,
+  "tempOptMin": 17.0,
+  "tempOptMax": 34.0,
+  "tempMax": 45.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1000.0,
+  "pluieMax": 1600.0,
+  "phMin": 5.5,
+  "phOptMin": 6.0,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Sunflower seed",
+   "correspondance": "exacte",
+   "ymax": 2.346,
+   "nObservations": 198,
+   "nPays": 18,
+   "p25": 0.62,
+   "mediane": 1.0,
+   "p75": 1.184
+  }
+ },
+ {
+  "nom": "Igname ailée",
+  "nomScientifique": "Dioscorea alata",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 220.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 14.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 32.0,
+  "tempMax": 40.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 4000.0,
+  "pluieMax": 8000.0,
+  "phMin": 4.8,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Yams",
+   "correspondance": "approximative",
+   "ymax": 17.225,
+   "nObservations": 277,
+   "nPays": 26,
+   "p25": 5.78,
+   "mediane": 7.53,
+   "p75": 9.386
+  }
+ },
+ {
+  "nom": "Igname amère",
+  "nomScientifique": "Dioscorea dumetorum",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 240.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 15.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 32.0,
+  "tempMax": 40.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1700.0,
+  "pluieMax": 4200.0,
+  "phMin": 4.8,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Yams",
+   "correspondance": "approximative",
+   "ymax": 17.225,
+   "nObservations": 277,
+   "nPays": 26,
+   "p25": 5.78,
+   "mediane": 7.53,
+   "p75": 9.386
+  }
+ },
+ {
+  "nom": "Igname blanche",
+  "nomScientifique": "Dioscorea rotundata",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 15.0,
+  "tempOptMin": 25.0,
+  "tempOptMax": 32.0,
+  "tempMax": 38.0,
+  "pluieMin": 800.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 3000.0,
+  "phMin": 5.8,
+  "phOptMin": 6.4,
+  "phOptMax": 6.7,
+  "phMax": 8.5,
+  "textures": [
+   "heavy"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Yams",
+   "correspondance": "approximative",
+   "ymax": 17.225,
+   "nObservations": 277,
+   "nPays": 26,
+   "p25": 5.78,
+   "mediane": 7.53,
+   "p75": 9.386
+  }
+ },
+ {
+  "nom": "Igname jaune",
+  "nomScientifique": "Dioscorea cayenensis",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 280.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 12.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 32.0,
+  "tempMax": 40.0,
+  "pluieMin": 900.0,
+  "pluieOptMin": 1200.0,
+  "pluieOptMax": 1900.0,
+  "pluieMax": 3000.0,
+  "phMin": 5.3,
+  "phOptMin": 6.0,
+  "phOptMax": 6.7,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Yams",
+   "correspondance": "approximative",
+   "ymax": 17.225,
+   "nObservations": 277,
+   "nPays": 26,
+   "p25": 5.78,
+   "mediane": 7.53,
+   "p75": 9.386
+  }
+ },
+ {
+  "nom": "Manioc",
+  "nomScientifique": "Manihot esculenta",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 10.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 29.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 1000.0,
+  "pluieOptMax": 1500.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.0,
+  "phOptMin": 5.5,
+  "phOptMax": 8.0,
+  "phMax": 9.0,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B"
+  ],
+  "rendement": {
+   "produitFao": "Cassava, fresh",
+   "correspondance": "exacte",
+   "ymax": 23.864,
+   "nObservations": 429,
+   "nPays": 39,
+   "p25": 5.969,
+   "mediane": 9.247,
+   "p75": 13.945
+  }
+ },
+ {
+  "nom": "Patate douce",
+  "nomScientifique": "Ipomoea batatas",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 80.0,
+  "cycleJoursMax": 170.0,
+  "tempMin": 10.0,
+  "tempOptMin": 18.0,
+  "tempOptMax": 28.0,
+  "tempMax": 38.0,
+  "pluieMin": 350.0,
+  "pluieOptMin": 750.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 5000.0,
+  "phMin": 4.0,
+  "phOptMin": 5.0,
+  "phOptMax": 7.0,
+  "phMax": 8.7,
+  "textures": [],
+  "zonesClimatiques": [],
+  "rendement": {
+   "produitFao": "Sweet potatoes",
+   "correspondance": "exacte",
+   "ymax": 27.661,
+   "nObservations": 453,
+   "nPays": 42,
+   "p25": 4.5,
+   "mediane": 7.269,
+   "p75": 12.239
+  }
+ },
+ {
+  "nom": "Petite igname",
+  "nomScientifique": "Dioscorea esculenta",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 200.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 17.0,
+  "tempOptMin": 28.0,
+  "tempOptMax": 32.0,
+  "tempMax": 45.0,
+  "pluieMin": 600.0,
+  "pluieOptMin": 800.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 8000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Yams",
+   "correspondance": "approximative",
+   "ymax": 17.225,
+   "nObservations": 277,
+   "nPays": 26,
+   "p25": 5.78,
+   "mediane": 7.53,
+   "p75": 9.386
+  }
+ },
+ {
+  "nom": "Pomme de terre",
+  "nomScientifique": "Solanum tuberosum",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 90.0,
+  "cycleJoursMax": 160.0,
+  "tempMin": 7.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 250.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 800.0,
+  "pluieMax": 2000.0,
+  "phMin": 4.2,
+  "phOptMin": 5.0,
+  "phOptMax": 6.2,
+  "phMax": 8.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "produitFao": "Potatoes",
+   "correspondance": "exacte",
+   "ymax": 30.432,
+   "nObservations": 437,
+   "nPays": 40,
+   "p25": 7.117,
+   "mediane": 12.07,
+   "p75": 19.805
+  }
+ },
+ {
+  "nom": "Taro",
+  "nomScientifique": "Colocasia esculenta",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 10.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 28.0,
+  "tempMax": 35.0,
+  "pluieMin": 1000.0,
+  "pluieOptMin": 1800.0,
+  "pluieOptMax": 2700.0,
+  "pluieMax": 4100.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Taro",
+   "correspondance": "exacte",
+   "ymax": 25.662,
+   "nObservations": 231,
+   "nPays": 21,
+   "p25": 3.116,
+   "mediane": 6.079,
+   "p75": 7.788
+  }
+ },
+ {
+  "nom": "Taro",
+  "nomScientifique": "Colocasia esculenta var. antiquorum",
+  "type": "racine/tubercule",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 210.0,
+  "tempMin": 5.0,
+  "tempOptMin": 19.0,
+  "tempOptMax": 25.0,
+  "tempMax": 30.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1500.0,
+  "pluieOptMax": 2000.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Taro",
+   "correspondance": "exacte",
+   "ymax": 25.662,
+   "nObservations": 231,
+   "nPays": 21,
+   "p25": 3.116,
+   "mediane": 6.079,
+   "p75": 7.788
+  }
+ },
+ {
+  "nom": "Cannelle",
+  "nomScientifique": "Cinnamomum verum",
+  "type": "épice",
+  "cycleJoursMin": 300.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 18.0,
+  "tempOptMin": 24.0,
+  "tempOptMax": 30.0,
+  "tempMax": 36.0,
+  "pluieMin": 1200.0,
+  "pluieOptMin": 2000.0,
+  "pluieOptMax": 2600.0,
+  "pluieMax": 3000.0,
+  "phMin": 5.0,
+  "phOptMin": 5.5,
+  "phOptMax": 6.5,
+  "phMax": 7.0,
+  "textures": [
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Cinnamon and cinnamon-tree flowers, raw",
+   "correspondance": "exacte",
+   "ymax": 1.991,
+   "nObservations": 31,
+   "nPays": 3,
+   "p25": 0.084,
+   "mediane": 0.249,
+   "p75": 1.755
+  }
+ },
+ {
+  "nom": "Coriandre",
+  "nomScientifique": "Coriandrum sativum",
+  "type": "épice",
+  "cycleJoursMin": 35.0,
+  "cycleJoursMax": 140.0,
+  "tempMin": 4.0,
+  "tempOptMin": 15.0,
+  "tempOptMax": 25.0,
+  "tempMax": 32.0,
+  "pluieMin": 300.0,
+  "pluieOptMin": 500.0,
+  "pluieOptMax": 1400.0,
+  "pluieMax": 2600.0,
+  "phMin": 4.0,
+  "phOptMin": 5.5,
+  "phOptMax": 7.5,
+  "phMax": 8.0,
+  "textures": [
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "ymax": 23.429
+  }
+ },
+ {
+  "nom": "Fenugrec",
+  "nomScientifique": "Trigonella foenum-graecum",
+  "type": "épice",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 120.0,
+  "tempMin": 5.0,
+  "tempOptMin": 13.0,
+  "tempOptMax": 27.0,
+  "tempMax": 32.0,
+  "pluieMin": 380.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 800.0,
+  "pluieMax": 1550.0,
+  "phMin": 5.3,
+  "phOptMin": 7.0,
+  "phOptMax": 7.5,
+  "phMax": 8.2,
+  "textures": [
+   "medium",
+   "light"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "rendement": {
+   "ymax": 1.363
+  }
+ },
+ {
+  "nom": "Gingembre",
+  "nomScientifique": "Zingiber officinale",
+  "type": "épice",
+  "cycleJoursMin": 270.0,
+  "cycleJoursMax": 365.0,
+  "tempMin": 13.0,
+  "tempOptMin": 19.0,
+  "tempOptMax": 29.0,
+  "tempMax": 35.0,
+  "pluieMin": 700.0,
+  "pluieOptMin": 1400.0,
+  "pluieOptMax": 3000.0,
+  "pluieMax": 4000.0,
+  "phMin": 4.3,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Ginger, raw",
+   "correspondance": "exacte",
+   "ymax": 16.261,
+   "nObservations": 121,
+   "nPays": 11,
+   "p25": 2.914,
+   "mediane": 7.034,
+   "p75": 11.605
+  }
+ },
+ {
+  "nom": "Piment",
+  "nomScientifique": "Capsicum chinense",
+  "type": "épice",
+  "cycleJoursMin": 120.0,
+  "cycleJoursMax": 150.0,
+  "tempMin": 15.0,
+  "tempOptMin": 20.0,
+  "tempOptMax": 26.0,
+  "tempMax": 32.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1250.0,
+  "pluieMax": 1500.0,
+  "phMin": 5.3,
+  "phOptMin": 6.0,
+  "phOptMax": 6.5,
+  "phMax": 7.0,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "ymax": 23.63
+  }
+ },
+ {
+  "nom": "Piment / poivron",
+  "nomScientifique": "Capsicum annuum",
+  "type": "épice",
+  "cycleJoursMin": 60.0,
+  "cycleJoursMax": 180.0,
+  "tempMin": 8.0,
+  "tempOptMin": 17.0,
+  "tempOptMax": 30.0,
+  "tempMax": 35.0,
+  "pluieMin": 500.0,
+  "pluieOptMin": 600.0,
+  "pluieOptMax": 1250.0,
+  "pluieMax": 1700.0,
+  "phMin": 4.5,
+  "phOptMin": 5.5,
+  "phOptMax": 6.8,
+  "phMax": 7.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A",
+   "C"
+  ],
+  "rendement": {
+   "produitFao": "Chillies and peppers, green (Capsicum spp. and Pimenta spp.)",
+   "correspondance": "approximative",
+   "ymax": 27.891,
+   "nObservations": 309,
+   "nPays": 29,
+   "p25": 4.0,
+   "mediane": 7.395,
+   "p75": 13.758
+  }
+ },
+ {
+  "nom": "Poivre",
+  "nomScientifique": "Piper nigrum",
+  "type": "épice",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 270.0,
+  "tempMin": 10.0,
+  "tempOptMin": 22.0,
+  "tempOptMax": 35.0,
+  "tempMax": 40.0,
+  "pluieMin": 2000.0,
+  "pluieOptMin": 2500.0,
+  "pluieOptMax": 4000.0,
+  "pluieMax": 5500.0,
+  "phMin": 5.0,
+  "phOptMin": 6.0,
+  "phOptMax": 7.0,
+  "phMax": 7.5,
+  "textures": [
+   "heavy",
+   "medium"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Pepper (Piper spp.), raw",
+   "correspondance": "exacte",
+   "ymax": 6.0,
+   "nObservations": 176,
+   "nPays": 16,
+   "p25": 0.53,
+   "mediane": 0.688,
+   "p75": 1.186
+  }
+ },
+ {
+  "nom": "Vanille",
+  "nomScientifique": "Vanilla planifolia",
+  "type": "épice",
+  "cycleJoursMin": 180.0,
+  "cycleJoursMax": 300.0,
+  "tempMin": 10.0,
+  "tempOptMin": 21.0,
+  "tempOptMax": 30.0,
+  "tempMax": 33.0,
+  "pluieMin": 1500.0,
+  "pluieOptMin": 2000.0,
+  "pluieOptMax": 2500.0,
+  "pluieMax": 3000.0,
+  "phMin": 4.3,
+  "phOptMin": 5.5,
+  "phOptMax": 7.0,
+  "phMax": 8.0,
+  "textures": [
+   "medium",
+   "organic"
+  ],
+  "zonesClimatiques": [
+   "A"
+  ],
+  "rendement": {
+   "produitFao": "Vanilla, raw",
+   "correspondance": "exacte",
+   "ymax": 0.711,
+   "nObservations": 66,
+   "nPays": 6,
+   "p25": 0.208,
+   "mediane": 0.332,
+   "p75": 0.503
+  }
+ }
+]

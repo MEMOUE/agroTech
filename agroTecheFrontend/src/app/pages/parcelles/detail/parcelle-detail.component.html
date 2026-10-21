@@ -124,14 +124,6 @@
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div class="px-5 pt-4 pb-2 flex items-center justify-between">
               <h3 class="font-semibold text-gray-800">Carte satellite</h3>
-              <button (click)="openGoogleMaps()"
-                class="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                </svg>
-                Google Maps
-              </button>
             </div>
             <app-parcelle-map [points]="parcelle()!.coordonneesGps" height="340px" />
           </div>
@@ -186,6 +178,153 @@
               }
             </div>
           }
+
+          <!-- Recommandation de cultures -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-gray-800">🌾 Cultures recommandées</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Besoins EcoCrop comparés au climat et au sol · rendements FAOSTAT</p>
+              </div>
+              @if (loadingRecos()) {
+                <svg class="animate-spin w-5 h-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                </svg>
+              }
+            </div>
+
+            @if (recosError()) {
+              <div class="px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex gap-2">
+                <span>⚠️</span> {{ recosError() }}
+              </div>
+            } @else if (recos(); as r) {
+              <!-- Conditions utilisées -->
+              <div class="flex flex-wrap gap-2 mb-4 text-xs">
+                @if (r.conditions.zoneClimatique) {
+                  <span class="px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-gray-600">{{ r.conditions.zoneClimatique }}</span>
+                }
+                <span class="px-2.5 py-1 rounded-full bg-orange-50 text-orange-700">🌡️ {{ r.conditions.temperatureMoyenneC | number:'1.0-1' }} °C</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">🌧️ {{ r.conditions.pluieAnnuelleMm | number:'1.0-0' }} mm/an</span>
+                @if (r.conditions.ph != null) {
+                  <span class="px-2.5 py-1 rounded-full bg-violet-50 text-violet-700">pH {{ r.conditions.ph | number:'1.0-1' }}</span>
+                }
+                @if (r.conditions.textureClasse) {
+                  <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">{{ r.conditions.textureClasse }}</span>
+                }
+              </div>
+
+              @if (!r.recommandations.length) {
+                <p class="text-sm text-gray-500 text-center py-6">
+                  Aucune culture du catalogue n’est suffisamment adaptée aux conditions de cette parcelle.
+                </p>
+              }
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+                @for (c of recosVisibles(); track c.culture; let i = $index) {
+                  <div class="rounded-xl border border-gray-100 p-4">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0">
+                        <p class="font-semibold text-gray-800">
+                          <span class="text-gray-300 font-normal mr-1">{{ i + 1 }}.</span>{{ c.culture }}
+                        </p>
+                        <p class="text-[11px] text-gray-400 italic truncate">{{ c.nomScientifique }}
+                          @if (c.cycleJoursMin) { · cycle {{ c.cycleJoursMin }}@if (c.cycleJoursMax && c.cycleJoursMax !== c.cycleJoursMin) {–{{ c.cycleJoursMax }}} j }
+                        </p>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <p class="text-2xl font-bold text-gray-800 leading-none">{{ c.score }}<span class="text-xs font-normal text-gray-400"> %</span></p>
+                        <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full inline-block mt-1" [class]="niveauReco[c.niveau].badge">
+                          {{ niveauReco[c.niveau].label }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="h-1.5 rounded-full bg-gray-100 mt-3 overflow-hidden">
+                      <div class="h-full rounded-full" [class]="niveauReco[c.niveau].bar" [style.width.%]="c.score"></div>
+                    </div>
+                    @if (c.facteurLimitant) {
+                      <p class="text-[11px] text-gray-500 mt-1.5">Facteur limitant : {{ c.facteurLimitant }}</p>
+                    }
+
+                    <!-- Rendement -->
+                    @if (c.rendement; as rd) {
+                      @if (rd.probable != null && rd.bas != null && rd.haut != null) {
+                        <div class="mt-3 rounded-lg bg-green-50/60 border border-green-100 px-3 py-2.5">
+                          <div class="flex items-baseline justify-between gap-2">
+                            <p class="text-xs text-gray-500">Rendement probable</p>
+                            <p class="text-sm font-bold text-green-700">
+                              {{ rd.probable | number:'1.0-2' }} t/ha
+                              <span class="text-xs font-normal text-gray-500">({{ rd.bas | number:'1.0-2' }} – {{ rd.haut | number:'1.0-2' }})</span>
+                            </p>
+                          </div>
+                          <div class="relative h-2 rounded-full bg-white mt-2">
+                            <div class="absolute h-2 rounded-full bg-green-200"
+                                 [style.left.%]="pct(rd.bas, rd.haut * 1.25)"
+                                 [style.width.%]="pct(rd.haut - rd.bas, rd.haut * 1.25)"></div>
+                            <div class="absolute -top-0.5 w-1.5 h-3 rounded-sm bg-green-600"
+                                 [style.left.%]="pct(rd.probable, rd.haut * 1.25)"></div>
+                          </div>
+                          @if (rd.productionProbableT != null) {
+                            <p class="text-xs text-gray-600 mt-2">
+                              Sur {{ r.superficieHa | number:'1.0-1' }} ha :
+                              <strong>≈ {{ rd.productionProbableT | number:'1.0-0' }} t</strong>
+                              <span class="text-gray-400">({{ rd.productionBasT | number:'1.0-0' }} – {{ rd.productionHauteT | number:'1.0-0' }} t)</span>
+                            </p>
+                          }
+                          <p class="text-[11px] mt-1.5"
+                             [class]="rd.fiabilite === 'moyenne' ? 'text-amber-700' : 'text-red-600'">
+                            Fiabilité {{ rd.fiabilite }} · <span class="text-gray-400">{{ rd.source }}</span>
+                          </p>
+                        </div>
+                      } @else {
+                        <p class="text-xs text-gray-400 mt-3">
+                          Rendement non estimable : aucune donnée de référence pour cette culture
+                          @if (rd.potentielMax) { (plafond observé {{ rd.potentielMax | number:'1.0-1' }} t/ha) }.
+                        </p>
+                      }
+                    }
+
+                    <!-- Détail des facteurs -->
+                    <details class="mt-3">
+                      <summary class="text-[11px] text-gray-400 cursor-pointer select-none">Détail des conditions</summary>
+                      <div class="mt-2 space-y-1.5">
+                        @for (f of c.facteurs; track f.code) {
+                          <div class="flex items-center justify-between gap-2 text-xs">
+                            <span class="text-gray-600">{{ f.nom }}
+                              @if (f.valeurParcelle != null) { <span class="text-gray-400">({{ f.valeurParcelle | number:'1.0-1' }} {{ f.unite }})</span> }
+                            </span>
+                            <span class="flex items-center gap-2 shrink-0">
+                              <span class="text-gray-400">optimal {{ f.plageOptimale }}</span>
+                              <span class="px-1.5 py-0.5 rounded-full font-semibold" [class]="statutFacteur[f.statut]">{{ f.score }} %</span>
+                            </span>
+                          </div>
+                        }
+                      </div>
+                    </details>
+                  </div>
+                }
+              </div>
+
+              @if (r.recommandations.length > 5) {
+                <button type="button" (click)="recosToutes.set(!recosToutes())"
+                  class="mt-3 w-full py-2 text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 rounded-xl transition-colors">
+                  {{ recosToutes() ? 'Voir moins' : 'Voir les ' + r.recommandations.length + ' cultures' }}
+                </button>
+              }
+
+              <div class="mt-4 rounded-xl bg-sky-50 border border-sky-100 px-4 py-3">
+                <p class="text-xs font-semibold text-sky-800 mb-1">À savoir</p>
+                <ul class="space-y-1">
+                  @for (a of r.avertissements; track a) {
+                    <li class="text-xs text-sky-900/80 leading-snug">• {{ a }}</li>
+                  }
+                </ul>
+              </div>
+            } @else if (loadingRecos()) {
+              <p class="text-sm text-gray-400 text-center py-6">Calcul des recommandations en cours…</p>
+            }
+          </div>
 
           <!-- Sentinel-2 (optique) -->
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">

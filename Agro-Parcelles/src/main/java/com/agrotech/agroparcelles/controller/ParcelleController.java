@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.controller;
 import com.agrotech.agroparcelles.dto.reponse.HistoriqueParcelleResponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
+import com.agrotech.agroparcelles.dto.reponse.RecommandationResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
@@ -143,6 +144,16 @@ public class ParcelleController {
     @GetMapping("/{id}/sol")
     public ResponseEntity<SolDataResponse> getSolData(@PathVariable Long id) {
         return ResponseEntity.ok(parcelleService.getSolData(id));
+    }
+
+    @Operation(summary = "Cultures recommandées et rendement de référence",
+               description = "Compare le climat et le sol de la parcelle aux besoins agronomiques de chaque culture (EcoCrop) "
+                           + "et donne l'intervalle de rendement FAOSTAT (quartiles) avec la valeur médiane.")
+    @GetMapping("/{id}/recommandations")
+    public ResponseEntity<RecommandationResponse> getRecommandations(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "10") int limite) {
+        return ResponseEntity.ok(parcelleService.getRecommandations(id, Math.min(Math.max(limite, 1), 50)));
     }
 
     @Operation(summary = "Historique des mesures enregistrées",

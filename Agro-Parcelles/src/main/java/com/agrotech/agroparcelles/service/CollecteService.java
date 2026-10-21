@@ -47,6 +47,7 @@ public class CollecteService {
     private final MesureSatelliteRepository satelliteRepository;
     private final SatelliteService satelliteService;
     private final SentinelExtractionService sentinelService;
+    private final SoilService soilService;
 
     @Scheduled(cron = "${collecte.cron:0 0 3 * * *}")
     public void collecteQuotidienne() {
@@ -73,6 +74,11 @@ public class CollecteService {
 
     /** Une parcelle en échec ne doit jamais bloquer les suivantes ni l'autre source. */
     public void collecter(Parcelle p) {
+        try {
+            soilService.analyser(p);   // enregistre le sol en base à la première réussite
+        } catch (Exception e) {
+            log.warn("Sol parcelle {} : {}", p.getId(), e.getMessage());
+        }
         try {
             collecterMeteo(p);
         } catch (Exception e) {

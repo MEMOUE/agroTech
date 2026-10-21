@@ -2,7 +2,7 @@ import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe, KeyValuePipe } from '@angular/common';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
+import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, RecommandationsResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -64,6 +64,24 @@ export class ParcelleDetailComponent implements OnInit {
   }
   readonly pluieSerie = computed(() => this.serieDe('pluie'));
   readonly et0Serie   = computed(() => this.serieDe('et0'));
+  recos         = signal<RecommandationsResponse | null>(null);
+  loadingRecos  = signal(false);
+  recosError    = signal('');
+  recosToutes   = signal(false);
+  /** Par défaut les 5 meilleures cultures ; le bouton « Voir tout » déplie le reste. */
+  readonly recosVisibles = computed(() => {
+    const r = this.recos()?.recommandations ?? [];
+    return this.recosToutes() ? r : r.slice(0, 5);
+  });
+  readonly niveauReco: Record<string, { label: string; badge: string; bar: string }> = {
+    tres_adaptee: { label: 'Très adaptée', badge: 'bg-green-50 text-green-700',   bar: 'bg-green-500' },
+    adaptee:      { label: 'Adaptée',      badge: 'bg-lime-50 text-lime-700',     bar: 'bg-lime-500' },
+    moyenne:      { label: 'Moyenne',      badge: 'bg-amber-50 text-amber-700',   bar: 'bg-amber-500' },
+  };
+  readonly statutFacteur: Record<string, string> = {
+    optimal: 'bg-green-50 text-green-700', tolere: 'bg-amber-50 text-amber-700', defavorable: 'bg-red-50 text-red-700',
+  };
+
   sol           = signal<SolDataResponse | null>(null);
   loadingSol    = signal(false);
   solError      = signal('');
@@ -125,6 +143,7 @@ export class ParcelleDetailComponent implements OnInit {
         this.loadSatellite(id);
         this.loadExtraction(p);
         this.loadSol(id);
+        this.loadRecos(id);
         if (this.capteursVirtuelsActifs) this.loadCapteurs(id);
         this.loadMap(id);
       },
@@ -170,6 +189,23 @@ export class ParcelleDetailComponent implements OnInit {
         this.loadingSol.set(false);
       }
     });
+  }
+
+  /** Recommandations de cultures (règles agronomiques + rendements de référence), ~10 s au premier appel. */
+  private loadRecos(id: number): void {
+    this.loadingRecos.set(true);
+    this.svc.getRecommandations(id, 50).subscribe({
+      next:  r => { this.recos.set(r); this.loadingRecos.set(false); },
+      error: e => {
+        this.recosError.set(e?.error?.error ?? 'Recommandations indisponibles.');
+        this.loadingRecos.set(false);
+      }
+    });
+  }
+
+  /** Position (en %) d'une valeur sur l'échelle 0 → potentiel max, pour la barre d'intervalle. */
+  pct(v: number | null, max: number | null): number {
+    return v == null || !max ? 0 : Math.min(100, Math.max(0, (v / max) * 100));
   }
 
   /** Capteurs virtuels (≈ 15 s au premier appel, puis en cache pour la journée côté serveur). */

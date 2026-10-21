@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.service;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleDtoReponse;
 import com.agrotech.agroparcelles.dto.reponse.ParcelleMapResponse;
 import com.agrotech.agroparcelles.dto.reponse.HistoriqueParcelleResponse;
+import com.agrotech.agroparcelles.dto.reponse.RecommandationResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
 import com.agrotech.agroparcelles.dto.reponse.SolDataResponse;
 import com.agrotech.agroparcelles.dto.request.ExtractionRequest;
@@ -32,6 +33,7 @@ public class ParcelleService {
     private final SoilService soilService;
     private final SentinelExtractionService sentinelExtractionService;
     private final CollecteService collecteService;
+    private final RecommandationService recommandationService;
 
     public ParcelleDtoReponse findById(Long id) {
         return parcelleMapper.toDto(getParcelle(id));
@@ -107,6 +109,10 @@ public class ParcelleService {
     public HistoriqueParcelleResponse getHistorique(Long id, LocalDate debut, LocalDate fin) {
         getParcelle(id);
         return collecteService.historique(id, debut, fin);
+    }
+
+    public RecommandationResponse getRecommandations(Long id, int limite) {
+        return recommandationService.recommander(getParcelle(id), limite);
     }
 
     private Parcelle getParcelle(Long id) {

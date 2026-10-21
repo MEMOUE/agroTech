@@ -143,3 +143,56 @@ export interface CapteursVirtuelsResponse {
   erreurs: Record<string, string>;
   avertissement: string;
 }
+
+export interface RecommandationFacteur {
+  code: string;
+  nom: string;
+  valeurParcelle: number | null;
+  unite: string;
+  plageOptimale: string;
+  plageTolerance: string;
+  score: number;
+  statut: 'optimal' | 'tolere' | 'defavorable';
+}
+
+/** Rendement de référence en t/ha (quartiles 25/75 % et médiane FAOSTAT) ; null si non disponible. */
+export interface RecommandationRendement {
+  bas: number | null;
+  probable: number | null;
+  haut: number | null;
+  potentielMax: number | null;
+  productionBasT: number | null;
+  productionProbableT: number | null;
+  productionHauteT: number | null;
+  fiabilite: 'moyenne' | 'faible' | 'indisponible';
+  source: string;
+}
+
+export interface Recommandation {
+  culture: string;
+  nomScientifique: string;
+  type: string;
+  score: number;
+  niveau: 'tres_adaptee' | 'adaptee' | 'moyenne';
+  facteurLimitant: string | null;
+  facteurs: RecommandationFacteur[];
+  cycleJoursMin: number | null;
+  cycleJoursMax: number | null;
+  rendement: RecommandationRendement | null;
+}
+
+export interface RecommandationsResponse {
+  parcelleId: number;
+  nomParcelle: string;
+  superficieHa: number;
+  conditions: {
+    temperatureMoyenneC: number;
+    pluieAnnuelleMm: number;
+    ph: number | null;
+    textureClasse: string | null;
+    textureCategorie: string | null;
+    zoneClimatique: string | null;
+  };
+  recommandations: Recommandation[];
+  avertissements: string[];
+}

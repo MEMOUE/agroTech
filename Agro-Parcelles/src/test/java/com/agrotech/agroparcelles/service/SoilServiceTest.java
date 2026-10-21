@@ -21,4 +21,25 @@ class SoilServiceTest {
         assertThat(SoilService.classeTexture(22, 28, 50)).isEqualTo("Sablo-argileuse");
         assertThat(SoilService.classeTexture(15, 40, 45)).isEqualTo("Franche (équilibrée)");
     }
+
+    @Test
+    void avecReprises_reussitApresUneErreurTemporaire() {
+        int[] appels = {0};
+        String r = SoilService.avecReprises(() -> {
+            if (++appels[0] < 3) throw new org.springframework.web.client.ResourceAccessException("504");
+            return "ok";
+        }, 3, 0);
+        assertThat(r).isEqualTo("ok");
+        assertThat(appels[0]).isEqualTo(3);
+    }
+
+    @Test
+    void avecReprises_abandonneApresLeNombreDeTentatives() {
+        int[] appels = {0};
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> SoilService.avecReprises(() -> {
+            appels[0]++;
+            throw new org.springframework.web.client.ResourceAccessException("504");
+        }, 3, 0)).isInstanceOf(org.springframework.web.client.RestClientException.class);
+        assertThat(appels[0]).isEqualTo(3);
+    }
 }
