@@ -7,3 +7,6 @@ venv/
 secrets/
 *.json
 !*.example.json
+
+# Jeux de donnees sources (xlsx), le catalogue genere est dans src/main/resources/data
+data/
