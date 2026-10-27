@@ -218,7 +218,8 @@ def _extraire_sentinel2(ring: list[list[float]],
         scl = img.select("SCL")
         masque = scl.remap(SCL_NUAGES, [1] * len(SCL_NUAGES), 0).eq(0)
         ndvi = img.normalizedDifference(["B8", "B4"]).rename("NDVI")
-        return ndvi.updateMask(masque)
+        ndwi = img.normalizedDifference(["B8", "B11"]).rename("NDWI")   # Gao : eau de la végétation
+        return ndvi.addBands(ndwi).updateMask(masque)
 
     composite = collection.map(_ndvi_masque).median()
 
@@ -227,6 +228,7 @@ def _extraire_sentinel2(ring: list[list[float]],
         geometry=geom, scale=10, maxPixels=int(1e9), bestEffort=True,
     ).getInfo()
 
+    ndwi_moyen = stats.get("NDWI_mean")
     moyen = stats.get("NDVI_mean")
     mini = stats.get("NDVI_min")
     maxi = stats.get("NDVI_max")
@@ -250,6 +252,7 @@ def _extraire_sentinel2(ring: list[list[float]],
         "periode": {"debut": debut, "fin": fin},
         "nombre_images": nb_images,
         "ndvi": {"moyen": _arr(moyen), "min": _arr(mini), "max": _arr(maxi)},
+        "ndwi_moyen": _arr(ndwi_moyen),
         "couverture_nuageuse_pct": round(couverture_pct * 100, 1) if couverture_pct is not None else None,
         "message": f"NDVI calculé sur un composite médian de {nb_images} image(s) Sentinel-2.",
     }
@@ -498,7 +501,7 @@ def images(req: ExtractionRequest) -> dict[str, Any]:
 
 @app.post("/virtual-sensors")
 def virtual_sensors(req: ExtractionRequest) -> dict[str, Any]:
-    """Capteurs virtuels (phase 0) : humidité du sol radar, ET0 FAO-56, bilan hydrique."""
+    """Capteurs virtuels : indices (radar, ET0, bilan hydrique) et modèles IA pré-entraînés."""
     try:
         ring = _sommets_distincts(_extraire_anneau(req.geojson))
     except ValueError as e:
@@ -515,6 +518,10 @@ def virtual_sensors(req: ExtractionRequest) -> dict[str, Any]:
         # NDVI récent : sert à estimer la confiance du radar (canopée dense = sol peu visible).
         fin = date.today()
         s2 = _extraire_sentinel2(ring, (fin - timedelta(days=60)).isoformat(), fin.isoformat())
-        return vs.calculer(ring, (s2.get("ndvi") or {}).get("moyen"))
+        try:
+            s1 = _extraire_sentinel1(ring, (fin - timedelta(days=60)).isoformat(), fin.isoformat())
+        except Exception:
+            s1 = None
+        return vs.calculer(ring, (s2.get("ndvi") or {}).get("moyen"), s2.get("ndwi_moyen"), s1)
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Erreur capteurs virtuels : {e}")

@@ -425,6 +425,9 @@
                   <div class="rounded-xl p-4 border flex flex-col" [class]="tileStyle(c).box">
                     <div class="flex items-start justify-between gap-1">
                       <span class="text-2xl leading-none">{{ capteurIcons[c.code] || '📟' }}</span>
+                      @if (c.type === 'modele') {
+                        <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-white/70 text-violet-700" title="Estimation d'un modèle, confiance {{ c.confiance }}">IA · {{ c.confiance }}</span>
+                      }
                       @if (tileStyle(c).badge; as bd) {
                         <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-white/70" [class]="tileStyle(c).text">{{ bd }}</span>
                       }

@@ -20,7 +20,7 @@ from typing import Any, Optional
 
 S1_COLLECTION = "COPERNICUS/S1_GRD"
 NASA_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
-NASA_PARAMS = "T2M_MAX,T2M_MIN,RH2M,ALLSKY_SFC_SW_DWN,WS10M,PRECTOTCORR"
+NASA_PARAMS = "T2M,T2M_MAX,T2M_MIN,RH2M,ALLSKY_SFC_SW_DWN,WS10M,PRECTOTCORR"
 NASA_FILL = -999.0
 HISTORIQUE_RADAR_JOURS = 365
 MIN_POINTS_RADAR = 8
@@ -121,11 +121,11 @@ def _nasa_quotidien(lat: float, lon: float, jours: int = 30) -> dict[str, dict[s
     return jours_data
 
 
-def _et0_et_pluie(lat: float, lon: float, altitude_m: float) -> list[dict[str, Any]]:
+def _et0_et_pluie(brut: dict[str, dict[str, float]], lat: float, altitude_m: float) -> list[dict[str, Any]]:
     """Série journalière {date, et0, pluie} (jours complets uniquement), triée par date."""
     requis = {"T2M_MAX", "T2M_MIN", "RH2M", "ALLSKY_SFC_SW_DWN", "WS10M", "PRECTOTCORR"}
     out = []
-    for d, v in sorted(_nasa_quotidien(lat, lon).items()):
+    for d, v in sorted(brut.items()):
         if not requis.issubset(v):
             continue
         dt = datetime.strptime(d, "%Y%m%d").date()
@@ -198,8 +198,50 @@ def _confiance_radar(ndvi_moyen: Optional[float]) -> tuple[str, str]:
     return "bonne", "Couvert végétal faible : le radar est sensible à l'humidité du sol."
 
 
-def calculer(ring: list[list[float]], ndvi_moyen: Optional[float]) -> dict[str, Any]:
-    """Renvoie la liste des capteurs virtuels (phase 0) pour le polygone."""
+def _features_modeles(brut: dict[str, dict[str, float]], ndvi: Optional[float], ndwi: Optional[float],
+                      s1: Optional[dict[str, Any]], ssm: Optional[float] = None) -> tuple[Optional[dict[str, Optional[float]]], str, str]:
+    """Entrées des modèles IA : dernier jour NASA complet + composites Sentinel. (features, date, sources)"""
+    requis = {"T2M", "RH2M", "PRECTOTCORR", "ALLSKY_SFC_SW_DWN"}
+    jours = [d for d in sorted(brut) if requis.issubset(brut[d])]
+    if not jours:
+        return None, "", ""
+    j = brut[jours[-1]]
+    radar = s1 if s1 and s1.get("statut") == "ok" else {}
+    features = {
+        "NASA_Temp_Air_C": j["T2M"], "NASA_Hum_Air_pct": j["RH2M"], "NASA_Rain_mm": j["PRECTOTCORR"],
+        "NASA_Solar_Rad": j["ALLSKY_SFC_SW_DWN"],
+        "Sentinel1_VV": radar.get("vv_db"), "Sentinel1_VH": radar.get("vh_db"), "Sentinel1_RVI": radar.get("rvi"),
+        "Sentinel1_SSM_Surface": ssm,   # indice radar d'humidité de surface (détection de changement, 0-100)
+        "Sentinel2_NDVI": ndvi, "Sentinel2_NDWI": ndwi,
+    }
+    d = jours[-1]
+    sources = (f"NASA POWER du {d[:4]}-{d[4:6]}-{d[6:]}, composites Sentinel-1/2 des 60 derniers jours")
+    return features, f"{d[:4]}-{d[4:6]}-{d[6:]}", sources
+
+
+def _ajouter_modeles(capteurs: list, erreurs: dict, brut, ndvi, ndwi, s1, ssm=None) -> None:
+    """Les modèles IA ne doivent jamais faire échouer les autres capteurs."""
+    try:
+        import ml_sensors
+
+        features, date_mesure, sources = _features_modeles(brut, ndvi, ndwi, s1, ssm)
+        if features is None:
+            for code in ml_sensors.CAPTEURS:
+                erreurs[code] = "Données NASA POWER récentes insuffisantes pour alimenter le modèle."
+            return
+        for code in ml_sensors.CAPTEURS:
+            capteur, raison = ml_sensors.predire(code, features, date_mesure, sources)
+            if capteur:
+                capteurs.append(capteur)
+            else:
+                erreurs[code] = raison
+    except Exception as e:
+        erreurs["modeles_ia"] = f"Modèles IA indisponibles : {e}"
+
+
+def calculer(ring: list[list[float]], ndvi_moyen: Optional[float], ndwi_moyen: Optional[float] = None,
+             s1: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    """Renvoie la liste des capteurs virtuels (indices phase 0 + modèles IA) pour le polygone."""
     import ee
 
     geom = ee.Geometry.Polygon([ring + [ring[0]]], proj="EPSG:4326", geodesic=False)
@@ -208,6 +250,7 @@ def calculer(ring: list[list[float]], ndvi_moyen: Optional[float]) -> dict[str, 
 
     capteurs: list[dict[str, Any]] = []
     erreurs: dict[str, str] = {}
+    ssm: Optional[float] = None
 
     # --- Humidité du sol (radar) ---
     try:
@@ -219,6 +262,7 @@ def calculer(ring: list[list[float]], ndvi_moyen: Optional[float]) -> dict[str, 
                 "Signal radar quasi constant (variation < 1 dB sur 12 mois) : couvert végétal trop dense "
                 "pour estimer l'humidité du sol par radar. Un capteur physique est nécessaire ici.")
         else:
+            ssm = smi[-1]["valeur"]
             niveau, note = _confiance_radar(ndvi_moyen)
             capteurs.append({
                 "code": "humidite_sol", "nom": "Humidité du sol (surface)",
@@ -233,7 +277,9 @@ def calculer(ring: list[list[float]], ndvi_moyen: Optional[float]) -> dict[str, 
 
     # --- ET0 et bilan hydrique (NASA POWER) ---
     try:
-        jours = _et0_et_pluie(lat, lon, _altitude(geom))
+        brut = _nasa_quotidien(lat, lon)
+        jours = _et0_et_pluie(brut, lat, _altitude(geom))
+        _ajouter_modeles(capteurs, erreurs, brut, ndvi_moyen, ndwi_moyen, s1, ssm)
         if len(jours) < 7:
             erreurs["et0"] = "Données NASA POWER insuffisantes sur la période récente."
         else:
@@ -276,6 +322,6 @@ def calculer(ring: list[list[float]], ndvi_moyen: Optional[float]) -> dict[str, 
         "statut": "ok" if capteurs else "no_data",
         "capteurs": capteurs,
         "erreurs": erreurs,
-        "avertissement": ("Indices calculés à partir des satellites, pas des mesures de capteurs. "
-                          "Ils seront remplacés par un modèle IA entraîné sur des capteurs physiques."),
+        "avertissement": ("Valeurs estimées à partir des satellites, pas des mesures de capteurs. "
+                          "Les modèles IA ne sont pas validés sur des capteurs physiques de ces parcelles."),
     }

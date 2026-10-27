@@ -40,10 +40,13 @@ export class ParcelleDetailComponent implements OnInit {
   };
   readonly capteurIcons: Record<string, string> = {
     humidite_sol: '💧', et0: '☀️', pluie: '🌧️', bilan_hydrique_7j: '⚖️', bilan_hydrique_14j: '⚖️',
+    temp_sol: '🌡️', humidite_sol_ia: '💧', azote_assimilable: '🌱',
   };
   /** Noms lisibles des capteurs indisponibles (clés de `erreurs`). */
   readonly capteurNoms: Record<string, string> = {
     humidite_sol: 'Humidité du sol', et0: 'ET0 et bilan hydrique',
+    temp_sol: 'Température du sol (IA)', humidite_sol_ia: 'Humidité du sol (IA)',
+    azote_assimilable: 'Azote assimilable (IA)', modeles_ia: 'Modèles IA',
   };
 
   /** Style d'une tuile : couleur fixe par capteur, ou selon le signe pour les bilans hydriques. */
