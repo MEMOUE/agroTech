@@ -54,3 +54,9 @@ def test_features_prennent_le_dernier_jour_nasa_complet():
     f, date_mesure, _ = _features_modeles(brut, 0.6, 0.1, {"statut": "ok", "vv_db": -8, "vh_db": -14, "rvi": 0.7})
     assert date_mesure == "2026-10-25" and f["NASA_Temp_Air_C"] == 26.0
     assert f["Sentinel1_SSM_Surface"] is None
+
+
+def test_ssm_plafonne_comme_a_l_entrainement():
+    brut = {"20261025": {"T2M": 26.0, "RH2M": 81.0, "PRECTOTCORR": 2.0, "ALLSKY_SFC_SW_DWN": 19.0}}
+    f, _, _ = _features_modeles(brut, 0.6, 0.1, None, 90.0)
+    assert f["Sentinel1_SSM_Surface"] == 65.0

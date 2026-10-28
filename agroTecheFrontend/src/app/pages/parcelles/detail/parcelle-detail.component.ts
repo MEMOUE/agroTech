@@ -28,7 +28,7 @@ export class ParcelleDetailComponent implements OnInit {
   loadingExtr   = signal(false);
   extractionErr = signal('');
   /** Interrupteur : passer à true pour réactiver les capteurs virtuels (bloc + appel API). */
-  readonly capteursVirtuelsActifs = false;
+  readonly capteursVirtuelsActifs = true;
 
   capteurs      = signal<CapteursVirtuelsResponse | null>(null);
   loadingCapt   = signal(false);

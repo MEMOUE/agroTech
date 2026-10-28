@@ -1,10 +1,13 @@
 package com.agrotech.agroparcelles.service;
 
+import com.agrotech.agroparcelles.entity.MesureCapteurVirtuel;
 import com.agrotech.agroparcelles.entity.MesureSatellite;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,5 +55,32 @@ class CollecteServiceTest {
         assertThat(m).isNotNull();
         assertThat(m.getNdviMoyen()).isNull();
         assertThat(m.getRvi()).isEqualTo(0.4);
+    }
+
+    @Test
+    void versMesuresCapteurs_garde_les_valeurs_et_ignore_les_capteurs_sans_valeur() {
+        Map<String, Object> temp = Map.of("code", "temp_sol", "nom", "Température du sol (modèle IA)",
+                "valeur", 25.4, "unite", "°C", "type", "modele", "confiance", "faible", "date_mesure", "2026-10-19");
+        Map<String, Object> vide = new HashMap<>();
+        vide.put("code", "et0");
+        vide.put("valeur", null);
+        Map<String, Object> reponse = Map.of("capteurs", List.of(temp, vide),
+                "erreurs", Map.of("humidite_sol_ia", "Entrée indisponible"));
+
+        List<MesureCapteurVirtuel> lignes = CollecteService.versMesuresCapteurs(
+                1L, FIN, LocalDateTime.now(), reponse);
+
+        assertThat(lignes).hasSize(1);
+        assertThat(lignes.get(0).getCode()).isEqualTo("temp_sol");
+        assertThat(lignes.get(0).getValeur()).isEqualTo(25.4);
+        assertThat(lignes.get(0).getType()).isEqualTo("modele");
+        assertThat(lignes.get(0).getDateDonnee()).isEqualTo(LocalDate.of(2026, 10, 19));
+        assertThat(lignes.get(0).getDateCollecte()).isEqualTo(FIN);
+    }
+
+    @Test
+    void versMesuresCapteurs_reponseSansCapteurs_neDonneRien() {
+        assertThat(CollecteService.versMesuresCapteurs(1L, FIN, LocalDateTime.now(), Map.of("erreurs", Map.of())))
+                .isEmpty();
     }
 }

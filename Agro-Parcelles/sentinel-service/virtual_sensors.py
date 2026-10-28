@@ -26,6 +26,8 @@ HISTORIQUE_RADAR_JOURS = 365
 MIN_POINTS_RADAR = 8
 # En dessous de cette plage (5ᵉ-95ᵉ percentile, en dB), le signal est du bruit : pas d'indice.
 DYNAMIQUE_MIN_DB = 1.0
+# Le SSM d'entraînement plafonne exactement à 65 : on applique le même plafond (borne basse non touchée).
+SSM_PLAFOND_ENTRAINEMENT = 65.0
 
 
 # ---------------------------------------------------------------------------
@@ -211,7 +213,7 @@ def _features_modeles(brut: dict[str, dict[str, float]], ndvi: Optional[float], 
         "NASA_Temp_Air_C": j["T2M"], "NASA_Hum_Air_pct": j["RH2M"], "NASA_Rain_mm": j["PRECTOTCORR"],
         "NASA_Solar_Rad": j["ALLSKY_SFC_SW_DWN"],
         "Sentinel1_VV": radar.get("vv_db"), "Sentinel1_VH": radar.get("vh_db"), "Sentinel1_RVI": radar.get("rvi"),
-        "Sentinel1_SSM_Surface": ssm,   # indice radar d'humidité de surface (détection de changement, 0-100)
+        "Sentinel1_SSM_Surface": None if ssm is None else min(ssm, SSM_PLAFOND_ENTRAINEMENT),
         "Sentinel2_NDVI": ndvi, "Sentinel2_NDWI": ndwi,
     }
     d = jours[-1]

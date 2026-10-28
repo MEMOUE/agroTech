@@ -1,5 +1,6 @@
 package com.agrotech.agroparcelles.dto.reponse;
 
+import com.agrotech.agroparcelles.entity.MesureCapteurVirtuel;
 import com.agrotech.agroparcelles.entity.MesureMeteo;
 import com.agrotech.agroparcelles.entity.MesureSatellite;
 import lombok.*;
@@ -18,4 +19,5 @@ public class HistoriqueParcelleResponse {
     private String dateFin;
     private List<MesureMeteo> meteo;
     private List<MesureSatellite> satellite;
+    private List<MesureCapteurVirtuel> capteursVirtuels;
 }

@@ -3,9 +3,11 @@ package com.agrotech.agroparcelles.service;
 import com.agrotech.agroparcelles.dto.reponse.HistoriqueParcelleResponse;
 import com.agrotech.agroparcelles.dto.reponse.SatelliteDataResponse;
 import com.agrotech.agroparcelles.dto.request.ExtractionRequest;
+import com.agrotech.agroparcelles.entity.MesureCapteurVirtuel;
 import com.agrotech.agroparcelles.entity.MesureMeteo;
 import com.agrotech.agroparcelles.entity.MesureSatellite;
 import com.agrotech.agroparcelles.entity.Parcelle;
+import com.agrotech.agroparcelles.repository.MesureCapteurVirtuelRepository;
 import com.agrotech.agroparcelles.repository.MesureMeteoRepository;
 import com.agrotech.agroparcelles.repository.MesureSatelliteRepository;
 import com.agrotech.agroparcelles.repository.ParcelleRepository;
@@ -48,6 +50,7 @@ public class CollecteService {
     private final SatelliteService satelliteService;
     private final SentinelExtractionService sentinelService;
     private final SoilService soilService;
+    private final MesureCapteurVirtuelRepository capteurRepository;
 
     @Scheduled(cron = "${collecte.cron:0 0 3 * * *}")
     public void collecteQuotidienne() {
@@ -89,6 +92,55 @@ public class CollecteService {
         } catch (Exception e) {
             log.warn("Sentinel parcelle {} : {}", p.getId(), e.getMessage());
         }
+        try {
+            enregistrerCapteurs(p.getId(), sentinelService.capteursVirtuels(
+                    ExtractionRequest.builder().geoJson(geoJsonDe(p)).build()));
+        } catch (Exception e) {
+            log.warn("Capteurs virtuels parcelle {} : {}", p.getId(), e.getMessage());
+        }
+    }
+
+    /** Une ligne par capteur et par jour : un nouveau calcul le même jour met la ligne à jour. */
+    public void enregistrerCapteurs(Long parcelleId, Map<String, Object> reponse) {
+        LocalDate aujourdhui = LocalDate.now();
+        LocalDateTime maintenant = LocalDateTime.now();
+        for (MesureCapteurVirtuel m : versMesuresCapteurs(parcelleId, aujourdhui, maintenant, reponse)) {
+            MesureCapteurVirtuel cible = capteurRepository
+                    .findByParcelleIdAndDateCollecteAndCode(parcelleId, aujourdhui, m.getCode()).orElse(m);
+            if (cible != m) {
+                m.setId(cible.getId());
+            }
+            capteurRepository.save(m);
+        }
+    }
+
+    /** Ne garde que les capteurs avec une valeur : les capteurs indisponibles ne laissent aucune ligne. */
+    static List<MesureCapteurVirtuel> versMesuresCapteurs(Long parcelleId, LocalDate jour,
+                                                          LocalDateTime maintenant, Map<String, Object> reponse) {
+        List<MesureCapteurVirtuel> lignes = new ArrayList<>();
+        if (!(reponse.get("capteurs") instanceof List<?> capteurs)) return lignes;
+        for (Object o : capteurs) {
+            if (!(o instanceof Map<?, ?> c) || !(c.get("code") instanceof String code)) continue;
+            Double valeur = nombre(c.get("valeur"));
+            if (valeur == null) continue;
+            LocalDate dateDonnee = null;
+            if (c.get("date_mesure") instanceof String s) {
+                try {
+                    dateDonnee = LocalDate.parse(s);
+                } catch (RuntimeException ignore) {
+                    // date source illisible : on l'enregistre vide plutôt que d'en inventer une
+                }
+            }
+            lignes.add(MesureCapteurVirtuel.builder()
+                    .parcelleId(parcelleId).dateCollecte(jour).code(code)
+                    .nom(c.get("nom") instanceof String s ? s : null)
+                    .valeur(valeur)
+                    .unite(c.get("unite") instanceof String s ? s : null)
+                    .type(c.get("type") instanceof String s ? s : null)
+                    .confiance(c.get("confiance") instanceof String s ? s : null)
+                    .dateDonnee(dateDonnee).collecteLe(maintenant).build());
+        }
+        return lignes;
     }
 
     void collecterMeteo(Parcelle p) {
@@ -198,11 +250,13 @@ public class CollecteService {
                 .dateDebut(debut.toString()).dateFin(fin.toString())
                 .meteo(meteoRepository.findByParcelleIdAndDateMesureBetweenOrderByDateMesure(parcelleId, debut, fin))
                 .satellite(satelliteRepository.findByParcelleIdAndDateMesureBetweenOrderByDateMesure(parcelleId, debut, fin))
+                .capteursVirtuels(capteurRepository.findByParcelleIdAndDateCollecteBetweenOrderByDateCollecte(parcelleId, debut, fin))
                 .build();
     }
 
     public void supprimerMesures(Long parcelleId) {
         meteoRepository.deleteByParcelleId(parcelleId);
         satelliteRepository.deleteByParcelleId(parcelleId);
+        capteurRepository.deleteByParcelleId(parcelleId);
     }
 }

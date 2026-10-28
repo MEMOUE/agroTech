@@ -13,6 +13,7 @@ import com.agrotech.agroparcelles.exception.ResourceNotFoundException;
 import com.agrotech.agroparcelles.mapper.ParcelleMapper;
 import com.agrotech.agroparcelles.repository.ParcelleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ParcelleService {
 
@@ -103,7 +105,13 @@ public class ParcelleService {
         Map<String, Object> geometry = Map.of("type", "Polygon", "coordinates", List.of(anneau));
         Map<String, Object> feature = Map.of("type", "Feature", "geometry", geometry);
 
-        return sentinelExtractionService.capteursVirtuels(ExtractionRequest.builder().geoJson(feature).build());
+        Map<String, Object> resultat = sentinelExtractionService.capteursVirtuels(ExtractionRequest.builder().geoJson(feature).build());
+        try {
+            collecteService.enregistrerCapteurs(id, resultat);
+        } catch (RuntimeException e) {
+            log.warn("Capteurs virtuels parcelle {} non enregistrés : {}", id, e.getMessage());   // l'affichage prime
+        }
+        return resultat;
     }
 
     public HistoriqueParcelleResponse getHistorique(Long id, LocalDate debut, LocalDate fin) {
