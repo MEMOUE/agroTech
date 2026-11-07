@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { LogoComponent } from '../../shared/logo/logo.component';
 
@@ -13,6 +13,7 @@ import { LogoComponent } from '../../shared/logo/logo.component';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+  private router = inject(Router);
 
   form = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
@@ -32,6 +33,7 @@ export class LoginComponent {
     // Le backend résout automatiquement grâce à CustomUserDetailsService
     const raw = this.form.getRawValue();
     this.auth.login(raw).subscribe({
+      next: () => this.router.navigate(['/dashboard']),
       error: err => {
         this.error.set(err.error?.message ?? 'Identifiants incorrects. Vérifiez votre nom d\'utilisateur ou téléphone.');
         this.loading.set(false);

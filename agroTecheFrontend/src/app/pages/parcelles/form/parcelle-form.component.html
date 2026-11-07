@@ -2,16 +2,19 @@
 
   <!-- Navbar -->
   <nav class="bg-white border-b border-gray-200">
-    <div class="max-w-xl mx-auto px-4 h-14 flex items-center gap-3">
-      <a routerLink="/parcelles" class="text-gray-400 hover:text-gray-600 transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-      </a>
-      <app-logo [size]="28" />
-      <span class="font-semibold text-gray-800">
-        {{ isEdit() ? 'Modifier la parcelle' : 'Nouvelle parcelle' }}
-      </span>
+    <div class="max-w-xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <a routerLink="/parcelles" class="text-gray-400 hover:text-gray-600 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </a>
+        <app-logo [size]="28" />
+        <span class="font-semibold text-gray-800">
+          {{ isEdit() ? 'Modifier la parcelle' : 'Nouvelle parcelle' }}
+        </span>
+      </div>
+      <app-user-menu />
     </div>
   </nav>
 

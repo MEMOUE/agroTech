@@ -35,17 +35,28 @@
 
       <!-- CTA + hamburger -->
       <div class="flex items-center gap-2">
-        <a routerLink="/login"
-          class="hidden sm:inline-flex text-sm text-gray-700 hover:text-gray-900 px-3.5 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">
-          Connexion
-        </a>
-        <a routerLink="/register"
-          class="inline-flex items-center gap-1.5 text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold shadow-sm shadow-green-600/30">
-          S'inscrire
-          <svg class="w-3.5 h-3.5 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-          </svg>
-        </a>
+        @if (auth.isLoggedIn()) {
+          <a routerLink="/dashboard"
+            class="hidden sm:inline-flex text-sm text-gray-700 hover:text-gray-900 px-3.5 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">
+            Tableau de bord
+          </a>
+          <button (click)="auth.logout()"
+            class="inline-flex items-center gap-1.5 text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold shadow-sm shadow-green-600/30">
+            Déconnexion
+          </button>
+        } @else {
+          <a routerLink="/login"
+            class="hidden sm:inline-flex text-sm text-gray-700 hover:text-gray-900 px-3.5 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">
+            Connexion
+          </a>
+          <a routerLink="/register"
+            class="inline-flex items-center gap-1.5 text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-semibold shadow-sm shadow-green-600/30">
+            S'inscrire
+            <svg class="w-3.5 h-3.5 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        }
         <!-- Hamburger mobile -->
         <button (click)="menuOpen.set(!menuOpen())" aria-label="Menu" [attr.aria-expanded]="menuOpen()"
           class="md:hidden ml-1 p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition">
@@ -77,10 +88,17 @@
           </button>
         }
         <div class="border-t border-gray-100 mt-2 pt-3 flex gap-2">
-          <a routerLink="/login" (click)="menuOpen.set(false)"
-            class="flex-1 text-center text-sm text-gray-700 px-3 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">Connexion</a>
-          <a routerLink="/register" (click)="menuOpen.set(false)"
-            class="flex-1 text-center text-sm text-white px-3 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 transition font-semibold">S'inscrire</a>
+          @if (auth.isLoggedIn()) {
+            <a routerLink="/dashboard" (click)="menuOpen.set(false)"
+              class="flex-1 text-center text-sm text-gray-700 px-3 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">Tableau de bord</a>
+            <button (click)="auth.logout(); menuOpen.set(false)"
+              class="flex-1 text-center text-sm text-white px-3 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 transition font-semibold">Déconnexion</button>
+          } @else {
+            <a routerLink="/login" (click)="menuOpen.set(false)"
+              class="flex-1 text-center text-sm text-gray-700 px-3 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium">Connexion</a>
+            <a routerLink="/register" (click)="menuOpen.set(false)"
+              class="flex-1 text-center text-sm text-white px-3 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 transition font-semibold">S'inscrire</a>
+          }
         </div>
       </div>
     }
@@ -106,10 +124,11 @@
           Cultiver mieux,<br>
           <span class="text-green-400">avec données satellitaires<br>et IA frugale.</span>
         </h1>
-        <p class="hero-sub text-green-100/80 text-lg leading-relaxed mb-8 max-w-lg">
+        <!-- TODO: du code a ne ttoyer ou adapter -->
+        <!-- <p class="hero-sub text-green-100/80 text-lg leading-relaxed mb-8 max-w-lg">
           AgroTech remplace les équipements coûteux par des données satellitaires
           et des modèles virtuels accessibles à tout agriculteur — même sans internet haut débit.
-        </p>
+        </p> -->
         <div class="hero-cta flex flex-wrap gap-3">
           <a routerLink="/register"
             class="inline-flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-400 text-white font-semibold rounded-xl transition text-sm shadow-lg shadow-green-900/40">

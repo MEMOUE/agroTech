@@ -6,11 +6,12 @@ import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionR
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
+import { UserMenuComponent } from '../../../shared/user-menu/user-menu.component';
 
 @Component({
   selector: 'app-parcelle-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, DatePipe, KeyValuePipe, ParcelleMapComponent, LogoComponent, BarChartComponent],
+  imports: [RouterLink, DecimalPipe, DatePipe, KeyValuePipe, ParcelleMapComponent, LogoComponent, BarChartComponent, UserMenuComponent],
   templateUrl: './parcelle-detail.component.html',
 })
 export class ParcelleDetailComponent implements OnInit {

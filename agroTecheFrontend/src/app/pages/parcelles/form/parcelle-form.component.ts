@@ -7,6 +7,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ExtractionResult, GpsPoint } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
+import { UserMenuComponent } from '../../../shared/user-menu/user-menu.component';
 
 type CaptureState = 'idle' | 'locating' | 'success' | 'error';
 type EntryMode = 'terrain' | 'manual';
@@ -14,7 +15,7 @@ type EntryMode = 'terrain' | 'manual';
 @Component({
   selector: 'app-parcelle-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ParcelleMapComponent, LogoComponent],
+  imports: [ReactiveFormsModule, RouterLink, ParcelleMapComponent, LogoComponent, UserMenuComponent],
   templateUrl: './parcelle-form.component.html',
 })
 export class ParcelleFormComponent implements OnInit, OnDestroy {

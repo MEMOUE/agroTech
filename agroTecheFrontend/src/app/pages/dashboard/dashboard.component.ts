@@ -6,11 +6,12 @@ import { ParcelleService } from '../../core/services/parcelle.service';
 import { UserProfile } from '../../core/models/auth.models';
 import { Parcelle } from '../../core/models/parcelle.models';
 import { LogoComponent } from '../../shared/logo/logo.component';
+import { UserMenuComponent } from '../../shared/user-menu/user-menu.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, LogoComponent],
+  imports: [RouterLink, DecimalPipe, LogoComponent, UserMenuComponent],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
@@ -34,12 +35,6 @@ export class DashboardComponent implements OnInit {
     return 'Bonsoir';
   })();
 
-  readonly roleLabels: Record<string, string> = {
-    AGRICULTEUR: 'Agriculteur',
-    TECHNICIEN: 'Technicien',
-    ADMIN: 'Administrateur',
-  };
-
   ngOnInit(): void {
     const cached = this.auth.currentUser();
     if (cached) {
@@ -59,6 +54,4 @@ export class DashboardComponent implements OnInit {
       error: () => this.loading.set(false),
     });
   }
-
-  logout(): void { this.auth.logout(); }
 }

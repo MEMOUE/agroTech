@@ -5,11 +5,12 @@ import { ParcelleService } from '../../../core/services/parcelle.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Parcelle } from '../../../core/models/parcelle.models';
 import { LogoComponent } from '../../../shared/logo/logo.component';
+import { UserMenuComponent } from '../../../shared/user-menu/user-menu.component';
 
 @Component({
   selector: 'app-parcelles-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, LogoComponent],
+  imports: [RouterLink, DecimalPipe, LogoComponent, UserMenuComponent],
   templateUrl: './parcelles-list.component.html',
 })
 export class ParcellesListComponent implements OnInit {

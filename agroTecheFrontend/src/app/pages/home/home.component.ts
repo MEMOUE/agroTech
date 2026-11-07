@@ -2,6 +2,7 @@ import { Component, HostListener, computed, inject, PLATFORM_ID, signal } from '
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LogoComponent } from '../../shared/logo/logo.component';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { LogoComponent } from '../../shared/logo/logo.component';
 })
 export class HomeComponent {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  auth = inject(AuthService);
 
   menuOpen = signal(false);
   scrolled = signal(false);
