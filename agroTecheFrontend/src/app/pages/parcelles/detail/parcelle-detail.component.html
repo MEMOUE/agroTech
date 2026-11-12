@@ -332,6 +332,12 @@
                   Aucune part n'est encore précisée : utilisez « Ajuster » sur chaque culture pour l'indiquer.
                 </p>
               }
+
+              @if (zonesTraceesAffichage().length && parcelle()) {
+                <p class="text-xs font-medium text-gray-600 mt-4 mb-2">Délimitation précise des zones tracées</p>
+                <app-parcelle-map [points]="[]" [contourReference]="parcelle()!.coordonneesGps"
+                  [zones]="zonesTraceesAffichage()" height="260px" />
+              }
             </div>
           }
 
@@ -877,18 +883,57 @@
             }
           </div>
 
-          <!-- Part de la parcelle : utile dès qu'il y a (ou qu'il y aura) plusieurs cultures en même temps -->
+          <!-- Zone occupée : utile dès qu'il y a (ou qu'il y aura) plusieurs cultures en même temps -->
           @if (plannings().length) {
             <div>
-              <label class="block text-xs font-medium text-gray-500 mb-1">Part de la parcelle (%)</label>
-              <input type="number" step="1" min="0" max="100"
-                [ngModel]="objectifPartSurface()" (ngModelChange)="objectifPartSurface.set($event)"
-                name="partSurface" placeholder="Ex. 40"
-                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
-              <p class="text-[11px] text-gray-400 mt-1">
-                {{ partDejaAlloueeAutres() }} % déjà alloués aux autres cultures en cours · {{ partDisponible() }} % disponibles.
-                Laisser vide si non précisé.
-              </p>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Zone occupée dans la parcelle</label>
+              <div class="flex gap-2 mb-2">
+                <button type="button" (click)="objectifModeZone.set('carte')"
+                  class="flex-1 py-1.5 text-xs font-medium rounded-lg border transition"
+                  [class]="objectifModeZone() === 'carte' ? 'bg-green-600 border-green-600 text-white' : 'border-gray-200 text-gray-600 hover:bg-gray-50'">
+                  🗺️ Délimiter sur la carte
+                </button>
+                <button type="button" (click)="objectifModeZone.set('pourcentage')"
+                  class="flex-1 py-1.5 text-xs font-medium rounded-lg border transition"
+                  [class]="objectifModeZone() === 'pourcentage' ? 'bg-green-600 border-green-600 text-white' : 'border-gray-200 text-gray-600 hover:bg-gray-50'">
+                  % Indiquer un pourcentage
+                </button>
+              </div>
+
+              @if (objectifModeZone() === 'carte') {
+                @if (parcelle()) {
+                  <!-- stopPropagation : un clic sur la carte (même interprété par Leaflet comme un
+                       léger glissé plutôt qu'un clic franc) ne doit jamais fermer la fenêtre via le fond. -->
+                  <div (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
+                    <app-parcelle-map
+                      [points]="objectifZoneGps()" [editable]="true" (pointsChange)="onZoneMapPoints($event)"
+                      [contourReference]="parcelle()!.coordonneesGps" [zones]="autresZonesPourModal()"
+                      height="260px" />
+                  </div>
+                }
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-[11px] text-gray-500">
+                    {{ objectifZoneGps().length }} sommet(s)
+                    @if (zoneSuperficie()) { · ≈ {{ zoneSuperficie() }} ha@if (zonePourcentage() != null) { ({{ zonePourcentage() }} %) } }
+                  </p>
+                  @if (objectifZoneGps().length) {
+                    <button type="button" (click)="effacerZone()" class="text-[11px] text-red-500 hover:text-red-700 underline">Effacer</button>
+                  }
+                </div>
+                <p class="text-[11px] text-gray-400 mt-1">
+                  Cliquez sur la carte pour placer les sommets de la zone (3 minimum). Le contour en pointillés est la parcelle entière
+                  @if (autresZonesPourModal().length) { ; les zones colorées sont les autres cultures déjà en cours }.
+                </p>
+              } @else {
+                <input type="number" step="1" min="0" max="100"
+                  [ngModel]="objectifPartSurface()" (ngModelChange)="objectifPartSurface.set($event)"
+                  name="partSurface" placeholder="Ex. 40"
+                  class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                <p class="text-[11px] text-gray-400 mt-1">
+                  {{ partDejaAlloueeAutres() }} % déjà alloués aux autres cultures en cours · {{ partDisponible() }} % disponibles.
+                  Laisser vide si non précisé.
+                </p>
+              }
             </div>
           }
 

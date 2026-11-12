@@ -203,8 +203,10 @@ export interface ObjectifCultureRequest {
   /** Optionnelle : calculée côté backend à partir du cycle de la culture si absente. */
   dateRecolteVisee?: string | null;
   rendementViseTHa?: number | null;
-  /** Part de la parcelle occupée par cette culture, en % (0-100) ; optionnel. */
+  /** Part de la parcelle occupée par cette culture, en % (0-100) ; ignoré si zoneGps est tracée. */
   partSurfacePct?: number | null;
+  /** Tracé précis de la zone occupée (≥ 3 sommets) : la part de surface est alors calculée automatiquement. */
+  zoneGps?: GpsPoint[] | null;
 }
 
 export interface TacheUpdateRequest {
@@ -212,11 +214,12 @@ export interface TacheUpdateRequest {
   dateReelle?: string | null;
 }
 
-/** Ajuste une culture déjà en cours (rendement visé, date de récolte et/ou part de surface) sans la remplacer. */
+/** Ajuste une culture déjà en cours (rendement visé, date de récolte, part de surface et/ou zone tracée) sans la remplacer. */
 export interface ObjectifUpdateRequest {
   dateRecolteVisee?: string | null;
   rendementViseTHa?: number | null;
   partSurfacePct?: number | null;
+  zoneGps?: GpsPoint[] | null;
 }
 
 export interface TachePlanning {
@@ -241,8 +244,10 @@ export interface PlanningResponse {
   rendementViseTHa: number | null;
   /** Part de la parcelle occupée par cette culture, en % (null si non précisée). */
   partSurfacePct: number | null;
-  /** Superficie correspondante (ha), calculée à partir de partSurfacePct. */
+  /** Superficie correspondante (ha), calculée à partir de la zone tracée ou de partSurfacePct. */
   superficieAllouee: number | null;
+  /** Tracé GPS précis de la zone occupée par cette culture sur la parcelle (vide si non tracée). */
+  zoneGps: GpsPoint[];
   statut: 'EN_COURS' | 'TERMINE' | 'ABANDONNE';
   taches: TachePlanning[];
 }

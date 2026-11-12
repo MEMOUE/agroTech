@@ -3,6 +3,7 @@ package com.agrotech.agroparcelles.service;
 import com.agrotech.agroparcelles.dto.reponse.PlanningResponse;
 import com.agrotech.agroparcelles.dto.request.ObjectifCultureRequest;
 import com.agrotech.agroparcelles.dto.request.ObjectifUpdateRequest;
+import com.agrotech.agroparcelles.dto.request.ParcelleDtoRequest;
 import com.agrotech.agroparcelles.dto.request.TacheUpdateRequest;
 import com.agrotech.agroparcelles.entity.ObjectifCulture;
 import com.agrotech.agroparcelles.entity.Parcelle;
@@ -35,6 +36,7 @@ public class ObjectifCultureService {
     private final ParcelleRepository parcelleRepository;
     private final CatalogueCultures catalogue;
     private final PlanningGenerator planningGenerator;
+    private final GeometryService geometryService;
 
     /** Tous les objectifs actifs (une culture en cours chacun) de la parcelle, le plus récent d'abord. */
     @Transactional
@@ -54,7 +56,8 @@ public class ObjectifCultureService {
         if (request.getDateSemisPrevue() == null) {
             throw new IllegalArgumentException("La date de semis prévue est obligatoire.");
         }
-        validerPartSurface(parcelleId, request.getPartSurfacePct(), null);
+        ZoneResolue zone = resoudreZone(request.getZoneGps(), request.getPartSurfacePct(), parcelle.getSuperficie());
+        validerPartSurface(parcelleId, zone.partSurfacePct(), null);
 
         Optional<Culture> culture = catalogue.trouver(request.getCulture());
         Integer cycleMin = culture.map(c -> arrondi(c.cycleJoursMin())).orElse(null);
@@ -78,7 +81,8 @@ public class ObjectifCultureService {
                 .dateSemisPrevue(request.getDateSemisPrevue())
                 .dateRecolteVisee(dateRecolte)
                 .rendementViseTHa(request.getRendementViseTHa())
-                .partSurfacePct(request.getPartSurfacePct())
+                .partSurfacePct(zone.partSurfacePct())
+                .zoneGps(zone.zoneGps())
                 .statut(ObjectifCulture.STATUT_EN_COURS)
                 .build();
         objectif = objectifRepository.save(objectif);
@@ -101,9 +105,13 @@ public class ObjectifCultureService {
         if (request.getRendementViseTHa() != null) {
             objectif.setRendementViseTHa(request.getRendementViseTHa());
         }
-        if (request.getPartSurfacePct() != null) {
-            validerPartSurface(parcelleId, request.getPartSurfacePct(), objectifId);
-            objectif.setPartSurfacePct(request.getPartSurfacePct());
+        if (request.getPartSurfacePct() != null || request.getZoneGps() != null) {
+            double superficie = parcelleRepository.findById(parcelleId).map(Parcelle::getSuperficie).orElse(0.0);
+            ZoneResolue zone = resoudreZone(request.getZoneGps(), request.getPartSurfacePct(), superficie);
+            validerPartSurface(parcelleId, zone.partSurfacePct(), objectifId);
+            objectif.setPartSurfacePct(zone.partSurfacePct());
+            // Une part saisie à la main sans nouvelle zone tracée efface l'ancien tracé (devenu incohérent).
+            objectif.setZoneGps(zone.zoneGps());
         }
         if (request.getDateRecolteVisee() != null) {
             objectif.setDateRecolteVisee(request.getDateRecolteVisee());
@@ -119,6 +127,33 @@ public class ObjectifCultureService {
 
         Double superficie = parcelleRepository.findById(parcelleId).map(Parcelle::getSuperficie).orElse(null);
         return toResponse(objectif, tacheRepository.findByObjectifIdOrderByOrdreAsc(objectif.getId()), superficie);
+    }
+
+    private record ZoneResolue(Double partSurfacePct, List<Parcelle.GpsPoint> zoneGps) {}
+
+    /**
+     * Si une zone est tracée (≥ 3 sommets), calcule sa superficie réelle (formule de Shoelace,
+     * {@link GeometryService}) et en déduit la part de la parcelle qu'elle occupe — la part
+     * saisie à la main est alors ignorée (la géométrie est la source de vérité). Sinon, reprend
+     * telle quelle la part saisie manuellement (et aucune zone tracée).
+     */
+    private ZoneResolue resoudreZone(List<ParcelleDtoRequest.GpsPointRequest> zoneReq, Double partSurfacePctSaisie,
+                                      double superficieParcelle) {
+        if (zoneReq == null || zoneReq.isEmpty()) {
+            return new ZoneResolue(partSurfacePctSaisie, List.of());
+        }
+        if (zoneReq.size() < 3) {
+            throw new IllegalArgumentException("La zone tracée sur la carte doit avoir au moins 3 sommets.");
+        }
+        if (superficieParcelle <= 0) {
+            throw new IllegalArgumentException("Superficie de la parcelle inconnue : impossible de calculer la part occupée par la zone tracée.");
+        }
+        List<Parcelle.GpsPoint> zone = zoneReq.stream()
+                .map(p -> new Parcelle.GpsPoint(p.getLat(), p.getLon()))
+                .toList();
+        double aireHa = geometryService.calculerSuperficie(zone);
+        double pct = Math.round(aireHa / superficieParcelle * 100 * 100) / 100.0;
+        return new ZoneResolue(pct, zone);
     }
 
     /**
@@ -218,6 +253,9 @@ public class ObjectifCultureService {
                 .rendementViseTHa(o.getRendementViseTHa())
                 .partSurfacePct(o.getPartSurfacePct())
                 .superficieAllouee(superficieAllouee)
+                .zoneGps(o.getZoneGps() == null ? List.of() : o.getZoneGps().stream()
+                        .map(p -> new PlanningResponse.GpsPoint(p.lat(), p.lon()))
+                        .toList())
                 .statut(o.getStatut())
                 .taches(taches.stream()
                         .map(t -> new PlanningResponse.Tache(t.getId(), t.getType(), t.getLibelle(), t.getOrdre(),

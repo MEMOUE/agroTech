@@ -22,13 +22,21 @@ public class PlanningResponse {
     private LocalDate dateSemisReelle;
     private LocalDate dateRecolteVisee;
     private Double rendementViseTHa;
-    /** Part de la parcelle occupée par cette culture, en % (null si non précisée). */
+    /**
+     * Part de la parcelle occupée par cette culture, en % (null si non précisée). Calculée à
+     * partir de {@code zoneGps} quand une zone est tracée (≥ 3 sommets), sinon reprise telle que
+     * saisie librement par l'utilisateur.
+     */
     private Double partSurfacePct;
-    /** Superficie correspondante (ha), calculée à partir de {@code partSurfacePct} et de la parcelle. */
+    /** Superficie correspondante (ha), calculée à partir de la zone tracée ou de {@code partSurfacePct}. */
     private Double superficieAllouee;
+    /** Tracé GPS précis de la zone occupée par cette culture sur la parcelle (vide si non tracée). */
+    private List<GpsPoint> zoneGps;
     private String statut;
 
     private List<Tache> taches;
+
+    public record GpsPoint(double lat, double lon) {}
 
     /**
      * @param statut A_FAIRE | FAIT

@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, ObjectifCultureRequest, Parcelle, ParcelleMapResponse, PlanningResponse, Recommandation, RecommandationsResponse, SatelliteDataResponse, SolDataResponse, TachePlanning } from '../../../core/models/parcelle.models';
+import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, GpsPoint, ObjectifCultureRequest, Parcelle, ParcelleMapResponse, PlanningResponse, Recommandation, RecommandationsResponse, SatelliteDataResponse, SolDataResponse, TachePlanning } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -128,15 +128,27 @@ export class ParcelleDetailComponent implements OnInit {
   );
   readonly partDisponible = computed(() => Math.max(0, 100 - this.partDejaAlloueeAutres()));
 
-  readonly PALETTE_REPARTITION = ['bg-green-500', 'bg-blue-500', 'bg-amber-500', 'bg-violet-500',
-    'bg-pink-500', 'bg-cyan-500', 'bg-rose-500', 'bg-lime-500'];
+  /** Une couleur (classe Tailwind + hex pour la carte Leaflet) par culture, dans l'ordre d'affichage. */
+  readonly PALETTE_REPARTITION = [
+    { bg: 'bg-green-500',  hex: '#22c55e' }, { bg: 'bg-blue-500',  hex: '#3b82f6' },
+    { bg: 'bg-amber-500',  hex: '#f59e0b' }, { bg: 'bg-violet-500', hex: '#8b5cf6' },
+    { bg: 'bg-pink-500',   hex: '#ec4899' }, { bg: 'bg-cyan-500',  hex: '#06b6d4' },
+    { bg: 'bg-rose-500',   hex: '#f43f5e' }, { bg: 'bg-lime-500',  hex: '#84cc16' },
+  ];
+
+  /** Couleur attribuée à chaque culture active, par id d'objectif (ordre d'affichage des plannings). */
+  readonly couleurParObjectif = computed(() => {
+    const map = new Map<number, { bg: string; hex: string }>();
+    this.plannings().forEach((p, i) => map.set(p.objectifId, this.PALETTE_REPARTITION[i % this.PALETTE_REPARTITION.length]));
+    return map;
+  });
 
   /** Répartition visuelle de la parcelle entre les cultures actives (si au moins une culture a une part précisée). */
   readonly repartition = computed(() => {
     const list = this.plannings();
-    const segments = list.map((p, i) => ({
+    const segments = list.map(p => ({
       culture: p.culture, pct: p.partSurfacePct, ha: p.superficieAllouee,
-      color: this.PALETTE_REPARTITION[i % this.PALETTE_REPARTITION.length],
+      color: this.couleurParObjectif().get(p.objectifId)!.bg,
     }));
     const sommeConnue = segments.reduce((s, x) => s + (x.pct ?? 0), 0);
     return {
@@ -145,6 +157,55 @@ export class ParcelleDetailComponent implements OnInit {
       aDesValeursConnues: segments.some(s => s.pct != null),
     };
   });
+
+  /** Zones précisément tracées (≥ 3 sommets) des cultures actives, à afficher sur la carte de répartition. */
+  readonly zonesTraceesAffichage = computed(() =>
+    this.plannings()
+      .filter(p => p.zoneGps.length >= 3)
+      .map(p => ({ points: p.zoneGps, color: this.couleurParObjectif().get(p.objectifId)!.hex }))
+  );
+
+  /** Zones des autres cultures actives, à afficher en repère dans la fenêtre de dessin d'une zone. */
+  readonly autresZonesPourModal = computed(() =>
+    this.plannings()
+      .filter(p => p.objectifId !== this.editingObjectifId() && p.zoneGps.length >= 3)
+      .map(p => ({ points: p.zoneGps, color: this.couleurParObjectif().get(p.objectifId)!.hex }))
+  );
+
+  /** 'carte' = délimiter précisément la zone sur la carte ; 'pourcentage' = indiquer juste un % de la parcelle. */
+  objectifModeZone = signal<'carte' | 'pourcentage'>('carte');
+  /** Sommets de la zone en cours de tracé pour la culture en cours d'ajout/ajustement. */
+  objectifZoneGps = signal<GpsPoint[]>([]);
+
+  /** Superficie (ha) de la zone en cours de tracé — calcul local indicatif (formule de Shoelace), le backend fait foi. */
+  readonly zoneSuperficie = computed(() => this.calculerSuperficieHa(this.objectifZoneGps()));
+  readonly zonePourcentage = computed(() => {
+    const totale = this.parcelle()?.superficie;
+    return totale ? Math.round(this.zoneSuperficie() / totale * 100 * 100) / 100 : null;
+  });
+
+  private calculerSuperficieHa(points: GpsPoint[]): number {
+    if (points.length < 3) return 0;
+    const latRef = points.reduce((s, p) => s + p.lat, 0) / points.length;
+    const cosLat = Math.cos(latRef * Math.PI / 180);
+    const R = 6_371_000;
+    let aire = 0;
+    for (let i = 0; i < points.length; i++) {
+      const a = points[i], b = points[(i + 1) % points.length];
+      const x1 = a.lon * Math.PI / 180 * cosLat * R, y1 = a.lat * Math.PI / 180 * R;
+      const x2 = b.lon * Math.PI / 180 * cosLat * R, y2 = b.lat * Math.PI / 180 * R;
+      aire += x1 * y2 - x2 * y1;
+    }
+    return Math.round(Math.abs(aire) / 2 / 10_000 * 100) / 100;
+  }
+
+  onZoneMapPoints(pts: GpsPoint[]): void {
+    this.objectifZoneGps.set(pts);
+  }
+
+  effacerZone(): void {
+    this.objectifZoneGps.set([]);
+  }
 
   readonly tacheIcones: Record<string, string> = {
     semis: '🌱', fertilisation_fond: '🧪', sarclage_1: '🌿', fertilisation_couverture: '🧪',
@@ -203,11 +264,13 @@ export class ParcelleDetailComponent implements OnInit {
     this.objectifCultureChoix.set(culture || '');
     // Si d'autres cultures sont déjà en cours, propose par défaut la part encore disponible.
     this.objectifPartSurface.set(this.plannings().length > 0 ? this.partDisponible() : null);
+    this.objectifZoneGps.set([]);
+    this.objectifModeZone.set('carte');
     this.appliquerCultureChoisie();
     this.showObjectifForm.set(true);
   }
 
-  /** Réouvre la fenêtre pour ajuster une culture déjà en cours (rendement visé, date de récolte, part de surface). */
+  /** Réouvre la fenêtre pour ajuster une culture déjà en cours (rendement visé, date de récolte, zone/part de surface). */
   modifierObjectif(pl: PlanningResponse): void {
     this.editingObjectifId.set(pl.objectifId);
     this.dateRecolteManuelle = true;
@@ -217,6 +280,8 @@ export class ParcelleDetailComponent implements OnInit {
     this.objectifDateSemis.set(pl.dateSemisPrevue);
     this.objectifDateRecolte.set(pl.dateRecolteVisee);
     this.objectifPartSurface.set(pl.partSurfacePct);
+    this.objectifZoneGps.set(pl.zoneGps ?? []);
+    this.objectifModeZone.set((pl.zoneGps?.length ?? 0) >= 3 ? 'carte' : 'pourcentage');
     this.objectifErreur.set('');
     this.showObjectifForm.set(true);
   }
@@ -275,12 +340,17 @@ export class ParcelleDetailComponent implements OnInit {
     this.savingObjectif.set(true);
     this.objectifErreur.set('');
 
+    const modeCarte = this.objectifModeZone() === 'carte';
+    const zoneGps = modeCarte && this.objectifZoneGps().length >= 3 ? this.objectifZoneGps() : null;
+    const partSurfacePct = modeCarte ? null : this.objectifPartSurface();
+
     if (objectifId != null) {
-      // Ajustement d'une culture déjà en cours : seuls le rendement, la date de récolte et la part de surface changent.
+      // Ajustement d'une culture déjà en cours : seuls le rendement, la date de récolte et la zone/part de surface changent.
       this.svc.ajusterObjectif(p.id, objectifId, {
         dateRecolteVisee: this.objectifDateRecolte() || null,
         rendementViseTHa: this.objectifRendement(),
-        partSurfacePct: this.objectifPartSurface(),
+        partSurfacePct,
+        zoneGps,
       }).subscribe({
         next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },
         error: e => {
@@ -298,7 +368,8 @@ export class ParcelleDetailComponent implements OnInit {
       dateSemisPrevue: this.objectifDateSemis(),
       dateRecolteVisee: this.objectifDateRecolte() || null,
       rendementViseTHa: this.objectifRendement(),
-      partSurfacePct: this.objectifPartSurface(),
+      partSurfacePct,
+      zoneGps,
     };
     this.svc.definirObjectif(p.id, dto).subscribe({
       next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },
