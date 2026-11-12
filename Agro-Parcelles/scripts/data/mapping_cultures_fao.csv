@@ -1,0 +1,145 @@
+nom_fr,nom_scientifique,type_culture,fao_item,fao_code_produit,correspondance
+Olivier,Olea europaea,arbre fruitier,Olives,260,exacte
+Anacardier (noix de cajou),Anacardium occidentale,culture de rente,"Cashew nuts, in shell",217,exacte
+Cacao,Theobroma cacao,culture de rente,Cocoa beans,661,exacte
+Café arabica,Coffea arabica,culture de rente,"Coffee, green",656,approximative
+Café liberica,Coffea liberica,culture de rente,"Coffee, green",656,approximative
+Café robusta,Coffea canephora,culture de rente,"Coffee, green",656,approximative
+Canne à sucre,Saccharum officinarum,culture de rente,Sugar cane,156,exacte
+Coton,Gossypium barbadense,culture de rente,"Seed cotton, unginned",328,approximative
+Coton,Gossypium hirsutum,culture de rente,"Seed cotton, unginned",328,approximative
+Hévéa (caoutchouc),Hevea brasiliensis,culture de rente,Natural rubber in primary forms,836,exacte
+Kola,Cola acuminata,culture de rente,Kola nuts,224,approximative
+Kola,Cola nitida,culture de rente,Kola nuts,224,approximative
+Palmier à huile,Elaeis guineensis,culture de rente,Oil palm fruit,254,exacte
+Tabac,Nicotiana tabacum,culture de rente,Unmanufactured tobacco,826,exacte
+Thé,Camellia sinensis,culture de rente,Tea leaves,667,exacte
+Thé,Camellia sinensis var. assamica,culture de rente,Tea leaves,667,exacte
+Thé,Camellia sinensis var. sinensis,culture de rente,Tea leaves,667,exacte
+Avoine,Avena sativa,céréale,Oats,75,exacte
+Blé dur,Triticum durum,céréale,Wheat,15,exacte
+Blé tendre,Triticum aestivum,céréale,Wheat,15,exacte
+Fonio blanc,Digitaria exilis,céréale,Fonio,94,exacte
+Maïs,Zea mays,céréale,Maize (corn),56,exacte
+Maïs,Zea mays ssp. mays,céréale,Maize (corn),56,exacte
+Maïs,Zea mays ssp. saccharata,céréale,Maize (corn),56,exacte
+Mil à chandelle,Pennisetum glaucum,céréale,Millet,79,approximative
+Orge,Hordeum vulgare,céréale,Barley,44,exacte
+Riz,Oryza sativa,céréale,Rice,27,exacte
+Riz,Oryza sativa ssp. indica,céréale,Rice,27,exacte
+Riz,Oryza sativa ssp. javanica,céréale,Rice,27,exacte
+Seigle,Secale cereale,céréale,Rye,71,exacte
+Sorgho,Sorghum bicolor,céréale,Sorghum,83,exacte
+Sorgho,Sorghum bicolor var. sweet,céréale,Sorghum,83,exacte
+Teff,Eragrostis tef,céréale,,,
+Éleusine (mil des oiseaux),Eleusine coracana ssp. coracana,céréale,Millet,79,approximative
+Kénaf,Hibiscus cannabinus,fibre,"Kenaf, and other textile bast fibres, raw or retted",782,approximative
+Sisal,Agave sisalana,fibre,"Sisal, raw",789,exacte
+Abricotier,Prunus armeniaca,fruit,Apricots,526,exacte
+Ananas,Ananas comosus,fruit,Pineapples,574,exacte
+Avocatier,Persea americana,fruit,Avocados,572,exacte
+Avocatier,Persea americana ssp. guatemalan,fruit,Avocados,572,exacte
+Avocatier,Persea americana ssp. mexican,fruit,Avocados,572,exacte
+Avocatier,Persea americana ssp. west indian,fruit,Avocados,572,exacte
+Banane / plantain,Musa acuminata,fruit,Bananas,486,approximative
+Banane / plantain,Musa acuminata x balbisiana,fruit,Bananas,486,approximative
+Banane / plantain,Musa balbisiana,fruit,Bananas,486,approximative
+Banane / plantain,Musa halabanensis,fruit,Bananas,486,approximative
+Banane / plantain,Musa salaccensis,fruit,Bananas,486,approximative
+Banane / plantain,Musa sp.,fruit,Bananas,486,approximative
+Caroubier,Ceratonia siliqua,fruit,Locust beans (carobs),461,exacte
+Cerisier,Prunus avium,fruit,Cherries,531,approximative
+Citronnier,Citrus limon,fruit,Lemons and limes,497,approximative
+Cognassier,Cydonia oblonga,fruit,Quinces,523,exacte
+Figuier,Ficus carica,fruit,Figs,569,exacte
+Fraisier,Fragaria chiloensis,fruit,Strawberries,544,approximative
+Fraisier,Fragaria vesca,fruit,Strawberries,544,approximative
+Fraisier,Fragaria virginiana,fruit,Strawberries,544,approximative
+Fraisier,Fragaria x ananassa,fruit,Strawberries,544,approximative
+Mandarinier,Citrus reticulata,fruit,"Tangerines, mandarins, clementines",495,exacte
+Manguier,Mangifera indica,fruit,"Mangoes, guavas and mangosteens",571,approximative
+Noyer,Juglans regia,fruit,"Walnuts, in shell",222,exacte
+Oranger,Citrus sinensis,fruit,Oranges,490,exacte
+Palmier dattier,Phoenix dactylifera,fruit,Dates,577,exacte
+Pamplemoussier,Citrus paradisi,fruit,Pomelos and grapefruits,507,approximative
+Papayer,Carica papaya,fruit,Papayas,600,exacte
+Pistachier,Pistacia vera,fruit,"Pistachios, in shell",223,exacte
+Poirier,Pyrus communis,fruit,Pears,521,exacte
+Pommier,Malus domestica,fruit,Apples,515,approximative
+Prunier,Prunus domestica,fruit,Plums and sloes,536,approximative
+Pêcher,Prunus persica,fruit,Peaches and nectarines,534,approximative
+Vigne,Vitis vinifera,fruit,Grapes,560,exacte
+Ail,Allium sativum,légume,Green garlic,406,approximative
+Artichaut,Cynara scolymus,légume,Artichokes,366,exacte
+Aubergine,Solanum melongena,légume,Eggplants (aubergines),399,exacte
+Betterave / bette,Beta vulgaris,légume,Sugar beet,157,approximative
+Betterave / bette,Beta vulgaris var. cicla,légume,Sugar beet,157,approximative
+Betterave / bette,Beta vulgaris var. crassa,légume,Sugar beet,157,approximative
+Betterave / bette,Beta vulgaris var. flavescens,légume,Sugar beet,157,approximative
+Betterave / bette,Beta vulgaris var. saccharifera,légume,Sugar beet,157,approximative
+Carotte,Daucus carota,légume,Carrots and turnips,426,approximative
+Chou,Brassica oleracea var. acephala,légume,Cabbages,358,approximative
+Chou,Brassica oleracea var. botrytis,légume,Cabbages,358,approximative
+Chou,Brassica oleracea var. capitata,légume,Cabbages,358,approximative
+Chou,Brassica oleracea var. gemmifera,légume,Cabbages,358,approximative
+Chou,Brassica oleracea var. gongyloides,légume,Cabbages,358,approximative
+Chou,Brassica oleracea var. italica,légume,Cabbages,358,approximative
+Concombre,Cucumis sativus,légume,Cucumbers and gherkins,397,exacte
+Courges,Cucurbita ficifolia,légume,"Pumpkins, squash and gourds",394,approximative
+Courges,Cucurbita maxima,légume,"Pumpkins, squash and gourds",394,approximative
+Courges,Cucurbita mixta,légume,"Pumpkins, squash and gourds",394,approximative
+Courges,Cucurbita moschata,légume,"Pumpkins, squash and gourds",394,approximative
+Courges,Cucurbita pepo,légume,"Pumpkins, squash and gourds",394,approximative
+Gombo,Abelmoschus esculentus,légume,Okra,430,exacte
+Laitue,Lactuca sativa var. capitata,légume,Lettuce and chicory,372,approximative
+Melon,Cucumis melo,légume,Cantaloupes and other melons,568,exacte
+Oignon,Allium cepa,légume,"Onions and shallots, dry (excluding dehydrated)",403,approximative
+Oignon,Allium cepa var. aggregatum,légume,"Onions and shallots, dry (excluding dehydrated)",403,approximative
+Oignon,Allium cepa var. cepa,légume,"Onions and shallots, dry (excluding dehydrated)",403,approximative
+Pastèque,Citrullus lanatus,légume,Watermelons,567,exacte
+Tomate,Lycopersicon esculentum,légume,Tomatoes,388,exacte
+Épinard,Spinacia oleracea,légume,Spinach,373,exacte
+Arachide,Arachis hypogaea,légumineuse,"Groundnuts, excluding shelled",242,exacte
+Dolique lablab,Lablab purpureus,légumineuse,,,
+Fève,Vicia faba,légumineuse,"Broad beans and horse beans, dry",181,exacte
+Haricot commun,Phaseolus vulgaris,légumineuse,"Beans, dry",176,approximative
+Lentille,Lens culinaris,légumineuse,"Lentils, dry",201,exacte
+Lupin blanc,Lupinus albus,légumineuse,Lupins,210,approximative
+Mucuna,Mucuna pruriens,légumineuse,,,
+Mucuna,Mucuna pruriens var utilis,légumineuse,,,
+Niébé,Vigna unguiculata,légumineuse,"Cow peas, dry",195,exacte
+Niébé,Vigna unguiculata ssp. biflora,légumineuse,"Cow peas, dry",195,exacte
+Niébé,Vigna unguiculata ssp. sesquipedalis,légumineuse,"Cow peas, dry",195,exacte
+Niébé,Vigna unguiculata ssp. unguiculata,légumineuse,"Cow peas, dry",195,exacte
+Petit pois,Pisum sativum,légumineuse,"Peas, dry",187,exacte
+Pois chiche,Cicer arietinum,légumineuse,"Chick peas, dry",191,exacte
+Pois d'Angole,Cajanus cajan,légumineuse,"Pigeon peas, dry",197,exacte
+Pois de terre (Hausa groundnut),Kerstingiella geocarpa,légumineuse,,,
+Soja,Glycine max,légumineuse,Soya beans,236,exacte
+Voandzou (pois bambara),Vigna subterranea,légumineuse,"Bambara beans, dry",203,exacte
+Carthame,Carthamus tinctorius,oléagineux,Safflower seed,280,exacte
+Cocotier,Cocos nucifera,oléagineux,"Coconuts, in shell",249,exacte
+Colza,Brassica napus,oléagineux,Rape or colza seed,270,exacte
+Colza,Brassica napus var. napobrassica,oléagineux,Rape or colza seed,270,exacte
+Karité,Vitellaria paradoxa,oléagineux,Karite nuts (sheanuts),263,exacte
+Ricin,Ricinus communis,oléagineux,Castor oil seeds,265,exacte
+Sésame,Sesamum indicum,oléagineux,Sesame seed,289,exacte
+Tournesol,Helianthus annuus,oléagineux,Sunflower seed,267,exacte
+Igname ailée,Dioscorea alata,racine/tubercule,Yams,137,approximative
+Igname amère,Dioscorea dumetorum,racine/tubercule,Yams,137,approximative
+Igname blanche,Dioscorea rotundata,racine/tubercule,Yams,137,approximative
+Igname jaune,Dioscorea cayenensis,racine/tubercule,Yams,137,approximative
+Manioc,Manihot esculenta,racine/tubercule,"Cassava, fresh",125,exacte
+Patate douce,Ipomoea batatas,racine/tubercule,Sweet potatoes,122,exacte
+Petite igname,Dioscorea esculenta,racine/tubercule,Yams,137,approximative
+Pomme de terre,Solanum tuberosum,racine/tubercule,Potatoes,116,exacte
+Taro,Colocasia esculenta,racine/tubercule,Taro,136,exacte
+Taro,Colocasia esculenta var. antiquorum,racine/tubercule,Taro,136,exacte
+Cannelle,Cinnamomum verum,épice,"Cinnamon and cinnamon-tree flowers, raw",693,exacte
+Coriandre,Coriandrum sativum,épice,,,
+Fenugrec,Trigonella foenum-graecum,épice,,,
+Gingembre,Zingiber officinale,épice,"Ginger, raw",720,exacte
+Piment,Capsicum chinense,épice,,,
+Piment / poivron,Capsicum annuum,épice,"Chillies and peppers, green (Capsicum spp. and Pimenta spp.)",401,approximative
+Poivre,Piper nigrum,épice,"Pepper (Piper spp.), raw",687,exacte
+Vanille,Vanilla planifolia,épice,"Vanilla, raw",692,exacte

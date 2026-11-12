@@ -29,12 +29,7 @@
   "rendement": {
    "produitFao": "Olives",
    "correspondance": "exacte",
-   "ymax": 10.195,
-   "nObservations": 55,
-   "nPays": 5,
-   "p25": 0.704,
-   "mediane": 1.318,
-   "p75": 1.962
+   "ymax": null
   }
  },
  {
@@ -67,12 +62,12 @@
   "rendement": {
    "produitFao": "Cashew nuts, in shell",
    "correspondance": "exacte",
-   "ymax": 2.131,
-   "nObservations": 189,
+   "nObservations": 104,
    "nPays": 18,
-   "p25": 0.463,
-   "mediane": 0.739,
-   "p75": 1.477
+   "p25": 0.468,
+   "mediane": 0.675,
+   "p75": 1.491,
+   "ymax": 4.19
   }
  },
  {
@@ -103,12 +98,12 @@
   "rendement": {
    "produitFao": "Cocoa beans",
    "correspondance": "exacte",
-   "ymax": 0.893,
-   "nObservations": 209,
+   "nObservations": 114,
    "nPays": 19,
-   "p25": 0.162,
-   "mediane": 0.377,
-   "p75": 0.52
+   "p25": 0.164,
+   "mediane": 0.409,
+   "p75": 0.535,
+   "ymax": 1.125
   }
  },
  {
@@ -140,12 +135,12 @@
   "rendement": {
    "produitFao": "Coffee, green",
    "correspondance": "approximative",
-   "ymax": 1.6,
-   "nObservations": 319,
+   "nObservations": 174,
    "nPays": 29,
-   "p25": 0.277,
-   "mediane": 0.407,
-   "p75": 0.94
+   "p25": 0.303,
+   "mediane": 0.432,
+   "p75": 0.964,
+   "ymax": 3.151
   }
  },
  {
@@ -177,12 +172,12 @@
   "rendement": {
    "produitFao": "Coffee, green",
    "correspondance": "approximative",
-   "ymax": 1.6,
-   "nObservations": 319,
+   "nObservations": 174,
    "nPays": 29,
-   "p25": 0.277,
-   "mediane": 0.407,
-   "p75": 0.94
+   "p25": 0.303,
+   "mediane": 0.432,
+   "p75": 0.964,
+   "ymax": 3.151
   }
  },
  {
@@ -213,12 +208,12 @@
   "rendement": {
    "produitFao": "Coffee, green",
    "correspondance": "approximative",
-   "ymax": 1.6,
-   "nObservations": 319,
+   "nObservations": 174,
    "nPays": 29,
-   "p25": 0.277,
-   "mediane": 0.407,
-   "p75": 0.94
+   "p25": 0.303,
+   "mediane": 0.432,
+   "p75": 0.964,
+   "ymax": 3.151
   }
  },
  {
@@ -244,12 +239,12 @@
   "rendement": {
    "produitFao": "Sugar cane",
    "correspondance": "exacte",
-   "ymax": 111.111,
-   "nObservations": 429,
-   "nPays": 39,
-   "p25": 35.319,
-   "mediane": 59.959,
-   "p75": 77.817
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 35.23,
+   "mediane": 58.396,
+   "p75": 74.429,
+   "ymax": 114.876
   }
  },
  {
@@ -282,12 +277,12 @@
   "rendement": {
    "produitFao": "Seed cotton, unginned",
    "correspondance": "approximative",
-   "ymax": 2.742,
-   "nObservations": 396,
-   "nPays": 36,
-   "p25": 0.587,
-   "mediane": 0.961,
-   "p75": 1.508
+   "nObservations": 192,
+   "nPays": 32,
+   "p25": 0.58,
+   "mediane": 0.898,
+   "p75": 1.341,
+   "ymax": 2.995
   }
  },
  {
@@ -321,12 +316,12 @@
   "rendement": {
    "produitFao": "Seed cotton, unginned",
    "correspondance": "approximative",
-   "ymax": 2.742,
-   "nObservations": 396,
-   "nPays": 36,
-   "p25": 0.587,
-   "mediane": 0.961,
-   "p75": 1.508
+   "nObservations": 192,
+   "nPays": 32,
+   "p25": 0.58,
+   "mediane": 0.898,
+   "p75": 1.341,
+   "ymax": 2.995
   }
  },
  {
@@ -357,12 +352,12 @@
   "rendement": {
    "produitFao": "Natural rubber in primary forms",
    "correspondance": "exacte",
-   "ymax": 1.644,
-   "nObservations": 115,
+   "nObservations": 66,
    "nPays": 11,
-   "p25": 0.803,
-   "mediane": 0.91,
-   "p75": 1.271
+   "p25": 0.802,
+   "mediane": 0.912,
+   "p75": 1.272,
+   "ymax": 1.703
   }
  },
  {
@@ -394,12 +389,12 @@
   "rendement": {
    "produitFao": "Kola nuts",
    "correspondance": "approximative",
-   "ymax": 0.8,
-   "nObservations": 66,
+   "nObservations": 36,
    "nPays": 6,
    "p25": 0.284,
-   "mediane": 0.37,
-   "p75": 0.69
+   "mediane": 0.375,
+   "p75": 0.706,
+   "ymax": 0.79
   }
  },
  {
@@ -430,12 +425,12 @@
   "rendement": {
    "produitFao": "Kola nuts",
    "correspondance": "approximative",
-   "ymax": 0.8,
-   "nObservations": 66,
+   "nObservations": 36,
    "nPays": 6,
    "p25": 0.284,
-   "mediane": 0.37,
-   "p75": 0.69
+   "mediane": 0.375,
+   "p75": 0.706,
+   "ymax": 0.79
   }
  },
  {
@@ -466,12 +461,12 @@
   "rendement": {
    "produitFao": "Oil palm fruit",
    "correspondance": "exacte",
-   "ymax": 15.594,
-   "nObservations": 242,
+   "nObservations": 132,
    "nPays": 22,
    "p25": 7.785,
-   "mediane": 9.875,
-   "p75": 11.626
+   "mediane": 9.866,
+   "p75": 11.715,
+   "ymax": 17.948
   }
  },
  {
@@ -505,12 +500,12 @@
   "rendement": {
    "produitFao": "Unmanufactured tobacco",
    "correspondance": "exacte",
-   "ymax": 14.18,
-   "nObservations": 380,
-   "nPays": 35,
-   "p25": 0.585,
-   "mediane": 0.999,
-   "p75": 1.533
+   "nObservations": 181,
+   "nPays": 31,
+   "p25": 0.512,
+   "mediane": 0.849,
+   "p75": 1.322,
+   "ymax": 3.996
   }
  },
  {
@@ -543,12 +538,12 @@
   "rendement": {
    "produitFao": "Tea leaves",
    "correspondance": "exacte",
-   "ymax": 14.981,
-   "nObservations": 187,
+   "nObservations": 102,
    "nPays": 18,
-   "p25": 1.123,
-   "mediane": 6.489,
-   "p75": 10.45
+   "p25": 1.169,
+   "mediane": 6.466,
+   "p75": 10.432,
+   "ymax": 12.697
   }
  },
  {
@@ -579,12 +574,12 @@
   "rendement": {
    "produitFao": "Tea leaves",
    "correspondance": "exacte",
-   "ymax": 14.981,
-   "nObservations": 187,
+   "nObservations": 102,
    "nPays": 18,
-   "p25": 1.123,
-   "mediane": 6.489,
-   "p75": 10.45
+   "p25": 1.169,
+   "mediane": 6.466,
+   "p75": 10.432,
+   "ymax": 12.697
   }
  },
  {
@@ -617,12 +612,12 @@
   "rendement": {
    "produitFao": "Tea leaves",
    "correspondance": "exacte",
-   "ymax": 14.981,
-   "nObservations": 187,
+   "nObservations": 102,
    "nPays": 18,
-   "p25": 1.123,
-   "mediane": 6.489,
-   "p75": 10.45
+   "p25": 1.169,
+   "mediane": 6.466,
+   "p75": 10.432,
+   "ymax": 12.697
   }
  },
  {
@@ -657,12 +652,12 @@
   "rendement": {
    "produitFao": "Oats",
    "correspondance": "exacte",
-   "ymax": 2.524,
-   "nObservations": 99,
-   "nPays": 9,
-   "p25": 0.884,
-   "mediane": 1.113,
-   "p75": 1.675
+   "nObservations": 36,
+   "nPays": 6,
+   "p25": 0.991,
+   "mediane": 1.541,
+   "p75": 1.932,
+   "ymax": 2.176
   }
  },
  {
@@ -696,12 +691,12 @@
   "rendement": {
    "produitFao": "Wheat",
    "correspondance": "exacte",
-   "ymax": 6.47,
-   "nObservations": 348,
-   "nPays": 32,
-   "p25": 1.102,
-   "mediane": 1.667,
-   "p75": 2.642
+   "nObservations": 162,
+   "nPays": 27,
+   "p25": 1.1,
+   "mediane": 1.704,
+   "p75": 2.9,
+   "ymax": 7.592
   }
  },
  {
@@ -735,12 +730,12 @@
   "rendement": {
    "produitFao": "Wheat",
    "correspondance": "exacte",
-   "ymax": 6.47,
-   "nObservations": 348,
-   "nPays": 32,
-   "p25": 1.102,
-   "mediane": 1.667,
-   "p75": 2.642
+   "nObservations": 162,
+   "nPays": 27,
+   "p25": 1.1,
+   "mediane": 1.704,
+   "p75": 2.9,
+   "ymax": 7.592
   }
  },
  {
@@ -772,12 +767,12 @@
   "rendement": {
    "produitFao": "Fonio",
    "correspondance": "exacte",
-   "ymax": 1.322,
-   "nObservations": 118,
+   "nObservations": 66,
    "nPays": 11,
-   "p25": 0.621,
-   "mediane": 0.721,
-   "p75": 0.82
+   "p25": 0.635,
+   "mediane": 0.727,
+   "p75": 0.86,
+   "ymax": 1.421
   }
  },
  {
@@ -803,12 +798,12 @@
   "rendement": {
    "produitFao": "Maize (corn)",
    "correspondance": "exacte",
-   "ymax": 4.998,
-   "nObservations": 550,
-   "nPays": 50,
-   "p25": 0.964,
-   "mediane": 1.521,
-   "p75": 2.029
+   "nObservations": 276,
+   "nPays": 46,
+   "p25": 0.996,
+   "mediane": 1.492,
+   "p75": 2.006,
+   "ymax": 11.89
   }
  },
  {
@@ -842,12 +837,12 @@
   "rendement": {
    "produitFao": "Maize (corn)",
    "correspondance": "exacte",
-   "ymax": 4.998,
-   "nObservations": 550,
-   "nPays": 50,
-   "p25": 0.964,
-   "mediane": 1.521,
-   "p75": 2.029
+   "nObservations": 276,
+   "nPays": 46,
+   "p25": 0.996,
+   "mediane": 1.492,
+   "p75": 2.006,
+   "ymax": 11.89
   }
  },
  {
@@ -881,12 +876,12 @@
   "rendement": {
    "produitFao": "Maize (corn)",
    "correspondance": "exacte",
-   "ymax": 4.998,
-   "nObservations": 550,
-   "nPays": 50,
-   "p25": 0.964,
-   "mediane": 1.521,
-   "p75": 2.029
+   "nObservations": 276,
+   "nPays": 46,
+   "p25": 0.996,
+   "mediane": 1.492,
+   "p75": 2.006,
+   "ymax": 11.89
   }
  },
  {
@@ -919,12 +914,12 @@
   "rendement": {
    "produitFao": "Millet",
    "correspondance": "approximative",
-   "ymax": 1.63,
-   "nObservations": 418,
-   "nPays": 38,
-   "p25": 0.508,
-   "mediane": 0.826,
-   "p75": 1.096
+   "nObservations": 216,
+   "nPays": 36,
+   "p25": 0.489,
+   "mediane": 0.815,
+   "p75": 1.067,
+   "ymax": 2.56
   }
  },
  {
@@ -957,12 +952,12 @@
   "rendement": {
    "produitFao": "Barley",
    "correspondance": "exacte",
-   "ymax": 6.6,
-   "nObservations": 165,
-   "nPays": 15,
-   "p25": 0.842,
-   "mediane": 1.896,
-   "p75": 3.542
+   "nObservations": 60,
+   "nPays": 10,
+   "p25": 1.444,
+   "mediane": 2.48,
+   "p75": 3.573,
+   "ymax": 8.108
   }
  },
  {
@@ -993,12 +988,12 @@
   "rendement": {
    "produitFao": "Rice",
    "correspondance": "exacte",
-   "ymax": 6.0,
-   "nObservations": 467,
-   "nPays": 43,
-   "p25": 1.314,
-   "mediane": 2.04,
-   "p75": 3.239
+   "nObservations": 235,
+   "nPays": 40,
+   "p25": 1.272,
+   "mediane": 2.0,
+   "p75": 3.091,
+   "ymax": 6.553
   }
  },
  {
@@ -1030,12 +1025,12 @@
   "rendement": {
    "produitFao": "Rice",
    "correspondance": "exacte",
-   "ymax": 6.0,
-   "nObservations": 467,
-   "nPays": 43,
-   "p25": 1.314,
-   "mediane": 2.04,
-   "p75": 3.239
+   "nObservations": 235,
+   "nPays": 40,
+   "p25": 1.272,
+   "mediane": 2.0,
+   "p75": 3.091,
+   "ymax": 6.553
   }
  },
  {
@@ -1065,12 +1060,12 @@
   "rendement": {
    "produitFao": "Rice",
    "correspondance": "exacte",
-   "ymax": 6.0,
-   "nObservations": 467,
-   "nPays": 43,
-   "p25": 1.314,
-   "mediane": 2.04,
-   "p75": 3.239
+   "nObservations": 235,
+   "nPays": 40,
+   "p25": 1.272,
+   "mediane": 2.0,
+   "p75": 3.091,
+   "ymax": 6.553
   }
  },
  {
@@ -1103,12 +1098,12 @@
   "rendement": {
    "produitFao": "Rye",
    "correspondance": "exacte",
-   "ymax": 2.0,
-   "nObservations": 33,
-   "nPays": 3,
-   "p25": 0.652,
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 1.096,
    "mediane": 1.097,
-   "p75": 1.998
+   "p75": 1.098,
+   "ymax": 1.101
   }
  },
  {
@@ -1141,12 +1136,12 @@
   "rendement": {
    "produitFao": "Sorghum",
    "correspondance": "exacte",
-   "ymax": 3.346,
-   "nObservations": 473,
-   "nPays": 43,
-   "p25": 0.563,
-   "mediane": 0.88,
-   "p75": 1.085
+   "nObservations": 234,
+   "nPays": 39,
+   "p25": 0.562,
+   "mediane": 0.887,
+   "p75": 1.079,
+   "ymax": 4.37
   }
  },
  {
@@ -1179,12 +1174,12 @@
   "rendement": {
    "produitFao": "Sorghum",
    "correspondance": "exacte",
-   "ymax": 3.346,
-   "nObservations": 473,
-   "nPays": 43,
-   "p25": 0.563,
-   "mediane": 0.88,
-   "p75": 1.085
+   "nObservations": 234,
+   "nPays": 39,
+   "p25": 0.562,
+   "mediane": 0.887,
+   "p75": 1.079,
+   "ymax": 4.37
   }
  },
  {
@@ -1216,7 +1211,9 @@
    "D"
   ],
   "rendement": {
-   "ymax": 1.811
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -1248,12 +1245,12 @@
   "rendement": {
    "produitFao": "Millet",
    "correspondance": "approximative",
-   "ymax": 1.63,
-   "nObservations": 418,
-   "nPays": 38,
-   "p25": 0.508,
-   "mediane": 0.826,
-   "p75": 1.096
+   "nObservations": 216,
+   "nPays": 36,
+   "p25": 0.489,
+   "mediane": 0.815,
+   "p75": 1.067,
+   "ymax": 2.56
   }
  },
  {
@@ -1287,12 +1284,12 @@
   "rendement": {
    "produitFao": "Kenaf, and other textile bast fibres, raw or retted",
    "correspondance": "approximative",
-   "ymax": 1.39,
-   "nObservations": 99,
+   "nObservations": 54,
    "nPays": 9,
-   "p25": 0.383,
+   "p25": 0.384,
    "mediane": 0.569,
-   "p75": 0.711
+   "p75": 0.679,
+   "ymax": 1.552
   }
  },
  {
@@ -1324,12 +1321,12 @@
   "rendement": {
    "produitFao": "Sisal, raw",
    "correspondance": "exacte",
-   "ymax": 1.667,
-   "nObservations": 132,
-   "nPays": 12,
-   "p25": 0.29,
-   "mediane": 0.635,
-   "p75": 0.942
+   "nObservations": 66,
+   "nPays": 11,
+   "p25": 0.235,
+   "mediane": 0.711,
+   "p75": 1.037,
+   "ymax": 2.025
   }
  },
  {
@@ -1360,12 +1357,12 @@
   "rendement": {
    "produitFao": "Apricots",
    "correspondance": "exacte",
-   "ymax": 15.469,
-   "nObservations": 110,
-   "nPays": 10,
-   "p25": 4.967,
-   "mediane": 5.696,
-   "p75": 8.185
+   "nObservations": 30,
+   "nPays": 5,
+   "p25": 4.478,
+   "mediane": 5.351,
+   "p75": 8.177,
+   "ymax": 8.648
   }
  },
  {
@@ -1397,20 +1394,20 @@
   "rendement": {
    "produitFao": "Pineapples",
    "correspondance": "exacte",
-   "ymax": 65.0,
-   "nObservations": 330,
+   "nObservations": 180,
    "nPays": 30,
-   "p25": 5.018,
-   "mediane": 8.479,
-   "p75": 24.505
+   "p25": 5.411,
+   "mediane": 8.488,
+   "p75": 24.504,
+   "ymax": 68.629
   }
  },
  {
   "nom": "Avocatier",
   "nomScientifique": "Persea americana",
   "type": "fruit",
-  "cycleJoursMin": null,
-  "cycleJoursMax": null,
+  "cycleJoursMin": 0.0,
+  "cycleJoursMax": 0.0,
   "tempMin": 10.0,
   "tempOptMin": 14.0,
   "tempOptMax": 40.0,
@@ -1432,12 +1429,12 @@
   "rendement": {
    "produitFao": "Avocados",
    "correspondance": "exacte",
-   "ymax": 29.935,
-   "nObservations": 204,
-   "nPays": 20,
-   "p25": 5.241,
-   "mediane": 7.237,
-   "p75": 11.548
+   "nObservations": 99,
+   "nPays": 17,
+   "p25": 5.675,
+   "mediane": 7.146,
+   "p75": 11.567,
+   "ymax": 46.0
   }
  },
  {
@@ -1470,12 +1467,12 @@
   "rendement": {
    "produitFao": "Avocados",
    "correspondance": "exacte",
-   "ymax": 29.935,
-   "nObservations": 204,
-   "nPays": 20,
-   "p25": 5.241,
-   "mediane": 7.237,
-   "p75": 11.548
+   "nObservations": 99,
+   "nPays": 17,
+   "p25": 5.675,
+   "mediane": 7.146,
+   "p75": 11.567,
+   "ymax": 46.0
   }
  },
  {
@@ -1508,12 +1505,12 @@
   "rendement": {
    "produitFao": "Avocados",
    "correspondance": "exacte",
-   "ymax": 29.935,
-   "nObservations": 204,
-   "nPays": 20,
-   "p25": 5.241,
-   "mediane": 7.237,
-   "p75": 11.548
+   "nObservations": 99,
+   "nPays": 17,
+   "p25": 5.675,
+   "mediane": 7.146,
+   "p75": 11.567,
+   "ymax": 46.0
   }
  },
  {
@@ -1543,12 +1540,12 @@
   "rendement": {
    "produitFao": "Avocados",
    "correspondance": "exacte",
-   "ymax": 29.935,
-   "nObservations": 204,
-   "nPays": 20,
-   "p25": 5.241,
-   "mediane": 7.237,
-   "p75": 11.548
+   "nObservations": 99,
+   "nPays": 17,
+   "p25": 5.675,
+   "mediane": 7.146,
+   "p75": 11.567,
+   "ymax": 46.0
   }
  },
  {
@@ -1581,12 +1578,12 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
@@ -1619,12 +1616,12 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
@@ -1655,12 +1652,12 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
@@ -1692,12 +1689,12 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
@@ -1728,20 +1725,20 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
   "nom": "Banane / plantain",
   "nomScientifique": "Musa sp.",
   "type": "fruit",
-  "cycleJoursMin": null,
-  "cycleJoursMax": null,
+  "cycleJoursMin": 0.0,
+  "cycleJoursMax": 0.0,
   "tempMin": 13.0,
   "tempOptMin": 22.0,
   "tempOptMax": 32.0,
@@ -1764,12 +1761,12 @@
   "rendement": {
    "produitFao": "Bananas",
    "correspondance": "approximative",
-   "ymax": 44.44,
-   "nObservations": 440,
-   "nPays": 40,
-   "p25": 6.818,
-   "mediane": 13.005,
-   "p75": 24.654
+   "nObservations": 222,
+   "nPays": 37,
+   "p25": 6.178,
+   "mediane": 12.074,
+   "p75": 20.528,
+   "ymax": 63.101
   }
  },
  {
@@ -1802,12 +1799,7 @@
   "rendement": {
    "produitFao": "Locust beans (carobs)",
    "correspondance": "exacte",
-   "ymax": 4.827,
-   "nObservations": 33,
-   "nPays": 3,
-   "p25": 2.04,
-   "mediane": 2.116,
-   "p75": 4.499
+   "ymax": null
   }
  },
  {
@@ -1840,12 +1832,12 @@
   "rendement": {
    "produitFao": "Cherries",
    "correspondance": "approximative",
-   "ymax": 6.379,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 1.871,
-   "mediane": 3.222,
-   "p75": 4.482
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 1.583,
+   "mediane": 1.608,
+   "p75": 1.645,
+   "ymax": 1.661
   }
  },
  {
@@ -1878,12 +1870,12 @@
   "rendement": {
    "produitFao": "Lemons and limes",
    "correspondance": "approximative",
-   "ymax": 22.053,
-   "nObservations": 275,
-   "nPays": 25,
-   "p25": 5.573,
-   "mediane": 8.548,
-   "p75": 15.053
+   "nObservations": 120,
+   "nPays": 20,
+   "p25": 5.423,
+   "mediane": 6.387,
+   "p75": 11.66,
+   "ymax": 42.403
   }
  },
  {
@@ -1917,12 +1909,12 @@
   "rendement": {
    "produitFao": "Quinces",
    "correspondance": "exacte",
-   "ymax": 13.621,
-   "nObservations": 55,
-   "nPays": 5,
-   "p25": 7.209,
-   "mediane": 9.433,
-   "p75": 11.231
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 11.517,
+   "mediane": 12.135,
+   "p75": 12.593,
+   "ymax": 13.376
   }
  },
  {
@@ -1955,12 +1947,12 @@
   "rendement": {
    "produitFao": "Figs",
    "correspondance": "exacte",
-   "ymax": 6.96,
-   "nObservations": 77,
-   "nPays": 7,
-   "p25": 2.311,
-   "mediane": 2.897,
-   "p75": 3.572
+   "nObservations": 12,
+   "nPays": 2,
+   "p25": 2.773,
+   "mediane": 3.032,
+   "p75": 3.321,
+   "ymax": 3.381
   }
  },
  {
@@ -1992,12 +1984,12 @@
   "rendement": {
    "produitFao": "Strawberries",
    "correspondance": "approximative",
-   "ymax": 45.309,
-   "nObservations": 74,
-   "nPays": 7,
-   "p25": 4.674,
-   "mediane": 12.205,
-   "p75": 37.017
+   "nObservations": 24,
+   "nPays": 4,
+   "p25": 3.712,
+   "mediane": 4.71,
+   "p75": 12.088,
+   "ymax": 33.044
   }
  },
  {
@@ -2031,12 +2023,12 @@
   "rendement": {
    "produitFao": "Strawberries",
    "correspondance": "approximative",
-   "ymax": 45.309,
-   "nObservations": 74,
-   "nPays": 7,
-   "p25": 4.674,
-   "mediane": 12.205,
-   "p75": 37.017
+   "nObservations": 24,
+   "nPays": 4,
+   "p25": 3.712,
+   "mediane": 4.71,
+   "p75": 12.088,
+   "ymax": 33.044
   }
  },
  {
@@ -2069,12 +2061,12 @@
   "rendement": {
    "produitFao": "Strawberries",
    "correspondance": "approximative",
-   "ymax": 45.309,
-   "nObservations": 74,
-   "nPays": 7,
-   "p25": 4.674,
-   "mediane": 12.205,
-   "p75": 37.017
+   "nObservations": 24,
+   "nPays": 4,
+   "p25": 3.712,
+   "mediane": 4.71,
+   "p75": 12.088,
+   "ymax": 33.044
   }
  },
  {
@@ -2108,12 +2100,12 @@
   "rendement": {
    "produitFao": "Strawberries",
    "correspondance": "approximative",
-   "ymax": 45.309,
-   "nObservations": 74,
-   "nPays": 7,
-   "p25": 4.674,
-   "mediane": 12.205,
-   "p75": 37.017
+   "nObservations": 24,
+   "nPays": 4,
+   "p25": 3.712,
+   "mediane": 4.71,
+   "p75": 12.088,
+   "ymax": 33.044
   }
  },
  {
@@ -2146,12 +2138,12 @@
   "rendement": {
    "produitFao": "Tangerines, mandarins, clementines",
    "correspondance": "exacte",
-   "ymax": 26.792,
-   "nObservations": 187,
-   "nPays": 17,
-   "p25": 4.149,
-   "mediane": 8.675,
-   "p75": 14.889
+   "nObservations": 72,
+   "nPays": 12,
+   "p25": 4.009,
+   "mediane": 7.647,
+   "p75": 9.044,
+   "ymax": 42.257
   }
  },
  {
@@ -2184,12 +2176,12 @@
   "rendement": {
    "produitFao": "Mangoes, guavas and mangosteens",
    "correspondance": "approximative",
-   "ymax": 20.523,
-   "nObservations": 395,
-   "nPays": 36,
+   "nObservations": 204,
+   "nPays": 34,
    "p25": 4.744,
-   "mediane": 7.214,
-   "p75": 12.371
+   "mediane": 7.177,
+   "p75": 12.338,
+   "ymax": 37.89
   }
  },
  {
@@ -2221,12 +2213,12 @@
   "rendement": {
    "produitFao": "Walnuts, in shell",
    "correspondance": "exacte",
-   "ymax": 5.356,
-   "nObservations": 33,
-   "nPays": 3,
-   "p25": 1.493,
-   "mediane": 1.694,
-   "p75": 5.202
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 1.475,
+   "mediane": 1.488,
+   "p75": 1.503,
+   "ymax": 1.506
   }
  },
  {
@@ -2259,12 +2251,12 @@
   "rendement": {
    "produitFao": "Oranges",
    "correspondance": "exacte",
-   "ymax": 35.406,
-   "nObservations": 384,
-   "nPays": 35,
-   "p25": 5.004,
-   "mediane": 9.415,
-   "p75": 15.432
+   "nObservations": 180,
+   "nPays": 30,
+   "p25": 4.673,
+   "mediane": 8.006,
+   "p75": 13.849,
+   "ymax": 45.8
   }
  },
  {
@@ -2296,12 +2288,12 @@
   "rendement": {
    "produitFao": "Dates",
    "correspondance": "exacte",
-   "ymax": 28.063,
-   "nObservations": 187,
-   "nPays": 17,
-   "p25": 2.443,
-   "mediane": 3.18,
-   "p75": 5.427
+   "nObservations": 72,
+   "nPays": 12,
+   "p25": 2.433,
+   "mediane": 2.811,
+   "p75": 4.017,
+   "ymax": 12.576
   }
  },
  {
@@ -2334,12 +2326,12 @@
   "rendement": {
    "produitFao": "Pomelos and grapefruits",
    "correspondance": "approximative",
-   "ymax": 27.32,
-   "nObservations": 209,
-   "nPays": 19,
-   "p25": 7.867,
-   "mediane": 11.024,
-   "p75": 15.872
+   "nObservations": 90,
+   "nPays": 15,
+   "p25": 7.636,
+   "mediane": 10.521,
+   "p75": 14.888,
+   "ymax": 31.158
   }
  },
  {
@@ -2370,12 +2362,12 @@
   "rendement": {
    "produitFao": "Papayas",
    "correspondance": "exacte",
-   "ymax": 27.016,
-   "nObservations": 178,
-   "nPays": 17,
-   "p25": 9.127,
-   "mediane": 12.017,
-   "p75": 16.926
+   "nObservations": 90,
+   "nPays": 15,
+   "p25": 9.135,
+   "mediane": 11.08,
+   "p75": 16.489,
+   "ymax": 48.135
   }
  },
  {
@@ -2408,12 +2400,12 @@
   "rendement": {
    "produitFao": "Pistachios, in shell",
    "correspondance": "exacte",
-   "ymax": 2.854,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 0.315,
-   "mediane": 0.866,
-   "p75": 2.124
+   "nObservations": 12,
+   "nPays": 2,
+   "p25": 0.38,
+   "mediane": 1.016,
+   "p75": 1.712,
+   "ymax": 1.769
   }
  },
  {
@@ -2445,12 +2437,12 @@
   "rendement": {
    "produitFao": "Pears",
    "correspondance": "exacte",
-   "ymax": 31.187,
-   "nObservations": 121,
-   "nPays": 11,
-   "p25": 4.88,
-   "mediane": 7.458,
-   "p75": 11.041
+   "nObservations": 36,
+   "nPays": 6,
+   "p25": 5.986,
+   "mediane": 6.527,
+   "p75": 7.988,
+   "ymax": 38.041
   }
  },
  {
@@ -2482,12 +2474,12 @@
   "rendement": {
    "produitFao": "Apples",
    "correspondance": "approximative",
-   "ymax": 41.274,
-   "nObservations": 110,
-   "nPays": 10,
-   "p25": 4.585,
-   "mediane": 16.257,
-   "p75": 25.18
+   "nObservations": 30,
+   "nPays": 5,
+   "p25": 3.536,
+   "mediane": 4.34,
+   "p75": 24.427,
+   "ymax": 42.688
   }
  },
  {
@@ -2519,12 +2511,12 @@
   "rendement": {
    "produitFao": "Plums and sloes",
    "correspondance": "approximative",
-   "ymax": 13.779,
-   "nObservations": 140,
-   "nPays": 13,
-   "p25": 5.079,
-   "mediane": 5.834,
-   "p75": 8.092
+   "nObservations": 48,
+   "nPays": 8,
+   "p25": 4.93,
+   "mediane": 5.509,
+   "p75": 6.64,
+   "ymax": 16.09
   }
  },
  {
@@ -2555,12 +2547,12 @@
   "rendement": {
    "produitFao": "Peaches and nectarines",
    "correspondance": "approximative",
-   "ymax": 18.926,
-   "nObservations": 132,
-   "nPays": 12,
-   "p25": 6.619,
-   "mediane": 9.081,
-   "p75": 15.55
+   "nObservations": 42,
+   "nPays": 7,
+   "p25": 5.776,
+   "mediane": 7.05,
+   "p75": 17.814,
+   "ymax": 27.0
   }
  },
  {
@@ -2594,12 +2586,12 @@
   "rendement": {
    "produitFao": "Grapes",
    "correspondance": "exacte",
-   "ymax": 21.236,
-   "nObservations": 129,
-   "nPays": 12,
-   "p25": 4.5,
-   "mediane": 6.65,
-   "p75": 8.61
+   "nObservations": 42,
+   "nPays": 7,
+   "p25": 4.203,
+   "mediane": 5.479,
+   "p75": 8.206,
+   "ymax": 17.998
   }
  },
  {
@@ -2632,12 +2624,12 @@
   "rendement": {
    "produitFao": "Green garlic",
    "correspondance": "approximative",
-   "ymax": 22.486,
-   "nObservations": 191,
-   "nPays": 18,
-   "p25": 5.697,
-   "mediane": 8.21,
-   "p75": 13.056
+   "nObservations": 78,
+   "nPays": 13,
+   "p25": 5.264,
+   "mediane": 6.98,
+   "p75": 13.056,
+   "ymax": 17.611
   }
  },
  {
@@ -2671,12 +2663,12 @@
   "rendement": {
    "produitFao": "Artichokes",
    "correspondance": "exacte",
-   "ymax": 23.16,
-   "nObservations": 66,
-   "nPays": 6,
-   "p25": 7.066,
-   "mediane": 13.555,
-   "p75": 19.108
+   "nObservations": 12,
+   "nPays": 2,
+   "p25": 5.304,
+   "mediane": 9.055,
+   "p75": 12.623,
+   "ymax": 12.679
   }
  },
  {
@@ -2710,12 +2702,12 @@
   "rendement": {
    "produitFao": "Eggplants (aubergines)",
    "correspondance": "exacte",
-   "ymax": 28.004,
-   "nObservations": 218,
-   "nPays": 21,
-   "p25": 7.7,
-   "mediane": 13.649,
-   "p75": 19.773
+   "nObservations": 92,
+   "nPays": 16,
+   "p25": 6.904,
+   "mediane": 10.12,
+   "p75": 15.99,
+   "ymax": 30.554
   }
  },
  {
@@ -2749,12 +2741,12 @@
   "rendement": {
    "produitFao": "Sugar beet",
    "correspondance": "approximative",
-   "ymax": 64.589,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 39.314,
-   "mediane": 51.954,
-   "p75": 59.583
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 14.373,
+   "mediane": 15.14,
+   "p75": 15.47,
+   "ymax": 16.482
   }
  },
  {
@@ -2787,12 +2779,12 @@
   "rendement": {
    "produitFao": "Sugar beet",
    "correspondance": "approximative",
-   "ymax": 64.589,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 39.314,
-   "mediane": 51.954,
-   "p75": 59.583
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 14.373,
+   "mediane": 15.14,
+   "p75": 15.47,
+   "ymax": 16.482
   }
  },
  {
@@ -2827,12 +2819,12 @@
   "rendement": {
    "produitFao": "Sugar beet",
    "correspondance": "approximative",
-   "ymax": 64.589,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 39.314,
-   "mediane": 51.954,
-   "p75": 59.583
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 14.373,
+   "mediane": 15.14,
+   "p75": 15.47,
+   "ymax": 16.482
   }
  },
  {
@@ -2866,12 +2858,12 @@
   "rendement": {
    "produitFao": "Sugar beet",
    "correspondance": "approximative",
-   "ymax": 64.589,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 39.314,
-   "mediane": 51.954,
-   "p75": 59.583
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 14.373,
+   "mediane": 15.14,
+   "p75": 15.47,
+   "ymax": 16.482
   }
  },
  {
@@ -2903,12 +2895,12 @@
   "rendement": {
    "produitFao": "Sugar beet",
    "correspondance": "approximative",
-   "ymax": 64.589,
-   "nObservations": 44,
-   "nPays": 4,
-   "p25": 39.314,
-   "mediane": 51.954,
-   "p75": 59.583
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 14.373,
+   "mediane": 15.14,
+   "p75": 15.47,
+   "ymax": 16.482
   }
  },
  {
@@ -2942,12 +2934,12 @@
   "rendement": {
    "produitFao": "Carrots and turnips",
    "correspondance": "approximative",
-   "ymax": 32.069,
-   "nObservations": 285,
-   "nPays": 27,
-   "p25": 7.086,
-   "mediane": 15.985,
-   "p75": 25.248
+   "nObservations": 132,
+   "nPays": 22,
+   "p25": 6.738,
+   "mediane": 14.399,
+   "p75": 22.494,
+   "ymax": 58.1
   }
  },
  {
@@ -2984,12 +2976,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3023,12 +3015,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3062,12 +3054,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3102,12 +3094,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3139,12 +3131,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3178,12 +3170,12 @@
   "rendement": {
    "produitFao": "Cabbages",
    "correspondance": "approximative",
-   "ymax": 41.474,
-   "nObservations": 307,
-   "nPays": 29,
-   "p25": 13.234,
-   "mediane": 18.45,
-   "p75": 28.003
+   "nObservations": 140,
+   "nPays": 24,
+   "p25": 13.0,
+   "mediane": 17.185,
+   "p75": 26.597,
+   "ymax": 58.803
   }
  },
  {
@@ -3217,12 +3209,12 @@
   "rendement": {
    "produitFao": "Cucumbers and gherkins",
    "correspondance": "exacte",
-   "ymax": 37.538,
-   "nObservations": 252,
-   "nPays": 24,
-   "p25": 8.192,
-   "mediane": 14.059,
-   "p75": 21.974
+   "nObservations": 110,
+   "nPays": 19,
+   "p25": 4.765,
+   "mediane": 12.435,
+   "p75": 17.609,
+   "ymax": 94.129
   }
  },
  {
@@ -3254,12 +3246,12 @@
   "rendement": {
    "produitFao": "Pumpkins, squash and gourds",
    "correspondance": "approximative",
-   "ymax": 36.253,
-   "nObservations": 236,
-   "nPays": 23,
-   "p25": 8.767,
-   "mediane": 15.825,
-   "p75": 21.984
+   "nObservations": 104,
+   "nPays": 18,
+   "p25": 6.411,
+   "mediane": 13.088,
+   "p75": 18.229,
+   "ymax": 32.314
   }
  },
  {
@@ -3295,12 +3287,12 @@
   "rendement": {
    "produitFao": "Pumpkins, squash and gourds",
    "correspondance": "approximative",
-   "ymax": 36.253,
-   "nObservations": 236,
-   "nPays": 23,
-   "p25": 8.767,
-   "mediane": 15.825,
-   "p75": 21.984
+   "nObservations": 104,
+   "nPays": 18,
+   "p25": 6.411,
+   "mediane": 13.088,
+   "p75": 18.229,
+   "ymax": 32.314
   }
  },
  {
@@ -3333,12 +3325,12 @@
   "rendement": {
    "produitFao": "Pumpkins, squash and gourds",
    "correspondance": "approximative",
-   "ymax": 36.253,
-   "nObservations": 236,
-   "nPays": 23,
-   "p25": 8.767,
-   "mediane": 15.825,
-   "p75": 21.984
+   "nObservations": 104,
+   "nPays": 18,
+   "p25": 6.411,
+   "mediane": 13.088,
+   "p75": 18.229,
+   "ymax": 32.314
   }
  },
  {
@@ -3372,12 +3364,12 @@
   "rendement": {
    "produitFao": "Pumpkins, squash and gourds",
    "correspondance": "approximative",
-   "ymax": 36.253,
-   "nObservations": 236,
-   "nPays": 23,
-   "p25": 8.767,
-   "mediane": 15.825,
-   "p75": 21.984
+   "nObservations": 104,
+   "nPays": 18,
+   "p25": 6.411,
+   "mediane": 13.088,
+   "p75": 18.229,
+   "ymax": 32.314
   }
  },
  {
@@ -3411,12 +3403,12 @@
   "rendement": {
    "produitFao": "Pumpkins, squash and gourds",
    "correspondance": "approximative",
-   "ymax": 36.253,
-   "nObservations": 236,
-   "nPays": 23,
-   "p25": 8.767,
-   "mediane": 15.825,
-   "p75": 21.984
+   "nObservations": 104,
+   "nPays": 18,
+   "p25": 6.411,
+   "mediane": 13.088,
+   "p75": 18.229,
+   "ymax": 32.314
   }
  },
  {
@@ -3451,12 +3443,12 @@
   "rendement": {
    "produitFao": "Okra",
    "correspondance": "exacte",
-   "ymax": 20.904,
-   "nObservations": 210,
-   "nPays": 21,
-   "p25": 2.53,
-   "mediane": 6.052,
-   "p75": 11.546
+   "nObservations": 115,
+   "nPays": 20,
+   "p25": 2.46,
+   "mediane": 5.0,
+   "p75": 11.131,
+   "ymax": 38.453
   }
  },
  {
@@ -3489,12 +3481,12 @@
   "rendement": {
    "produitFao": "Lettuce and chicory",
    "correspondance": "approximative",
-   "ymax": 39.559,
-   "nObservations": 184,
-   "nPays": 17,
-   "p25": 9.708,
-   "mediane": 16.375,
-   "p75": 21.65
+   "nObservations": 84,
+   "nPays": 14,
+   "p25": 7.09,
+   "mediane": 14.477,
+   "p75": 26.183,
+   "ymax": 41.872
   }
  },
  {
@@ -3527,12 +3519,12 @@
   "rendement": {
    "produitFao": "Cantaloupes and other melons",
    "correspondance": "exacte",
-   "ymax": 28.635,
-   "nObservations": 165,
-   "nPays": 15,
-   "p25": 9.789,
-   "mediane": 15.234,
-   "p75": 23.189
+   "nObservations": 66,
+   "nPays": 11,
+   "p25": 9.586,
+   "mediane": 14.774,
+   "p75": 22.683,
+   "ymax": 24.539
   }
  },
  {
@@ -3566,12 +3558,12 @@
   "rendement": {
    "produitFao": "Onions and shallots, dry (excluding dehydrated)",
    "correspondance": "approximative",
-   "ymax": 35.169,
-   "nObservations": 371,
-   "nPays": 34,
-   "p25": 10.135,
-   "mediane": 18.084,
-   "p75": 24.968
+   "nObservations": 174,
+   "nPays": 29,
+   "p25": 9.604,
+   "mediane": 15.79,
+   "p75": 20.018,
+   "ymax": 45.818
   }
  },
  {
@@ -3605,12 +3597,12 @@
   "rendement": {
    "produitFao": "Onions and shallots, dry (excluding dehydrated)",
    "correspondance": "approximative",
-   "ymax": 35.169,
-   "nObservations": 371,
-   "nPays": 34,
-   "p25": 10.135,
-   "mediane": 18.084,
-   "p75": 24.968
+   "nObservations": 174,
+   "nPays": 29,
+   "p25": 9.604,
+   "mediane": 15.79,
+   "p75": 20.018,
+   "ymax": 45.818
   }
  },
  {
@@ -3644,20 +3636,20 @@
   "rendement": {
    "produitFao": "Onions and shallots, dry (excluding dehydrated)",
    "correspondance": "approximative",
-   "ymax": 35.169,
-   "nObservations": 371,
-   "nPays": 34,
-   "p25": 10.135,
-   "mediane": 18.084,
-   "p75": 24.968
+   "nObservations": 174,
+   "nPays": 29,
+   "p25": 9.604,
+   "mediane": 15.79,
+   "p75": 20.018,
+   "ymax": 45.818
   }
  },
  {
   "nom": "Pastèque",
   "nomScientifique": "Citrullus lanatus",
   "type": "légume",
-  "cycleJoursMin": null,
-  "cycleJoursMax": null,
+  "cycleJoursMin": 0.0,
+  "cycleJoursMax": 0.0,
   "tempMin": 15.0,
   "tempOptMin": 20.0,
   "tempOptMax": 35.0,
@@ -3681,12 +3673,12 @@
   "rendement": {
    "produitFao": "Watermelons",
    "correspondance": "exacte",
-   "ymax": 44.781,
-   "nObservations": 235,
-   "nPays": 22,
-   "p25": 12.226,
-   "mediane": 20.049,
-   "p75": 32.825
+   "nObservations": 102,
+   "nPays": 17,
+   "p25": 10.734,
+   "mediane": 17.157,
+   "p75": 24.965,
+   "ymax": 128.377
   }
  },
  {
@@ -3720,12 +3712,12 @@
   "rendement": {
    "produitFao": "Tomatoes",
    "correspondance": "exacte",
-   "ymax": 58.954,
-   "nObservations": 471,
-   "nPays": 43,
-   "p25": 7.877,
-   "mediane": 13.145,
-   "p75": 21.051
+   "nObservations": 228,
+   "nPays": 38,
+   "p25": 7.538,
+   "mediane": 11.567,
+   "p75": 18.891,
+   "ymax": 66.544
   }
  },
  {
@@ -3758,12 +3750,12 @@
   "rendement": {
    "produitFao": "Spinach",
    "correspondance": "exacte",
-   "ymax": 19.694,
-   "nObservations": 54,
-   "nPays": 5,
-   "p25": 11.748,
-   "mediane": 13.063,
-   "p75": 16.391
+   "nObservations": 18,
+   "nPays": 3,
+   "p25": 8.693,
+   "mediane": 13.135,
+   "p75": 13.972,
+   "ymax": 24.858
   }
  },
  {
@@ -3795,12 +3787,12 @@
   "rendement": {
    "produitFao": "Groundnuts, excluding shelled",
    "correspondance": "exacte",
-   "ymax": 2.625,
-   "nObservations": 519,
-   "nPays": 48,
-   "p25": 0.669,
-   "mediane": 0.887,
-   "p75": 1.252
+   "nObservations": 258,
+   "nPays": 43,
+   "p25": 0.662,
+   "mediane": 0.877,
+   "p75": 1.141,
+   "ymax": 2.984
   }
  },
  {
@@ -3834,7 +3826,9 @@
    "D"
   ],
   "rendement": {
-   "ymax": 2.307
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -3868,12 +3862,12 @@
   "rendement": {
    "produitFao": "Broad beans and horse beans, dry",
    "correspondance": "exacte",
-   "ymax": 3.574,
-   "nObservations": 110,
-   "nPays": 10,
-   "p25": 0.889,
-   "mediane": 1.381,
-   "p75": 2.016
+   "nObservations": 30,
+   "nPays": 5,
+   "p25": 0.793,
+   "mediane": 1.414,
+   "p75": 2.259,
+   "ymax": 6.697
   }
  },
  {
@@ -3907,12 +3901,12 @@
   "rendement": {
    "produitFao": "Beans, dry",
    "correspondance": "approximative",
-   "ymax": 3.14,
-   "nObservations": 385,
-   "nPays": 35,
-   "p25": 0.525,
-   "mediane": 0.809,
-   "p75": 1.264
+   "nObservations": 186,
+   "nPays": 31,
+   "p25": 0.518,
+   "mediane": 0.686,
+   "p75": 1.226,
+   "ymax": 3.677
   }
  },
  {
@@ -3946,12 +3940,12 @@
   "rendement": {
    "produitFao": "Lentils, dry",
    "correspondance": "exacte",
-   "ymax": 2.039,
-   "nObservations": 101,
-   "nPays": 10,
-   "p25": 0.521,
-   "mediane": 0.771,
-   "p75": 1.077
+   "nObservations": 32,
+   "nPays": 6,
+   "p25": 0.565,
+   "mediane": 0.686,
+   "p75": 0.81,
+   "ymax": 1.371
   }
  },
  {
@@ -3984,12 +3978,12 @@
   "rendement": {
    "produitFao": "Lupins",
    "correspondance": "approximative",
-   "ymax": 2.069,
-   "nObservations": 33,
-   "nPays": 3,
-   "p25": 0.668,
-   "mediane": 1.0,
-   "p75": 1.817
+   "nObservations": 6,
+   "nPays": 1,
+   "p25": 1.027,
+   "mediane": 1.154,
+   "p75": 1.275,
+   "ymax": 1.35
   }
  },
  {
@@ -4020,15 +4014,17 @@
    "C"
   ],
   "rendement": {
-   "ymax": 2.015
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
   "nom": "Mucuna",
   "nomScientifique": "Mucuna pruriens var utilis",
   "type": "légumineuse",
-  "cycleJoursMin": null,
-  "cycleJoursMax": null,
+  "cycleJoursMin": 0.0,
+  "cycleJoursMax": 0.0,
   "tempMin": 10.0,
   "tempOptMin": 20.0,
   "tempOptMax": 30.0,
@@ -4050,7 +4046,9 @@
    "C"
   ],
   "rendement": {
-   "ymax": 2.015
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -4083,12 +4081,12 @@
   "rendement": {
    "produitFao": "Cow peas, dry",
    "correspondance": "exacte",
-   "ymax": 1.691,
-   "nObservations": 257,
-   "nPays": 24,
-   "p25": 0.413,
-   "mediane": 0.491,
-   "p75": 0.822
+   "nObservations": 138,
+   "nPays": 23,
+   "p25": 0.429,
+   "mediane": 0.489,
+   "p75": 0.785,
+   "ymax": 1.691
   }
  },
  {
@@ -4119,12 +4117,12 @@
   "rendement": {
    "produitFao": "Cow peas, dry",
    "correspondance": "exacte",
-   "ymax": 1.691,
-   "nObservations": 257,
-   "nPays": 24,
-   "p25": 0.413,
-   "mediane": 0.491,
-   "p75": 0.822
+   "nObservations": 138,
+   "nPays": 23,
+   "p25": 0.429,
+   "mediane": 0.489,
+   "p75": 0.785,
+   "ymax": 1.691
   }
  },
  {
@@ -4157,12 +4155,12 @@
   "rendement": {
    "produitFao": "Cow peas, dry",
    "correspondance": "exacte",
-   "ymax": 1.691,
-   "nObservations": 257,
-   "nPays": 24,
-   "p25": 0.413,
-   "mediane": 0.491,
-   "p75": 0.822
+   "nObservations": 138,
+   "nPays": 23,
+   "p25": 0.429,
+   "mediane": 0.489,
+   "p75": 0.785,
+   "ymax": 1.691
   }
  },
  {
@@ -4194,12 +4192,12 @@
   "rendement": {
    "produitFao": "Cow peas, dry",
    "correspondance": "exacte",
-   "ymax": 1.691,
-   "nObservations": 257,
-   "nPays": 24,
-   "p25": 0.413,
-   "mediane": 0.491,
-   "p75": 0.822
+   "nObservations": 138,
+   "nPays": 23,
+   "p25": 0.429,
+   "mediane": 0.489,
+   "p75": 0.785,
+   "ymax": 1.691
   }
  },
  {
@@ -4234,12 +4232,12 @@
   "rendement": {
    "produitFao": "Peas, dry",
    "correspondance": "exacte",
-   "ymax": 8.79,
-   "nObservations": 220,
-   "nPays": 20,
-   "p25": 0.441,
-   "mediane": 0.809,
-   "p75": 1.218
+   "nObservations": 90,
+   "nPays": 15,
+   "p25": 0.431,
+   "mediane": 0.691,
+   "p75": 1.003,
+   "ymax": 5.782
   }
  },
  {
@@ -4273,12 +4271,12 @@
   "rendement": {
    "produitFao": "Chick peas, dry",
    "correspondance": "exacte",
-   "ymax": 2.188,
-   "nObservations": 165,
-   "nPays": 15,
-   "p25": 0.572,
-   "mediane": 0.825,
-   "p75": 1.756
+   "nObservations": 60,
+   "nPays": 10,
+   "p25": 0.574,
+   "mediane": 0.767,
+   "p75": 1.917,
+   "ymax": 4.326
   }
  },
  {
@@ -4311,12 +4309,12 @@
   "rendement": {
    "produitFao": "Pigeon peas, dry",
    "correspondance": "exacte",
-   "ymax": 1.746,
-   "nObservations": 88,
+   "nObservations": 48,
    "nPays": 8,
-   "p25": 0.623,
-   "mediane": 0.883,
-   "p75": 1.142
+   "p25": 0.622,
+   "mediane": 0.82,
+   "p75": 1.163,
+   "ymax": 1.795
   }
  },
  {
@@ -4345,7 +4343,9 @@
    "B"
   ],
   "rendement": {
-   "ymax": 0.868
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -4378,12 +4378,12 @@
   "rendement": {
    "produitFao": "Soya beans",
    "correspondance": "exacte",
-   "ymax": 2.667,
-   "nObservations": 286,
-   "nPays": 27,
-   "p25": 0.637,
-   "mediane": 1.022,
-   "p75": 1.465
+   "nObservations": 146,
+   "nPays": 25,
+   "p25": 0.659,
+   "mediane": 1.053,
+   "p75": 1.447,
+   "ymax": 2.667
   }
  },
  {
@@ -4414,12 +4414,12 @@
   "rendement": {
    "produitFao": "Bambara beans, dry",
    "correspondance": "exacte",
-   "ymax": 1.584,
-   "nObservations": 99,
+   "nObservations": 54,
    "nPays": 9,
-   "p25": 0.49,
-   "mediane": 0.675,
-   "p75": 0.918
+   "p25": 0.53,
+   "mediane": 0.681,
+   "p75": 0.971,
+   "ymax": 1.391
   }
  },
  {
@@ -4453,12 +4453,12 @@
   "rendement": {
    "produitFao": "Safflower seed",
    "correspondance": "exacte",
-   "ymax": 1.206,
-   "nObservations": 22,
+   "nObservations": 12,
    "nPays": 2,
    "p25": 0.554,
-   "mediane": 0.789,
-   "p75": 1.2
+   "mediane": 0.865,
+   "p75": 1.201,
+   "ymax": 1.212
   }
  },
  {
@@ -4489,12 +4489,12 @@
   "rendement": {
    "produitFao": "Coconuts, in shell",
    "correspondance": "exacte",
-   "ymax": 5.97,
-   "nObservations": 253,
+   "nObservations": 138,
    "nPays": 23,
-   "p25": 2.688,
-   "mediane": 3.231,
-   "p75": 4.156
+   "p25": 2.716,
+   "mediane": 3.157,
+   "p75": 4.313,
+   "ymax": 7.999
   }
  },
  {
@@ -4527,12 +4527,12 @@
   "rendement": {
    "produitFao": "Rape or colza seed",
    "correspondance": "exacte",
-   "ymax": 29.361,
-   "nObservations": 59,
-   "nPays": 6,
-   "p25": 1.152,
-   "mediane": 1.7,
-   "p75": 1.945
+   "nObservations": 16,
+   "nPays": 3,
+   "p25": 1.638,
+   "mediane": 1.77,
+   "p75": 2.481,
+   "ymax": 3.407
   }
  },
  {
@@ -4566,12 +4566,12 @@
   "rendement": {
    "produitFao": "Rape or colza seed",
    "correspondance": "exacte",
-   "ymax": 29.361,
-   "nObservations": 59,
-   "nPays": 6,
-   "p25": 1.152,
-   "mediane": 1.7,
-   "p75": 1.945
+   "nObservations": 16,
+   "nPays": 3,
+   "p25": 1.638,
+   "mediane": 1.77,
+   "p75": 2.481,
+   "ymax": 3.407
   }
  },
  {
@@ -4606,12 +4606,12 @@
   "rendement": {
    "produitFao": "Karite nuts (sheanuts)",
    "correspondance": "exacte",
-   "ymax": 3.987,
-   "nObservations": 77,
+   "nObservations": 42,
    "nPays": 7,
-   "p25": 1.062,
-   "mediane": 1.4,
-   "p75": 2.511
+   "p25": 1.059,
+   "mediane": 1.405,
+   "p75": 2.514,
+   "ymax": 4.36
   }
  },
  {
@@ -4643,12 +4643,12 @@
   "rendement": {
    "produitFao": "Castor oil seeds",
    "correspondance": "exacte",
-   "ymax": 1.038,
-   "nObservations": 143,
-   "nPays": 13,
+   "nObservations": 72,
+   "nPays": 12,
    "p25": 0.333,
    "mediane": 0.5,
-   "p75": 0.726
+   "p75": 0.733,
+   "ymax": 1.842
   }
  },
  {
@@ -4680,12 +4680,12 @@
   "rendement": {
    "produitFao": "Sesame seed",
    "correspondance": "exacte",
-   "ymax": 1.286,
-   "nObservations": 321,
-   "nPays": 30,
+   "nObservations": 167,
+   "nPays": 28,
    "p25": 0.329,
-   "mediane": 0.515,
-   "p75": 0.737
+   "mediane": 0.514,
+   "p75": 0.738,
+   "ymax": 4.87
   }
  },
  {
@@ -4719,12 +4719,12 @@
   "rendement": {
    "produitFao": "Sunflower seed",
    "correspondance": "exacte",
-   "ymax": 2.346,
-   "nObservations": 198,
-   "nPays": 18,
-   "p25": 0.62,
+   "nObservations": 84,
+   "nPays": 14,
+   "p25": 0.531,
    "mediane": 1.0,
-   "p75": 1.184
+   "p75": 1.129,
+   "ymax": 1.753
   }
  },
  {
@@ -4756,12 +4756,12 @@
   "rendement": {
    "produitFao": "Yams",
    "correspondance": "approximative",
-   "ymax": 17.225,
-   "nObservations": 277,
+   "nObservations": 152,
    "nPays": 26,
-   "p25": 5.78,
-   "mediane": 7.53,
-   "p75": 9.386
+   "p25": 5.782,
+   "mediane": 7.438,
+   "p75": 9.274,
+   "ymax": 18.849
   }
  },
  {
@@ -4791,12 +4791,12 @@
   "rendement": {
    "produitFao": "Yams",
    "correspondance": "approximative",
-   "ymax": 17.225,
-   "nObservations": 277,
+   "nObservations": 152,
    "nPays": 26,
-   "p25": 5.78,
-   "mediane": 7.53,
-   "p75": 9.386
+   "p25": 5.782,
+   "mediane": 7.438,
+   "p75": 9.274,
+   "ymax": 18.849
   }
  },
  {
@@ -4826,12 +4826,12 @@
   "rendement": {
    "produitFao": "Yams",
    "correspondance": "approximative",
-   "ymax": 17.225,
-   "nObservations": 277,
+   "nObservations": 152,
    "nPays": 26,
-   "p25": 5.78,
-   "mediane": 7.53,
-   "p75": 9.386
+   "p25": 5.782,
+   "mediane": 7.438,
+   "p75": 9.274,
+   "ymax": 18.849
   }
  },
  {
@@ -4862,12 +4862,12 @@
   "rendement": {
    "produitFao": "Yams",
    "correspondance": "approximative",
-   "ymax": 17.225,
-   "nObservations": 277,
+   "nObservations": 152,
    "nPays": 26,
-   "p25": 5.78,
-   "mediane": 7.53,
-   "p75": 9.386
+   "p25": 5.782,
+   "mediane": 7.438,
+   "p75": 9.274,
+   "ymax": 18.849
   }
  },
  {
@@ -4899,12 +4899,12 @@
   "rendement": {
    "produitFao": "Cassava, fresh",
    "correspondance": "exacte",
-   "ymax": 23.864,
-   "nObservations": 429,
+   "nObservations": 234,
    "nPays": 39,
-   "p25": 5.969,
-   "mediane": 9.247,
-   "p75": 13.945
+   "p25": 6.087,
+   "mediane": 9.447,
+   "p75": 14.221,
+   "ymax": 35.538
   }
  },
  {
@@ -4930,12 +4930,12 @@
   "rendement": {
    "produitFao": "Sweet potatoes",
    "correspondance": "exacte",
-   "ymax": 27.661,
-   "nObservations": 453,
-   "nPays": 42,
-   "p25": 4.5,
-   "mediane": 7.269,
-   "p75": 12.239
+   "nObservations": 240,
+   "nPays": 40,
+   "p25": 4.61,
+   "mediane": 7.116,
+   "p75": 11.329,
+   "ymax": 46.084
   }
  },
  {
@@ -4966,12 +4966,12 @@
   "rendement": {
    "produitFao": "Yams",
    "correspondance": "approximative",
-   "ymax": 17.225,
-   "nObservations": 277,
+   "nObservations": 152,
    "nPays": 26,
-   "p25": 5.78,
-   "mediane": 7.53,
-   "p75": 9.386
+   "p25": 5.782,
+   "mediane": 7.438,
+   "p75": 9.274,
+   "ymax": 18.849
   }
  },
  {
@@ -5005,12 +5005,12 @@
   "rendement": {
    "produitFao": "Potatoes",
    "correspondance": "exacte",
-   "ymax": 30.432,
-   "nObservations": 437,
-   "nPays": 40,
-   "p25": 7.117,
-   "mediane": 12.07,
-   "p75": 19.805
+   "nObservations": 210,
+   "nPays": 35,
+   "p25": 6.16,
+   "mediane": 10.522,
+   "p75": 18.021,
+   "ymax": 37.951
   }
  },
  {
@@ -5042,12 +5042,12 @@
   "rendement": {
    "produitFao": "Taro",
    "correspondance": "exacte",
-   "ymax": 25.662,
-   "nObservations": 231,
-   "nPays": 21,
-   "p25": 3.116,
-   "mediane": 6.079,
-   "p75": 7.788
+   "nObservations": 120,
+   "nPays": 20,
+   "p25": 3.282,
+   "mediane": 6.061,
+   "p75": 7.805,
+   "ymax": 25.69
   }
  },
  {
@@ -5079,12 +5079,12 @@
   "rendement": {
    "produitFao": "Taro",
    "correspondance": "exacte",
-   "ymax": 25.662,
-   "nObservations": 231,
-   "nPays": 21,
-   "p25": 3.116,
-   "mediane": 6.079,
-   "p75": 7.788
+   "nObservations": 120,
+   "nPays": 20,
+   "p25": 3.282,
+   "mediane": 6.061,
+   "p75": 7.805,
+   "ymax": 25.69
   }
  },
  {
@@ -5115,12 +5115,12 @@
   "rendement": {
    "produitFao": "Cinnamon and cinnamon-tree flowers, raw",
    "correspondance": "exacte",
-   "ymax": 1.991,
-   "nObservations": 31,
+   "nObservations": 16,
    "nPays": 3,
-   "p25": 0.084,
-   "mediane": 0.249,
-   "p75": 1.755
+   "p25": 0.201,
+   "mediane": 0.246,
+   "p75": 1.754,
+   "ymax": 1.759
   }
  },
  {
@@ -5151,7 +5151,9 @@
    "D"
   ],
   "rendement": {
-   "ymax": 23.429
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -5183,7 +5185,9 @@
    "D"
   ],
   "rendement": {
-   "ymax": 1.363
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -5215,12 +5219,12 @@
   "rendement": {
    "produitFao": "Ginger, raw",
    "correspondance": "exacte",
-   "ymax": 16.261,
-   "nObservations": 121,
+   "nObservations": 66,
    "nPays": 11,
-   "p25": 2.914,
-   "mediane": 7.034,
-   "p75": 11.605
+   "p25": 2.776,
+   "mediane": 7.525,
+   "p75": 12.32,
+   "ymax": 24.091
   }
  },
  {
@@ -5249,7 +5253,9 @@
    "A"
   ],
   "rendement": {
-   "ymax": 23.63
+   "produitFao": null,
+   "correspondance": null,
+   "ymax": null
   }
  },
  {
@@ -5281,12 +5287,12 @@
   "rendement": {
    "produitFao": "Chillies and peppers, green (Capsicum spp. and Pimenta spp.)",
    "correspondance": "approximative",
-   "ymax": 27.891,
-   "nObservations": 309,
-   "nPays": 29,
-   "p25": 4.0,
-   "mediane": 7.395,
-   "p75": 13.758
+   "nObservations": 144,
+   "nPays": 24,
+   "p25": 3.395,
+   "mediane": 6.697,
+   "p75": 8.351,
+   "ymax": 26.546
   }
  },
  {
@@ -5317,12 +5323,12 @@
   "rendement": {
    "produitFao": "Pepper (Piper spp.), raw",
    "correspondance": "exacte",
-   "ymax": 6.0,
-   "nObservations": 176,
+   "nObservations": 96,
    "nPays": 16,
-   "p25": 0.53,
+   "p25": 0.548,
    "mediane": 0.688,
-   "p75": 1.186
+   "p75": 1.24,
+   "ymax": 10.0
   }
  },
  {
@@ -5353,12 +5359,12 @@
   "rendement": {
    "produitFao": "Vanilla, raw",
    "correspondance": "exacte",
-   "ymax": 0.711,
-   "nObservations": 66,
+   "nObservations": 36,
    "nPays": 6,
    "p25": 0.208,
-   "mediane": 0.332,
-   "p75": 0.503
+   "mediane": 0.342,
+   "p75": 0.503,
+   "ymax": 0.78
   }
  }
 ]
