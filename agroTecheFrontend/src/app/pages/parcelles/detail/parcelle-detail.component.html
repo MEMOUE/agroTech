@@ -226,7 +226,7 @@
                             </p>
                           }
                           <p class="text-[11px] mt-1.5"
-                             [class]="rd.fiabilite === 'moyenne' ? 'text-amber-700' : 'text-red-600'">
+                             [class]="rd.fiabilite === 'bonne' ? 'text-green-700' : rd.fiabilite === 'moyenne' ? 'text-amber-700' : 'text-red-600'">
                             Fiabilité {{ rd.fiabilite }} · <span class="text-gray-400">{{ rd.source }}</span>
                           </p>
                         </div>

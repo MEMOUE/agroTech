@@ -83,12 +83,24 @@ class RecommandationServiceTest {
         assertThat(r.probable()).isEqualTo(1.5);
         assertThat(r.haut()).isEqualTo(2.0);
         assertThat(r.productionProbableT()).isEqualTo(6.0);
-        assertThat(r.fiabilite()).isEqualTo("moyenne");
+        assertThat(r.fiabilite()).isEqualTo("bonne");
+    }
+
+    @Test
+    void rendement_correspondanceExacte_peuDePays_fiabiliteMoyenne() {
+        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 80, 15, 1.0, 1.5, 2.0);
+        assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("moyenne");
     }
 
     @Test
     void rendement_correspondanceApproximative_fiabiliteFaible() {
         RendementReference ref = new RendementReference("Bananas", "approximative", 44.0, 300, 30, 5.0, 9.0, 14.0);
+        assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("faible");
+    }
+
+    @Test
+    void rendement_correspondanceExacte_tresPeuDePays_fiabiliteFaible() {
+        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 20, 5, 1.0, 1.5, 2.0);
         assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("faible");
     }
 

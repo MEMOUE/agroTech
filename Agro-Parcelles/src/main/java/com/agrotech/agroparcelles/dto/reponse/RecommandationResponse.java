@@ -45,9 +45,11 @@ public class RecommandationResponse {
                           String plageOptimale, String plageTolerance, int score, String statut) {}
 
     /**
-     * Rendement de référence (t/ha) : distribution des rendements FAOSTAT africains récents.
+     * Rendement de référence (t/ha) : distribution des rendements FAOSTAT, Afrique subsaharienne, 2019+.
      * {@code bas}/{@code haut} = quartiles 25/75, {@code probable} = médiane.
      * Les champs sont null quand la distribution n'est pas disponible pour cette culture.
+     *
+     * @param fiabilite bonne | moyenne | faible | indisponible
      */
     public record Rendement(Double bas, Double probable, Double haut, Double potentielMax,
                             Double productionBasT, Double productionProbableT, Double productionHauteT,

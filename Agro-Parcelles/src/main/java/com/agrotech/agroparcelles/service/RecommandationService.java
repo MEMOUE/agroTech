@@ -157,8 +157,12 @@ public class RecommandationService {
             return new Rendement(null, null, null, r.ymax(), null, null, null, "indisponible", message);
         }
         boolean exacte = "exacte".equals(r.correspondance());
-        boolean assezDePays = r.nPays() != null && r.nPays() >= 10;
-        String fiabilite = exacte && assezDePays ? "moyenne" : "faible";
+        int nPays = r.nPays() != null ? r.nPays() : 0;
+        // Correspondance exacte + large couverture géographique (Afrique subsaharienne, 2019+) : fiabilité bonne.
+        // Correspondance exacte + couverture plus limitée : moyenne. Sinon (correspondance approximative ou peu
+        // de pays) : faible. Seuils arbitraires mais documentés, pas de niveau au-delà de "bonne" (un seul
+        // facteur régional sans détail variété/sol/pratiques ne permet pas une confiance plus forte).
+        String fiabilite = !exacte ? "faible" : nPays >= 20 ? "bonne" : nPays >= 10 ? "moyenne" : "faible";
         String source = String.format(Locale.ROOT,
                 "FAOSTAT, rendements en Afrique subsaharienne depuis %d (%s, %d observations, %d pays)%s",
                 ANNEE_MIN_FAO_CATALOGUE, r.produitFao(), r.nObservations(), r.nPays(),

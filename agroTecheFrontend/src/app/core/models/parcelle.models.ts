@@ -164,7 +164,7 @@ export interface RecommandationRendement {
   productionBasT: number | null;
   productionProbableT: number | null;
   productionHauteT: number | null;
-  fiabilite: 'moyenne' | 'faible' | 'indisponible';
+  fiabilite: 'bonne' | 'moyenne' | 'faible' | 'indisponible';
   source: string;
 }
 
