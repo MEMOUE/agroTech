@@ -103,6 +103,11 @@ export class ParcelleDetailComponent implements OnInit {
   editingObjectifId = signal<number | null>(null);
   readonly modeEdition = computed(() => this.editingObjectifId() !== null);
 
+  /** Ouvert automatiquement tant que rien n'est cultivé, replié dès qu'une culture est en cours ;
+   * l'utilisateur garde la main pour le rouvrir/refermer entre deux chargements du planning. */
+  recosOuvert = signal(true);
+  private cultureEnCoursConnue: boolean | null = null;
+
   /** '' = aucune sélection, '__autre__' = culture hors liste (texte libre). */
   readonly AUTRE_CULTURE = '__autre__';
   objectifCultureChoix = signal('');
@@ -215,7 +220,15 @@ export class ParcelleDetailComponent implements OnInit {
   private loadPlannings(id: number): void {
     this.loadingPlanning.set(true);
     this.svc.getPlannings(id).subscribe({
-      next: p => { this.plannings.set(p); this.loadingPlanning.set(false); },
+      next: p => {
+        this.plannings.set(p);
+        this.loadingPlanning.set(false);
+        const cultivee = p.length > 0;
+        if (this.cultureEnCoursConnue !== cultivee) {
+          this.recosOuvert.set(!cultivee);
+          this.cultureEnCoursConnue = cultivee;
+        }
+      },
       error: () => {
         this.loadingPlanning.set(false);
         this.planningError.set('Cultures en cours indisponibles pour le moment.');
