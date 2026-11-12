@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Catalogue de cultures (besoins EcoCrop + rendements de référence FAOSTAT), généré par
@@ -51,6 +52,11 @@ public class CatalogueCultures {
 
     public List<Culture> cultures() {
         return cultures;
+    }
+
+    /** Recherche par nom (insensible à la casse) ; une culture peut avoir plusieurs variétés dans le catalogue. */
+    public Optional<Culture> trouver(String nom) {
+        return cultures.stream().filter(c -> c.nom().equalsIgnoreCase(nom)).findFirst();
     }
 
     /** Pour les tests. */

@@ -1,8 +1,9 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe, KeyValuePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, Parcelle, ParcelleMapResponse, RecommandationsResponse, SatelliteDataResponse, SolDataResponse } from '../../../core/models/parcelle.models';
+import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, ObjectifCultureRequest, Parcelle, ParcelleMapResponse, PlanningResponse, Recommandation, RecommandationsResponse, SatelliteDataResponse, SolDataResponse, TachePlanning } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -11,7 +12,7 @@ import { UserMenuComponent } from '../../../shared/user-menu/user-menu.component
 @Component({
   selector: 'app-parcelle-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, DatePipe, KeyValuePipe, ParcelleMapComponent, LogoComponent, BarChartComponent, UserMenuComponent],
+  imports: [RouterLink, DecimalPipe, DatePipe, KeyValuePipe, FormsModule, ParcelleMapComponent, LogoComponent, BarChartComponent, UserMenuComponent],
   templateUrl: './parcelle-detail.component.html',
 })
 export class ParcelleDetailComponent implements OnInit {
@@ -90,6 +91,194 @@ export class ParcelleDetailComponent implements OnInit {
   loadingSol    = signal(false);
   solError      = signal('');
 
+  // ── Cultiver cette parcelle : cultures en cours (une ou plusieurs) & planning ─
+  /** Une parcelle peut porter plusieurs cultures à la fois (rotation, association) : une entrée par culture active. */
+  plannings       = signal<PlanningResponse[]>([]);
+  loadingPlanning = signal(false);
+  planningError   = signal('');
+  showObjectifForm = signal(false);
+  savingObjectif   = signal(false);
+  objectifErreur   = signal('');
+  /** null = ajout d'une nouvelle culture ; sinon id de la culture en cours que l'on ajuste. */
+  editingObjectifId = signal<number | null>(null);
+  readonly modeEdition = computed(() => this.editingObjectifId() !== null);
+
+  /** '' = aucune sélection, '__autre__' = culture hors liste (texte libre). */
+  readonly AUTRE_CULTURE = '__autre__';
+  objectifCultureChoix = signal('');
+  objectifCultureLibre = signal('');
+  objectifRendement = signal<number | null>(null);
+  objectifDateSemis = signal(this.todayIso());
+  objectifDateRecolte = signal<string | null>(null);
+  /** true dès que l'utilisateur modifie la date de récolte à la main : on arrête de la recalculer. */
+  private dateRecolteManuelle = false;
+
+  readonly tacheIcones: Record<string, string> = {
+    semis: '🌱', fertilisation_fond: '🧪', sarclage_1: '🌿', fertilisation_couverture: '🧪',
+    irrigation: '💧', sarclage_2: '🌿', traitement_phytosanitaire: '🛡️', recolte: '🌾',
+  };
+
+  /** Les 10 cultures les mieux classées (score décroissant) pour le sol et le climat de la parcelle. */
+  readonly topCultures = computed<Recommandation[]>(() =>
+    (this.recos()?.recommandations ?? []).slice().sort((a, b) => b.score - a.score).slice(0, 10)
+  );
+
+  /** Culture sélectionnée telle que recommandée (score, cycle, rendement) — null si "autre culture" ou inconnue. */
+  readonly cultureSelectionnee = computed<Recommandation | null>(() => {
+    const nom = this.objectifCultureChoix();
+    if (!nom || nom === this.AUTRE_CULTURE) return null;
+    return this.recos()?.recommandations.find(r => r.culture === nom) ?? null;
+  });
+
+  /** Plage de rendement plausible (quartiles FAOSTAT) pour la culture sélectionnée, bornée par le plafond observé. */
+  readonly rendementBornes = computed<{ min: number; max: number; probable: number } | null>(() => {
+    const rd = this.cultureSelectionnee()?.rendement;
+    if (!rd || rd.bas == null || rd.haut == null || rd.probable == null) return null;
+    return { min: rd.bas, max: Math.max(rd.haut, rd.potentielMax ?? rd.haut), probable: rd.probable };
+  });
+
+  readonly objectifCultureFinal = computed(() =>
+    this.objectifCultureChoix() === this.AUTRE_CULTURE ? this.objectifCultureLibre().trim() : this.objectifCultureChoix()
+  );
+
+  private todayIso(): string {
+    return new Date().toISOString().substring(0, 10);
+  }
+
+  private addJoursIso(iso: string, jours: number): string {
+    const d = new Date(iso + 'T00:00:00');
+    d.setDate(d.getDate() + Math.round(jours));
+    return d.toISOString().substring(0, 10);
+  }
+
+  /** Récolte visée = semis + cycle de la culture (le plus long connu, marge de sécurité). */
+  private recalculerDateRecolte(): void {
+    if (this.dateRecolteManuelle) return;
+    const c = this.cultureSelectionnee();
+    const cycle = c?.cycleJoursMax ?? c?.cycleJoursMin;
+    this.objectifDateRecolte.set(cycle ? this.addJoursIso(this.objectifDateSemis(), cycle) : null);
+  }
+
+  /** Ouvre la fenêtre pour ajouter une nouvelle culture sur la parcelle, préremplie si une culture est fournie. */
+  ouvrirObjectifPour(culture: string): void {
+    this.editingObjectifId.set(null);
+    this.dateRecolteManuelle = false;
+    this.objectifDateSemis.set(this.todayIso());
+    this.objectifDateRecolte.set(null);
+    this.objectifCultureLibre.set('');
+    this.objectifErreur.set('');
+    this.objectifCultureChoix.set(culture || '');
+    this.appliquerCultureChoisie();
+    this.showObjectifForm.set(true);
+  }
+
+  /** Réouvre la fenêtre pour ajuster une culture déjà en cours (rendement visé, date de récolte). */
+  modifierObjectif(pl: PlanningResponse): void {
+    this.editingObjectifId.set(pl.objectifId);
+    this.dateRecolteManuelle = true;
+    this.objectifCultureChoix.set(pl.culture);
+    this.objectifCultureLibre.set(pl.culture);
+    this.objectifRendement.set(pl.rendementViseTHa);
+    this.objectifDateSemis.set(pl.dateSemisPrevue);
+    this.objectifDateRecolte.set(pl.dateRecolteVisee);
+    this.objectifErreur.set('');
+    this.showObjectifForm.set(true);
+  }
+
+  /** Choix dans la liste des cultures recommandées (ou "autre culture") : met à jour rendement et date de récolte. */
+  onCultureChoixChange(nom: string): void {
+    this.objectifCultureChoix.set(nom);
+    this.appliquerCultureChoisie();
+  }
+
+  private appliquerCultureChoisie(): void {
+    const bornes = this.rendementBornes();
+    this.objectifRendement.set(bornes?.probable ?? null);
+    this.recalculerDateRecolte();
+  }
+
+  onDateSemisChange(v: string): void {
+    this.objectifDateSemis.set(v);
+    this.recalculerDateRecolte();
+  }
+
+  onDateRecolteChange(v: string): void {
+    this.dateRecolteManuelle = true;
+    this.objectifDateRecolte.set(v || null);
+  }
+
+  annulerObjectif(): void {
+    this.showObjectifForm.set(false);
+    this.objectifErreur.set('');
+  }
+
+  private loadPlannings(id: number): void {
+    this.loadingPlanning.set(true);
+    this.svc.getPlannings(id).subscribe({
+      next: p => { this.plannings.set(p); this.loadingPlanning.set(false); },
+      error: () => {
+        this.loadingPlanning.set(false);
+        this.planningError.set('Cultures en cours indisponibles pour le moment.');
+      }
+    });
+  }
+
+  soumettreObjectif(): void {
+    const p = this.parcelle();
+    if (!p) return;
+    const objectifId = this.editingObjectifId();
+
+    this.savingObjectif.set(true);
+    this.objectifErreur.set('');
+
+    if (objectifId != null) {
+      // Ajustement d'une culture déjà en cours : seuls le rendement et la date de récolte changent.
+      this.svc.ajusterObjectif(p.id, objectifId, {
+        dateRecolteVisee: this.objectifDateRecolte() || null,
+        rendementViseTHa: this.objectifRendement(),
+      }).subscribe({
+        next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },
+        error: e => {
+          this.objectifErreur.set(e?.error?.error ?? "Impossible d'ajuster cette culture.");
+          this.savingObjectif.set(false);
+        }
+      });
+      return;
+    }
+
+    const culture = this.objectifCultureFinal();
+    if (!culture || !this.objectifDateSemis()) { this.savingObjectif.set(false); return; }
+    const dto: ObjectifCultureRequest = {
+      culture,
+      dateSemisPrevue: this.objectifDateSemis(),
+      dateRecolteVisee: this.objectifDateRecolte() || null,
+      rendementViseTHa: this.objectifRendement(),
+    };
+    this.svc.definirObjectif(p.id, dto).subscribe({
+      next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },
+      error: e => {
+        this.objectifErreur.set(e?.error?.error ?? "Impossible d'ajouter cette culture.");
+        this.savingObjectif.set(false);
+      }
+    });
+  }
+
+  /** Arrête le suivi d'une culture (conservée en historique, retirée de la liste active). */
+  abandonnerCulture(pl: PlanningResponse): void {
+    if (!confirm(`Abandonner le suivi de « ${pl.culture} » sur cette parcelle ?`)) return;
+    this.svc.abandonnerObjectif(pl.parcelleId, pl.objectifId).subscribe({
+      next: () => this.loadPlannings(pl.parcelleId),
+      error: () => this.planningError.set("Impossible d'abandonner cette culture.")
+    });
+  }
+
+  basculerTache(pl: PlanningResponse, t: TachePlanning): void {
+    this.svc.marquerTache(pl.parcelleId, pl.objectifId, t.id, { fait: t.statut !== 'FAIT' }).subscribe({
+      next: () => this.loadPlannings(pl.parcelleId),
+      error: () => this.planningError.set('Impossible de mettre à jour cette tâche.')
+    });
+  }
+
   /** Style d'un niveau (bas = rouge, moyen = ambre, bon = vert, élevé = violet) et segments de jauge. */
   readonly niveauStyle: Record<string, { label: string; badge: string; bar: string; segments: number }> = {
     bas:   { label: 'Faible',  badge: 'bg-red-50 text-red-700',       bar: 'bg-red-500',     segments: 1 },
@@ -150,6 +339,7 @@ export class ParcelleDetailComponent implements OnInit {
         this.loadRecos(id);
         if (this.capteursVirtuelsActifs) this.loadCapteurs(id);
         this.loadMap(id);
+        this.loadPlannings(id);
       },
       error: () => { this.error.set('Parcelle introuvable.'); this.loading.set(false); }
     });

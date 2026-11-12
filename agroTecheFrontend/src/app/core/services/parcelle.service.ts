@@ -2,8 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  ExtractionImages, ExtractionResult, GpsPoint, Parcelle, ParcelleDtoRequest,
-  CapteursVirtuelsResponse, ParcelleMapResponse, RecommandationsResponse, SatelliteDataResponse, SolDataResponse,
+  ExtractionImages, ExtractionResult, GpsPoint, ObjectifCultureRequest, ObjectifUpdateRequest, Parcelle, ParcelleDtoRequest,
+  CapteursVirtuelsResponse, ParcelleMapResponse, PlanningResponse, RecommandationsResponse, SatelliteDataResponse,
+  SolDataResponse, TacheUpdateRequest,
 } from '../models/parcelle.models';
 
 const API = 'http://localhost:8082/api/parcelles';
@@ -80,5 +81,30 @@ export class ParcelleService {
   /** Envoie un polygone GeoJSON au service d'extraction Sentinel-2. */
   extract(geoJson: unknown, dateDebut?: string, dateFin?: string): Observable<ExtractionResult> {
     return this.http.post<ExtractionResult>(EXTRACTION_API, { geoJson, dateDebut, dateFin });
+  }
+
+  /** Cultures actives de la parcelle (une ou plusieurs à la fois) et leur planning généré. */
+  getPlannings(id: number): Observable<PlanningResponse[]> {
+    return this.http.get<PlanningResponse[]>(`${API}/${id}/objectifs`);
+  }
+
+  /** Ajoute une culture sur la parcelle (ne remplace pas les cultures déjà en cours). */
+  definirObjectif(id: number, dto: ObjectifCultureRequest): Observable<PlanningResponse> {
+    return this.http.post<PlanningResponse>(`${API}/${id}/objectifs`, dto);
+  }
+
+  /** Ajuste le rendement visé et/ou la date de récolte d'une culture déjà en cours. */
+  ajusterObjectif(parcelleId: number, objectifId: number, dto: ObjectifUpdateRequest): Observable<PlanningResponse> {
+    return this.http.patch<PlanningResponse>(`${API}/${parcelleId}/objectifs/${objectifId}`, dto);
+  }
+
+  /** Abandonne une culture (reste en historique mais ne réapparaît plus dans la liste active). */
+  abandonnerObjectif(parcelleId: number, objectifId: number): Observable<void> {
+    return this.http.post<void>(`${API}/${parcelleId}/objectifs/${objectifId}/abandonner`, {});
+  }
+
+  /** Coche/décoche une tâche du planning ; peut décaler les tâches suivantes. */
+  marquerTache(parcelleId: number, objectifId: number, tacheId: number, dto: TacheUpdateRequest): Observable<PlanningResponse> {
+    return this.http.patch<PlanningResponse>(`${API}/${parcelleId}/objectifs/${objectifId}/taches/${tacheId}`, dto);
   }
 }

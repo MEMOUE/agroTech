@@ -196,3 +196,46 @@ export interface RecommandationsResponse {
   recommandations: Recommandation[];
   avertissements: string[];
 }
+
+export interface ObjectifCultureRequest {
+  culture: string;
+  dateSemisPrevue: string;
+  /** Optionnelle : calculée côté backend à partir du cycle de la culture si absente. */
+  dateRecolteVisee?: string | null;
+  rendementViseTHa?: number | null;
+}
+
+export interface TacheUpdateRequest {
+  fait: boolean;
+  dateReelle?: string | null;
+}
+
+/** Ajuste une culture déjà en cours (rendement visé et/ou date de récolte) sans la remplacer. */
+export interface ObjectifUpdateRequest {
+  dateRecolteVisee?: string | null;
+  rendementViseTHa?: number | null;
+}
+
+export interface TachePlanning {
+  id: number;
+  type: string;
+  libelle: string;
+  ordre: number;
+  datePrevue: string;
+  dateReelle: string | null;
+  statut: 'A_FAIRE' | 'FAIT';
+}
+
+export interface PlanningResponse {
+  objectifId: number;
+  parcelleId: number;
+  culture: string;
+  cycleJoursMin: number | null;
+  cycleJoursMax: number | null;
+  dateSemisPrevue: string;
+  dateSemisReelle: string | null;
+  dateRecolteVisee: string;
+  rendementViseTHa: number | null;
+  statut: 'EN_COURS' | 'TERMINE' | 'ABANDONNE';
+  taches: TachePlanning[];
+}
