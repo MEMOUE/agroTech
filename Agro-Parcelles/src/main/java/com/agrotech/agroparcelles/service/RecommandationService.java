@@ -31,6 +31,8 @@ public class RecommandationService {
     static final double SCORE_MIN_RETENU = 0.40;
     static final double SCORE_TEXTURE_INADAPTEE = 0.5;
     static final int LIMITE_PAR_DEFAUT = 10;
+    /** Doit rester synchronisé avec ANNEE_MIN_FAO dans scripts/build_catalogue.py. */
+    static final int ANNEE_MIN_FAO_CATALOGUE = 2019;
 
     private final CatalogueCultures catalogue;
     private final ClimatologieService climatologieService;
@@ -149,15 +151,17 @@ public class RecommandationService {
     static Rendement rendement(RendementReference r, double superficieHa) {
         if (r == null) return null;
         if (!r.aDistribution()) {
-            return new Rendement(null, null, null, r.ymax(), null, null, null, "indisponible",
-                    "Aucune distribution FAOSTAT pour cette culture ; seul le plafond observé est connu.");
+            String message = r.ymax() != null
+                    ? "Aucune distribution de rendement récente en Afrique subsaharienne pour cette culture ; seul le plafond observé est connu."
+                    : "Aucune donnée de rendement récente en Afrique subsaharienne pour cette culture.";
+            return new Rendement(null, null, null, r.ymax(), null, null, null, "indisponible", message);
         }
         boolean exacte = "exacte".equals(r.correspondance());
         boolean assezDePays = r.nPays() != null && r.nPays() >= 10;
         String fiabilite = exacte && assezDePays ? "moyenne" : "faible";
         String source = String.format(Locale.ROOT,
-                "FAOSTAT, rendements africains depuis 2014 (%s, %d observations, %d pays)%s",
-                r.produitFao(), r.nObservations(), r.nPays(),
+                "FAOSTAT, rendements en Afrique subsaharienne depuis %d (%s, %d observations, %d pays)%s",
+                ANNEE_MIN_FAO_CATALOGUE, r.produitFao(), r.nObservations(), r.nPays(),
                 exacte ? "" : " ; produit FAO proche mais différent de la culture");
         return new Rendement(r.p25(), r.mediane(), r.p75(), r.ymax(),
                 arrondi(r.p25() * superficieHa, 1), arrondi(r.mediane() * superficieHa, 1),
@@ -166,7 +170,7 @@ public class RecommandationService {
 
     private static List<String> avertissementsGeneraux() {
         return List.of(
-                "Le rendement est une référence régionale (quartiles et médiane des rendements africains récents), pas une prédiction pour cette parcelle : variété, fertilisation, irrigation et ravageurs ne sont pas connus.",
+                "Le rendement est une référence régionale (quartiles et médiane des rendements observés en Afrique subsaharienne depuis " + ANNEE_MIN_FAO_CATALOGUE + "), pas une prédiction pour cette parcelle : variété, fertilisation, irrigation et ravageurs ne sont pas connus.",
                 "Les cultures sont filtrées par zone climatique EcoCrop (tropical, sec, subtropical, tempéré) ; les cultures d'altitude et les microclimats ne sont pas distingués.",
                 "Le climat utilisé est la normale annuelle (température moyenne, pluie annuelle) : la répartition des pluies dans l'année et la saison de semis ne sont pas évaluées.",
                 "Le drainage, la fertilité, le phosphore et le potassium ne sont pas mesurables par satellite et n'entrent pas dans le score : une analyse de sol reste recommandée.");
