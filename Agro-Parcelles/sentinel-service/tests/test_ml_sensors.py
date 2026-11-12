@@ -49,7 +49,7 @@ def test_features_prennent_le_dernier_jour_nasa_complet():
     brut = {
         "20261024": {"T2M": 25.0, "RH2M": 80.0, "PRECTOTCORR": 1.0, "ALLSKY_SFC_SW_DWN": 18.0},
         "20261025": {"T2M": 26.0, "RH2M": 81.0, "PRECTOTCORR": 2.0, "ALLSKY_SFC_SW_DWN": 19.0},
-        "20261026": {"T2M": 27.0},   # jour incomplet : ignoré
+        "20261026": {"T2M": 27.0},  
     }
     f, date_mesure, _ = _features_modeles(brut, 0.6, 0.1, {"statut": "ok", "vv_db": -8, "vh_db": -14, "rvi": 0.7})
     assert date_mesure == "2026-10-25" and f["NASA_Temp_Air_C"] == 26.0
