@@ -77,36 +77,37 @@ class RecommandationServiceTest {
 
     @Test
     void rendement_intervalleEtProductionPourLaSuperficie() {
-        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 550, 50, 1.0, 1.5, 2.0);
+        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 550, 50, 2019, 2024, 1.0, 1.5, 2.0);
         Rendement r = RecommandationService.rendement(ref, 4.0);
         assertThat(r.bas()).isEqualTo(1.0);
         assertThat(r.probable()).isEqualTo(1.5);
         assertThat(r.haut()).isEqualTo(2.0);
         assertThat(r.productionProbableT()).isEqualTo(6.0);
         assertThat(r.fiabilite()).isEqualTo("bonne");
+        assertThat(r.source()).contains("de 2019 à 2024");
     }
 
     @Test
     void rendement_correspondanceExacte_peuDePays_fiabiliteMoyenne() {
-        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 80, 15, 1.0, 1.5, 2.0);
+        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 80, 15, 2019, 2024, 1.0, 1.5, 2.0);
         assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("moyenne");
     }
 
     @Test
     void rendement_correspondanceApproximative_fiabiliteFaible() {
-        RendementReference ref = new RendementReference("Bananas", "approximative", 44.0, 300, 30, 5.0, 9.0, 14.0);
+        RendementReference ref = new RendementReference("Bananas", "approximative", 44.0, 300, 30, 2019, 2024, 5.0, 9.0, 14.0);
         assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("faible");
     }
 
     @Test
     void rendement_correspondanceExacte_tresPeuDePays_fiabiliteFaible() {
-        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 20, 5, 1.0, 1.5, 2.0);
+        RendementReference ref = new RendementReference("Maize (corn)", "exacte", 5.0, 20, 5, 2019, 2024, 1.0, 1.5, 2.0);
         assertThat(RecommandationService.rendement(ref, 1.0).fiabilite()).isEqualTo("faible");
     }
 
     @Test
     void rendement_sansDistribution_neDonnePasDeValeurProbable() {
-        Rendement r = RecommandationService.rendement(new RendementReference(null, null, 3.0, null, null, null, null, null), 1.0);
+        Rendement r = RecommandationService.rendement(new RendementReference(null, null, 3.0, null, null, null, null, null, null, null), 1.0);
         assertThat(r.probable()).isNull();
         assertThat(r.potentielMax()).isEqualTo(3.0);
         assertThat(r.fiabilite()).isEqualTo("indisponible");

@@ -163,9 +163,12 @@ public class RecommandationService {
         // de pays) : faible. Seuils arbitraires mais documentés, pas de niveau au-delà de "bonne" (un seul
         // facteur régional sans détail variété/sol/pratiques ne permet pas une confiance plus forte).
         String fiabilite = !exacte ? "faible" : nPays >= 20 ? "bonne" : nPays >= 10 ? "moyenne" : "faible";
+        int anneeMin = r.anneeMin() != null ? r.anneeMin() : ANNEE_MIN_FAO_CATALOGUE;
+        int anneeMax = r.anneeMax() != null ? r.anneeMax() : anneeMin;
+        String periode = anneeMin == anneeMax ? String.valueOf(anneeMin) : anneeMin + " à " + anneeMax;
         String source = String.format(Locale.ROOT,
-                "FAOSTAT, rendements en Afrique subsaharienne depuis %d (%s, %d observations, %d pays)%s",
-                ANNEE_MIN_FAO_CATALOGUE, r.produitFao(), r.nObservations(), r.nPays(),
+                "FAOSTAT, rendements en Afrique subsaharienne de %s (%s, %d observations, %d pays)%s",
+                periode, r.produitFao(), r.nObservations(), r.nPays(),
                 exacte ? "" : " ; produit FAO proche mais différent de la culture");
         return new Rendement(r.p25(), r.mediane(), r.p75(), r.ymax(),
                 arrondi(r.p25() * superficieHa, 1), arrondi(r.mediane() * superficieHa, 1),

@@ -99,9 +99,12 @@ def charger_zones_ssa() -> set:
 
 
 def stats_fao(chemin_fao: str, codes_produits: set) -> dict:
-    """{code_produit: {nObservations, nPays, p25, mediane, p75, ymax}} en t/ha, Afrique
-    subsaharienne, années >= ANNEE_MIN_FAO, lu en flux (le fichier source fait plusieurs
-    centaines de Mo)."""
+    """{code_produit: {nObservations, nPays, anneeMin, anneeMax, p25, mediane, p75, ymax}} en
+    t/ha, Afrique subsaharienne, années >= ANNEE_MIN_FAO, lu en flux (le fichier source fait
+    plusieurs centaines de Mo). anneeMin/anneeMax sont les années effectivement observées pour
+    cette culture (peuvent être plus récentes que ANNEE_MIN_FAO si les rapports les plus anciens
+    manquent, ou s'arrêter avant l'année en cours si les derniers chiffres ne sont pas encore
+    publiés par les pays)."""
     import pandas as pd
 
     zones_ssa = charger_zones_ssa()
@@ -132,6 +135,8 @@ def stats_fao(chemin_fao: str, codes_produits: set) -> dict:
         out[int(code)] = {
             "nObservations": int(len(r)),
             "nPays": int(g["Code zone"].nunique()),
+            "anneeMin": int(g["Année"].min()),
+            "anneeMax": int(g["Année"].max()),
             "p25": round(float(r.quantile(0.25)), 3),
             "mediane": round(float(r.median()), 3),
             "p75": round(float(r.quantile(0.75)), 3),

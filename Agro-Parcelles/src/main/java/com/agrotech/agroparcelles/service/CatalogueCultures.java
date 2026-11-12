@@ -30,10 +30,15 @@ public class CatalogueCultures {
                           List<String> textures, List<String> zonesClimatiques,
                           RendementReference rendement) {}
 
-    /** Distribution des rendements pays x année (t/ha) ; seul {@code ymax} est toujours présent. */
+    /**
+     * Distribution des rendements pays x année (t/ha), Afrique subsaharienne. {@code anneeMin}/
+     * {@code anneeMax} sont les années effectivement observées dans l'échantillon (peuvent être
+     * absents si aucune donnée récente n'existe pour cette culture).
+     */
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record RendementReference(String produitFao, String correspondance, Double ymax,
                                      Integer nObservations, Integer nPays,
+                                     Integer anneeMin, Integer anneeMax,
                                      Double p25, Double mediane, Double p75) {
         public boolean aDistribution() {
             return mediane != null && p25 != null && p75 != null;
