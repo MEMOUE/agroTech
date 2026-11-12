@@ -96,10 +96,10 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div>
 
         <!-- Parcelles récentes -->
-        <div class="lg:col-span-2">
+        <div>
           <div class="flex items-center justify-between mb-4">
             <h2 class="font-semibold text-gray-800">Mes parcelles</h2>
             <a routerLink="/parcelles"
@@ -155,49 +155,6 @@
               }
             </div>
           }
-        </div>
-
-        <!-- Panneau latéral -->
-        <div class="space-y-4">
-
-          <!-- Profil -->
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Profil</h3>
-            <div class="flex flex-col items-center text-center mb-4">
-              <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-700 text-xl font-bold mb-2">
-                {{ profile()!.name.charAt(0).toUpperCase() }}
-              </div>
-              <p class="font-semibold text-gray-800 text-sm">{{ profile()!.name }}</p>
-              <p class="text-xs text-gray-400">&#64;{{ profile()!.username }}</p>
-            </div>
-            <div class="space-y-1.5 text-xs text-gray-500">
-              <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                {{ profile()!.email }}
-              </div>
-            </div>
-          </div>
-
-          <!-- Actions rapides -->
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Actions rapides</h3>
-            <div class="space-y-2">
-              <a routerLink="/parcelles/new"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-green-50 transition text-sm text-gray-700 hover:text-green-700">
-                <span class="text-lg">🌱</span> Nouvelle parcelle
-              </a>
-              <a routerLink="/parcelles"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 transition text-sm text-gray-700 hover:text-blue-700">
-                <span class="text-lg">🗺️</span> Gérer mes parcelles
-              </a>
-              <button disabled
-                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-300 cursor-not-allowed">
-                <span class="text-lg">📊</span> Rapports (bientôt)
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     }
