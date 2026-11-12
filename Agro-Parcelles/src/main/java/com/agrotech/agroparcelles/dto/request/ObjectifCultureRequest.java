@@ -23,4 +23,7 @@ public class ObjectifCultureRequest {
     private LocalDate dateRecolteVisee;
 
     private Double rendementViseTHa;
+
+    /** Part de la parcelle occupée par cette culture, en % (0-100) ; optionnel. */
+    private Double partSurfacePct;
 }

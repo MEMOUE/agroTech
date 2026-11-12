@@ -51,6 +51,10 @@ public class ObjectifCulture {
     /** Rendement visé en t/ha (null si non renseigné). */
     private Double rendementViseTHa;
 
+    /** Part de la superficie de la parcelle occupée par cette culture, en % (null si non précisée). */
+    @Column(name = "part_surface_pct")
+    private Double partSurfacePct;
+
     @Column(nullable = false)
     @Builder.Default
     private String statut = STATUT_EN_COURS;

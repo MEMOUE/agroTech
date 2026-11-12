@@ -22,6 +22,10 @@ public class PlanningResponse {
     private LocalDate dateSemisReelle;
     private LocalDate dateRecolteVisee;
     private Double rendementViseTHa;
+    /** Part de la parcelle occupée par cette culture, en % (null si non précisée). */
+    private Double partSurfacePct;
+    /** Superficie correspondante (ha), calculée à partir de {@code partSurfacePct} et de la parcelle. */
+    private Double superficieAllouee;
     private String statut;
 
     private List<Tache> taches;

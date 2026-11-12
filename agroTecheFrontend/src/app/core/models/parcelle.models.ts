@@ -203,6 +203,8 @@ export interface ObjectifCultureRequest {
   /** Optionnelle : calculée côté backend à partir du cycle de la culture si absente. */
   dateRecolteVisee?: string | null;
   rendementViseTHa?: number | null;
+  /** Part de la parcelle occupée par cette culture, en % (0-100) ; optionnel. */
+  partSurfacePct?: number | null;
 }
 
 export interface TacheUpdateRequest {
@@ -210,10 +212,11 @@ export interface TacheUpdateRequest {
   dateReelle?: string | null;
 }
 
-/** Ajuste une culture déjà en cours (rendement visé et/ou date de récolte) sans la remplacer. */
+/** Ajuste une culture déjà en cours (rendement visé, date de récolte et/ou part de surface) sans la remplacer. */
 export interface ObjectifUpdateRequest {
   dateRecolteVisee?: string | null;
   rendementViseTHa?: number | null;
+  partSurfacePct?: number | null;
 }
 
 export interface TachePlanning {
@@ -236,6 +239,10 @@ export interface PlanningResponse {
   dateSemisReelle: string | null;
   dateRecolteVisee: string;
   rendementViseTHa: number | null;
+  /** Part de la parcelle occupée par cette culture, en % (null si non précisée). */
+  partSurfacePct: number | null;
+  /** Superficie correspondante (ha), calculée à partir de partSurfacePct. */
+  superficieAllouee: number | null;
   statut: 'EN_COURS' | 'TERMINE' | 'ABANDONNE';
   taches: TachePlanning[];
 }

@@ -115,8 +115,36 @@ export class ParcelleDetailComponent implements OnInit {
   objectifRendement = signal<number | null>(null);
   objectifDateSemis = signal(this.todayIso());
   objectifDateRecolte = signal<string | null>(null);
+  /** Part de la parcelle occupée par cette culture, en % (null = non précisée, culture seule sur la parcelle). */
+  objectifPartSurface = signal<number | null>(null);
   /** true dès que l'utilisateur modifie la date de récolte à la main : on arrête de la recalculer. */
   private dateRecolteManuelle = false;
+
+  /** Part déjà allouée aux autres cultures actives (exclut la culture en cours d'ajustement). */
+  readonly partDejaAlloueeAutres = computed(() =>
+    this.plannings()
+      .filter(p => p.objectifId !== this.editingObjectifId())
+      .reduce((s, p) => s + (p.partSurfacePct ?? 0), 0)
+  );
+  readonly partDisponible = computed(() => Math.max(0, 100 - this.partDejaAlloueeAutres()));
+
+  readonly PALETTE_REPARTITION = ['bg-green-500', 'bg-blue-500', 'bg-amber-500', 'bg-violet-500',
+    'bg-pink-500', 'bg-cyan-500', 'bg-rose-500', 'bg-lime-500'];
+
+  /** Répartition visuelle de la parcelle entre les cultures actives (si au moins une culture a une part précisée). */
+  readonly repartition = computed(() => {
+    const list = this.plannings();
+    const segments = list.map((p, i) => ({
+      culture: p.culture, pct: p.partSurfacePct, ha: p.superficieAllouee,
+      color: this.PALETTE_REPARTITION[i % this.PALETTE_REPARTITION.length],
+    }));
+    const sommeConnue = segments.reduce((s, x) => s + (x.pct ?? 0), 0);
+    return {
+      segments,
+      resteNonPrecise: Math.max(0, 100 - sommeConnue),
+      aDesValeursConnues: segments.some(s => s.pct != null),
+    };
+  });
 
   readonly tacheIcones: Record<string, string> = {
     semis: '🌱', fertilisation_fond: '🧪', sarclage_1: '🌿', fertilisation_couverture: '🧪',
@@ -173,11 +201,13 @@ export class ParcelleDetailComponent implements OnInit {
     this.objectifCultureLibre.set('');
     this.objectifErreur.set('');
     this.objectifCultureChoix.set(culture || '');
+    // Si d'autres cultures sont déjà en cours, propose par défaut la part encore disponible.
+    this.objectifPartSurface.set(this.plannings().length > 0 ? this.partDisponible() : null);
     this.appliquerCultureChoisie();
     this.showObjectifForm.set(true);
   }
 
-  /** Réouvre la fenêtre pour ajuster une culture déjà en cours (rendement visé, date de récolte). */
+  /** Réouvre la fenêtre pour ajuster une culture déjà en cours (rendement visé, date de récolte, part de surface). */
   modifierObjectif(pl: PlanningResponse): void {
     this.editingObjectifId.set(pl.objectifId);
     this.dateRecolteManuelle = true;
@@ -186,6 +216,7 @@ export class ParcelleDetailComponent implements OnInit {
     this.objectifRendement.set(pl.rendementViseTHa);
     this.objectifDateSemis.set(pl.dateSemisPrevue);
     this.objectifDateRecolte.set(pl.dateRecolteVisee);
+    this.objectifPartSurface.set(pl.partSurfacePct);
     this.objectifErreur.set('');
     this.showObjectifForm.set(true);
   }
@@ -245,10 +276,11 @@ export class ParcelleDetailComponent implements OnInit {
     this.objectifErreur.set('');
 
     if (objectifId != null) {
-      // Ajustement d'une culture déjà en cours : seuls le rendement et la date de récolte changent.
+      // Ajustement d'une culture déjà en cours : seuls le rendement, la date de récolte et la part de surface changent.
       this.svc.ajusterObjectif(p.id, objectifId, {
         dateRecolteVisee: this.objectifDateRecolte() || null,
         rendementViseTHa: this.objectifRendement(),
+        partSurfacePct: this.objectifPartSurface(),
       }).subscribe({
         next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },
         error: e => {
@@ -266,6 +298,7 @@ export class ParcelleDetailComponent implements OnInit {
       dateSemisPrevue: this.objectifDateSemis(),
       dateRecolteVisee: this.objectifDateRecolte() || null,
       rendementViseTHa: this.objectifRendement(),
+      partSurfacePct: this.objectifPartSurface(),
     };
     this.svc.definirObjectif(p.id, dto).subscribe({
       next: () => { this.loadPlannings(p.id); this.savingObjectif.set(false); this.showObjectifForm.set(false); },

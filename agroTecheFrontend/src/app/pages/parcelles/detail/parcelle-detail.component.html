@@ -290,6 +290,51 @@
             </div>
           </details>
 
+          <!-- Répartition de la plantation : visible dès que plusieurs cultures se partagent la parcelle -->
+          @if (plannings().length > 1) {
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <h3 class="font-semibold text-gray-800">📐 Répartition de la plantation</h3>
+              <p class="text-xs text-gray-400 mt-0.5">Comment la parcelle est partagée entre les cultures en cours</p>
+
+              <div class="flex h-4 rounded-full overflow-hidden mt-4 bg-gray-100">
+                @for (s of repartition().segments; track s.culture) {
+                  @if (s.pct) {
+                    <div [class]="s.color" [style.width.%]="s.pct" [title]="s.culture + ' · ' + s.pct + ' %'"></div>
+                  }
+                }
+                @if (repartition().resteNonPrecise > 0) {
+                  <div class="bg-gray-300" [style.width.%]="repartition().resteNonPrecise" title="Non précisé"></div>
+                }
+              </div>
+
+              <div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 text-xs">
+                @for (s of repartition().segments; track s.culture) {
+                  <span class="inline-flex items-center gap-1.5">
+                    <i class="w-2.5 h-2.5 rounded-full shrink-0" [class]="s.color"></i>
+                    {{ s.culture }}
+                    @if (s.pct != null) {
+                      — {{ s.pct }} % @if (s.ha != null) { ({{ s.ha }} ha) }
+                    } @else {
+                      <span class="text-gray-400">— part non précisée</span>
+                    }
+                  </span>
+                }
+                @if (repartition().resteNonPrecise > 0) {
+                  <span class="inline-flex items-center gap-1.5 text-gray-400">
+                    <i class="w-2.5 h-2.5 rounded-full bg-gray-300 shrink-0"></i>
+                    Non précisé — {{ repartition().resteNonPrecise }} %
+                  </span>
+                }
+              </div>
+
+              @if (!repartition().aDesValeursConnues) {
+                <p class="text-[11px] text-gray-400 mt-3">
+                  Aucune part n'est encore précisée : utilisez « Ajuster » sur chaque culture pour l'indiquer.
+                </p>
+              }
+            </div>
+          }
+
           <!-- Cultures en cours & planning cultural : une parcelle peut porter plusieurs cultures à la fois -->
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
             <div class="flex items-center justify-between mb-1">
@@ -320,6 +365,11 @@
                       <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-700 font-semibold">🌾 {{ pl.culture }}</span>
                       @if (pl.rendementViseTHa != null) {
                         <span class="px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-gray-600">Objectif {{ pl.rendementViseTHa }} t/ha</span>
+                      }
+                      @if (pl.partSurfacePct != null) {
+                        <span class="px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-gray-600">
+                          📐 {{ pl.partSurfacePct }} % de la parcelle @if (pl.superficieAllouee != null) { ({{ pl.superficieAllouee }} ha) }
+                        </span>
                       }
                       <span class="px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-gray-600">
                         Semis {{ pl.dateSemisPrevue | date:'dd/MM/yyyy' }} → Récolte {{ pl.dateRecolteVisee | date:'dd/MM/yyyy' }}
@@ -826,6 +876,21 @@
                 class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
             }
           </div>
+
+          <!-- Part de la parcelle : utile dès qu'il y a (ou qu'il y aura) plusieurs cultures en même temps -->
+          @if (plannings().length) {
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Part de la parcelle (%)</label>
+              <input type="number" step="1" min="0" max="100"
+                [ngModel]="objectifPartSurface()" (ngModelChange)="objectifPartSurface.set($event)"
+                name="partSurface" placeholder="Ex. 40"
+                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+              <p class="text-[11px] text-gray-400 mt-1">
+                {{ partDejaAlloueeAutres() }} % déjà alloués aux autres cultures en cours · {{ partDisponible() }} % disponibles.
+                Laisser vide si non précisé.
+              </p>
+            </div>
+          }
 
           <div class="flex gap-2 pt-1">
             <button type="submit" [disabled]="savingObjectif() || (!modeEdition() && !objectifCultureFinal())"
