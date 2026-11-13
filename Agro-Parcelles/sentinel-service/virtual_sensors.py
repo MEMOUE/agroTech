@@ -19,6 +19,9 @@ from datetime import date, datetime, timedelta
 from typing import Any, Optional
 
 S1_COLLECTION = "COPERNICUS/S1_GRD"
+S2_COLLECTION = "COPERNICUS/S2_SR_HARMONIZED"
+SCL_NUAGES = [3, 8, 9, 10]
+SEUIL_NUAGE_SCENE_PCT = 80
 NASA_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 NASA_PARAMS = "T2M,T2M_MAX,T2M_MIN,RH2M,ALLSKY_SFC_SW_DWN,WS10M,PRECTOTCORR"
 NASA_FILL = -999.0
@@ -28,6 +31,14 @@ MIN_POINTS_RADAR = 8
 DYNAMIQUE_MIN_DB = 1.0
 # Le SSM d'entraînement plafonne exactement à 65 : on applique le même plafond (borne basse non touchée).
 SSM_PLAFOND_ENTRAINEMENT = 65.0
+
+HISTORIQUE_NDVI_JOURS = 365
+MIN_POINTS_NDVI = 6
+# Position du NDVI du jour dans l'historique 12 mois de LA MÊME parcelle (0 = le plus bas jamais vu).
+SEUIL_ANOMALIE_BASSE = 0.15
+SEUIL_ANOMALIE_MODEREE = 0.35
+# Historique quasi plat (parcelle stable toute l'année) : pas de dynamique exploitable.
+DYNAMIQUE_MIN_NDVI = 0.05
 
 
 # ---------------------------------------------------------------------------
@@ -105,6 +116,43 @@ def indice_humidite_radar(serie_vv: list[tuple[str, float]]) -> Optional[list[di
 
 
 # ---------------------------------------------------------------------------
+# Anomalie de végétation — NDVI vs historique propre à la parcelle
+# ---------------------------------------------------------------------------
+def anomalie_vegetation(serie_ndvi: list[tuple[str, float]]) -> Optional[dict[str, Any]]:
+    """
+    Compare le NDVI le plus récent à son PROPRE historique 12 mois sur cette parcelle
+    (normalisation en percentile 5ᵉ/95ᵉ, même principe que l'humidité du sol radar).
+
+    Ce n'est PAS un diagnostic : une position basse peut venir d'un stress hydrique, d'une
+    récolte, d'une replantation, d'une maladie ou d'un ravageur. Renvoie None si l'historique
+    est insuffisant, si la dynamique est trop plate pour être exploitable, ou si rien d'anormal
+    n'est détecté.
+    """
+    if len(serie_ndvi) < MIN_POINTS_NDVI:
+        return None
+    vals = [v for _, v in serie_ndvi]
+    bas, haut = _percentile(vals, 0.05), _percentile(vals, 0.95)
+    if haut - bas < DYNAMIQUE_MIN_NDVI:
+        return None
+
+    derniere_date, dernier_ndvi = serie_ndvi[-1]
+    position = max(0.0, min(1.0, (dernier_ndvi - bas) / (haut - bas)))
+    if position <= SEUIL_ANOMALIE_BASSE:
+        niveau = "basse"
+    elif position <= SEUIL_ANOMALIE_MODEREE:
+        niveau = "moderee"
+    else:
+        return None
+
+    return {
+        "date": derniere_date,
+        "ndvi": round(dernier_ndvi, 4),
+        "position_percentile": round(position * 100, 1),
+        "niveau": niveau,
+    }
+
+
+# ---------------------------------------------------------------------------
 # NASA POWER (quotidien, ~dernier mois)
 # ---------------------------------------------------------------------------
 def _nasa_quotidien(lat: float, lon: float, jours: int = 30) -> dict[str, dict[str, float]]:
@@ -173,6 +221,33 @@ def _serie_radar(geom) -> list[tuple[str, float]]:
         p = f["properties"]
         if p.get("vv") is not None:
             par_date.setdefault(p["t"], []).append(float(p["vv"]))
+    return [(d, sum(v) / len(v)) for d, v in sorted(par_date.items())]
+
+
+def _serie_ndvi(geom) -> list[tuple[str, float]]:
+    """NDVI moyen (masqué nuages, bande SCL) par date sur le polygone, historique 12 mois."""
+    import ee
+
+    fin = date.today()
+    debut = fin - timedelta(days=HISTORIQUE_NDVI_JOURS)
+    col = (
+        ee.ImageCollection(S2_COLLECTION)
+        .filterBounds(geom).filterDate(debut.isoformat(), fin.isoformat())
+        .filter(ee.Filter.lte("CLOUDY_PIXEL_PERCENTAGE", SEUIL_NUAGE_SCENE_PCT))
+    )
+
+    def _stats(img):
+        masque = img.select("SCL").remap(SCL_NUAGES, [1] * len(SCL_NUAGES), 0).eq(0)
+        ndvi = img.normalizedDifference(["B8", "B4"]).updateMask(masque)
+        m = ndvi.reduceRegion(ee.Reducer.mean(), geom, 20, maxPixels=int(1e9), bestEffort=True)
+        return ee.Feature(None, {"t": img.date().format("YYYY-MM-dd"), "ndvi": m.get("nd")})
+
+    feats = ee.FeatureCollection(col.map(_stats)).getInfo().get("features", [])
+    par_date: dict[str, list[float]] = {}
+    for f in feats:
+        p = f["properties"]
+        if p.get("ndvi") is not None:
+            par_date.setdefault(p["t"], []).append(float(p["ndvi"]))
     return [(d, sum(v) / len(v)) for d, v in sorted(par_date.items())]
 
 
@@ -276,6 +351,41 @@ def calculer(ring: list[list[float]], ndvi_moyen: Optional[float], ndwi_moyen: O
             })
     except Exception as e:
         erreurs["humidite_sol"] = f"Erreur Earth Engine : {e}"
+
+    # --- Anomalie de végétation (NDVI vs historique propre à la parcelle) ---
+    try:
+        serie_ndvi = _serie_ndvi(geom)
+        anomalie = anomalie_vegetation(serie_ndvi)
+        if anomalie is None:
+            if len(serie_ndvi) < MIN_POINTS_NDVI:
+                erreurs["alerte_vegetation"] = (
+                    "Historique Sentinel-2 insuffisant sur ce polygone pour détecter une anomalie.")
+            # Sinon : rien d'anormal détecté, pas de capteur à afficher (pas une erreur).
+        else:
+            if anomalie["niveau"] == "basse":
+                note = (
+                    f"NDVI nettement plus bas que d'habitude sur cette parcelle "
+                    f"({anomalie['position_percentile']:.0f}ᵉ percentile de son historique 12 mois). "
+                    "Ce n'est PAS un diagnostic : stress hydrique, récolte, replantation, maladie ou "
+                    "ravageur peuvent tous l'expliquer. Vérifiez sur le terrain ou utilisez l'analyse photo."
+                )
+            else:
+                note = (
+                    f"NDVI un peu sous la normale pour cette parcelle "
+                    f"({anomalie['position_percentile']:.0f}ᵉ percentile) : à surveiller, "
+                    "pas nécessairement un problème."
+                )
+            capteurs.append({
+                "code": "alerte_vegetation", "nom": "Anomalie de végétation (NDVI)",
+                "valeur": anomalie["position_percentile"], "unite": "percentile de l'historique",
+                "date_mesure": anomalie["date"],
+                "serie": [{"date": d, "valeur": round(v, 4)} for d, v in serie_ndvi[-12:]],
+                "type": "indice", "confiance": "faible",
+                "methode": "NDVI Sentinel-2 — position dans l'historique 12 mois de la même parcelle",
+                "note": note,
+            })
+    except Exception as e:
+        erreurs["alerte_vegetation"] = f"Erreur Earth Engine : {e}"
 
     # --- ET0 et bilan hydrique (NASA POWER) ---
     try:

@@ -3,7 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DecimalPipe, DatePipe, KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ParcelleService, pointsToGeoJson } from '../../../core/services/parcelle.service';
-import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, GpsPoint, ObjectifCultureRequest, Parcelle, ParcelleMapResponse, PlanningResponse, Recommandation, RecommandationsResponse, SatelliteDataResponse, SolDataResponse, TachePlanning } from '../../../core/models/parcelle.models';
+import { AssistantService } from '../../../core/services/assistant.service';
+import { CapteurVirtuel, CapteursVirtuelsResponse, ExtractionImages, ExtractionResult, GpsPoint, ObjectifCultureRequest, Parcelle, ParcelleMapResponse, PestPhotoAnalysis, PlanningResponse, Recommandation, RecommandationsResponse, SatelliteDataResponse, SolDataResponse, TachePlanning } from '../../../core/models/parcelle.models';
 import { ParcelleMapComponent } from '../../../shared/parcelle-map/parcelle-map.component';
 import { BarChartComponent, ChartPoint } from '../../../shared/bar-chart/bar-chart.component';
 import { LogoComponent } from '../../../shared/logo/logo.component';
@@ -18,6 +19,7 @@ import { UserMenuComponent } from '../../../shared/user-menu/user-menu.component
 export class ParcelleDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private svc = inject(ParcelleService);
+  private assistantSvc = inject(AssistantService);
 
   parcelle   = signal<Parcelle | null>(null);
   mapData    = signal<ParcelleMapResponse | null>(null);
@@ -42,7 +44,7 @@ export class ParcelleDetailComponent implements OnInit {
   };
   readonly capteurIcons: Record<string, string> = {
     humidite_sol: '💧', et0: '☀️', pluie: '🌧️', bilan_hydrique_7j: '⚖️', bilan_hydrique_14j: '⚖️',
-    temp_sol: '🌡️', humidite_sol_ia: '💧', azote_assimilable: '🌱',
+    temp_sol: '🌡️', humidite_sol_ia: '💧', azote_assimilable: '🌱', alerte_vegetation: '🩺',
   };
   /** Noms lisibles des capteurs indisponibles (clés de `erreurs`). */
   readonly capteurNoms: Record<string, string> = {
@@ -53,6 +55,11 @@ export class ParcelleDetailComponent implements OnInit {
 
   /** Style d'une tuile : couleur fixe par capteur, ou selon le signe pour les bilans hydriques. */
   tileStyle(c: CapteurVirtuel): { box: string; text: string; badge: string | null } {
+    if (c.code === 'alerte_vegetation') {
+      return c.valeur <= 15
+        ? { box: 'bg-red-50 border-red-100', text: 'text-red-700', badge: 'À surveiller' }
+        : { box: 'bg-amber-50 border-amber-100', text: 'text-amber-700', badge: null };
+    }
     if (c.code.startsWith('bilan_hydrique')) {
       if (c.valeur > 10)  return { box: 'bg-sky-50 border-sky-100',     text: 'text-sky-700',     badge: 'Excédent' };
       if (c.valeur < -10) return { box: 'bg-amber-50 border-amber-100', text: 'text-amber-700',   badge: 'Déficit' };
@@ -409,6 +416,42 @@ export class ParcelleDetailComponent implements OnInit {
   lightbox      = signal<{ src: string; titre: string } | null>(null);
   images        = signal<ExtractionImages | null>(null);
   loadingImages = signal(false);
+
+  // ── Santé des cultures : analyse de photo (maladies/ravageurs) ─
+  /** Ce n'est pas un diagnostic certain : voir le champ `avertissement` de la réponse. */
+  photoApercu      = signal<string | null>(null);
+  analysePhoto     = signal<PestPhotoAnalysis | null>(null);
+  analysePhotoEnCours = signal(false);
+  analysePhotoErreur  = signal('');
+  readonly confiancePhotoStyle: Record<string, string> = {
+    faible: 'bg-gray-50 text-gray-600', moyenne: 'bg-amber-50 text-amber-700', bonne: 'bg-red-50 text-red-700',
+  };
+
+  /** Anomalie de végétation (NDVI vs historique de la parcelle), si détectée par les capteurs virtuels. */
+  readonly alerteVegetation = computed(() =>
+    this.capteurs()?.capteurs.find(c => c.code === 'alerte_vegetation') ?? null
+  );
+
+  analyserPhotoCulture(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const fichier = input.files?.[0];
+    const p = this.parcelle();
+    if (!fichier || !p) return;
+
+    this.analysePhoto.set(null);
+    this.analysePhotoErreur.set('');
+    this.photoApercu.set(URL.createObjectURL(fichier));
+    this.analysePhotoEnCours.set(true);
+
+    this.assistantSvc.analyserPhoto(p.id, fichier).subscribe({
+      next: r => { this.analysePhoto.set(r); this.analysePhotoEnCours.set(false); },
+      error: e => {
+        this.analysePhotoErreur.set(e?.error?.error ?? "Analyse indisponible pour le moment.");
+        this.analysePhotoEnCours.set(false);
+      },
+    });
+    input.value = '';
+  }
 
   /** Interprétation lisible du NDVI moyen (seuils usuels en agronomie). */
   readonly ndviLabel = computed(() => {

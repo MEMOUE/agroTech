@@ -16,6 +16,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB
 
 server:
   port: ${SERVER_PORT:8082}

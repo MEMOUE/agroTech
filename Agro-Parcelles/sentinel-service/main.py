@@ -14,6 +14,9 @@ lus depuis l'environnement, jamais en dur :
   - GEE_PRIVATE_KEY_FILE   : chemin du fichier JSON de la clé du compte de service
 
 Si ces variables sont absentes, /extract renvoie 503 avec un message explicite.
+
+Assistant IA (/assistant/chat, /assistant/pest-photo) : nécessite ANTHROPIC_API_KEY (clé API
+Anthropic), également lue depuis l'environnement. Voir assistant.py.
 """
 import math
 import os
@@ -51,6 +54,18 @@ class ExtractionRequest(BaseModel):
     geojson: dict[str, Any] = Field(..., description="Feature / geometry / FeatureCollection GeoJSON")
     date_debut: Optional[str] = None
     date_fin: Optional[str] = None
+
+
+class ChatRequest(BaseModel):
+    message: str
+    contexte: dict[str, Any] = Field(default_factory=dict)
+    historique: list[dict[str, str]] = Field(default_factory=list)
+
+
+class PestPhotoRequest(BaseModel):
+    image_b64: str = Field(..., description="Photo encodée en base64 (sans préfixe data:...)")
+    mime_type: str = Field(default="image/jpeg")
+    contexte: dict[str, Any] = Field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -525,3 +540,28 @@ def virtual_sensors(req: ExtractionRequest) -> dict[str, Any]:
         return vs.calculer(ring, (s2.get("ndvi") or {}).get("moyen"), s2.get("ndwi_moyen"), s1)
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Erreur capteurs virtuels : {e}")
+
+
+@app.post("/assistant/chat")
+def assistant_chat(req: ChatRequest) -> dict[str, str]:
+    import assistant as ai
+
+    try:
+        reponse = ai.repondre_chat(req.message, req.contexte, req.historique)
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Erreur assistant IA : {e}")
+    return {"reponse": reponse}
+
+
+@app.post("/assistant/pest-photo")
+def assistant_pest_photo(req: PestPhotoRequest) -> dict[str, Any]:
+    import assistant as ai
+
+    try:
+        return ai.analyser_photo(req.image_b64, req.mime_type, req.contexte)
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Erreur assistant IA : {e}")

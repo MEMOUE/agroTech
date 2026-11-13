@@ -232,6 +232,29 @@ export interface TachePlanning {
   statut: 'A_FAIRE' | 'FAIT';
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface ChatResponse {
+  reponse: string;
+}
+
+export interface PestPhotoHypothese {
+  cause: string;
+  /** faible | moyenne | bonne */
+  confiance: string;
+}
+
+/** Résultat de l'analyse d'une photo par l'assistant IA. Ce n'est PAS un diagnostic certain. */
+export interface PestPhotoAnalysis {
+  observations: string;
+  hypotheses: PestPhotoHypothese[];
+  recommandation: string;
+  avertissement: string;
+}
+
 export interface PlanningResponse {
   objectifId: number;
   parcelleId: number;

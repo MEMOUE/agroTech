@@ -1,0 +1,23 @@
+@keyframes clignement {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+}
+
+.robot-eye {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: clignement 4s ease-in-out infinite;
+}
+
+.robot-eye.oeil-droit {
+  animation-delay: 0.08s;
+}
+
+@keyframes apparition {
+  from { opacity: 0; transform: translateY(6px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.menu-icone {
+  animation: apparition 0.18s ease-out backwards;
+}

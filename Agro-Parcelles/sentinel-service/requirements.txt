@@ -4,3 +4,4 @@ pydantic==2.10.4
 earthengine-api>=1.1,<2
 lightgbm>=4.5,<5
 numpy>=1.26
+anthropic>=0.40,<1

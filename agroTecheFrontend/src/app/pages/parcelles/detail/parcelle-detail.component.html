@@ -127,6 +127,62 @@
             <app-parcelle-map [points]="parcelle()!.coordonneesGps" height="340px" />
           </div>
 
+          <!-- Santé des cultures : anomalie NDVI + analyse de photo (maladies/ravageurs). Ce n'est pas un diagnostic certain. -->
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h3 class="font-semibold text-gray-800">🩺 Santé des cultures — Télédétection</h3>
+            <p class="text-xs text-gray-400 mt-0.5 mb-4">
+              Signaux indicatifs, pas un diagnostic : confirmez sur le terrain ou auprès d'un agronome.
+            </p>
+
+            @if (alerteVegetation(); as av) {
+              <div class="rounded-xl p-4 border mb-4 flex flex-col" [class]="tileStyle(av).box">
+                <div class="flex items-start justify-between gap-1">
+                  <span class="text-2xl leading-none">{{ capteurIcons[av.code] }}</span>
+                  @if (tileStyle(av).badge; as bd) {
+                    <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-white/70" [class]="tileStyle(av).text">{{ bd }}</span>
+                  }
+                </div>
+                <p class="text-sm font-semibold mt-2" [class]="tileStyle(av).text">{{ av.nom }}</p>
+                <p class="text-[11px] text-gray-500 mt-1 leading-snug">{{ av.note }}</p>
+              </div>
+            }
+
+            <label class="flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-green-300 hover:bg-green-50/40 transition text-sm text-gray-600">
+              <span class="text-lg">📷</span>
+              <span>{{ analysePhotoEnCours() ? 'Analyse en cours…' : 'Analyser une photo de ma culture' }}</span>
+              <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden"
+                [disabled]="analysePhotoEnCours()" (change)="analyserPhotoCulture($event)" />
+            </label>
+
+            @if (photoApercu(); as src) {
+              <div class="mt-4 flex gap-4 items-start flex-col sm:flex-row">
+                <img [src]="src" alt="Photo de la culture" class="w-full sm:w-40 rounded-xl border border-gray-100 object-cover" />
+                <div class="flex-1 min-w-0">
+                  @if (analysePhotoEnCours()) {
+                    <p class="text-sm text-gray-400">Analyse de la photo…</p>
+                  } @else if (analysePhotoErreur()) {
+                    <p class="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">{{ analysePhotoErreur() }}</p>
+                  } @else if (analysePhoto(); as a) {
+                    <p class="text-sm text-gray-700">{{ a.observations }}</p>
+                    @if (a.hypotheses.length) {
+                      <div class="flex flex-wrap gap-1.5 mt-2">
+                        @for (h of a.hypotheses; track h.cause) {
+                          <span class="text-xs font-medium px-2 py-1 rounded-full" [class]="confiancePhotoStyle[h.confiance] || 'bg-gray-50 text-gray-600'">
+                            {{ h.cause }} · confiance {{ h.confiance }}
+                          </span>
+                        }
+                      </div>
+                    }
+                    @if (a.recommandation) {
+                      <p class="text-sm text-gray-600 mt-2">👉 {{ a.recommandation }}</p>
+                    }
+                    <p class="text-[11px] text-gray-400 mt-2 italic">{{ a.avertissement }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
           <!-- Recommandation de cultures : ouvert tant qu'aucune culture n'est en cours sur la parcelle,
                replié dès qu'elle est cultivée (affichable à volonté via le résumé). -->
           <details class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 group"

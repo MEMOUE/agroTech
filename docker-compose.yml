@@ -43,6 +43,7 @@ services:
       GEE_PROJECT: ${GEE_PROJECT:-}
       GEE_SERVICE_ACCOUNT: ${GEE_SERVICE_ACCOUNT:-}
       GEE_PRIVATE_KEY_FILE: /secrets/gee-key.json
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
     volumes:
       - ./Agro-Parcelles/sentinel-service/secrets:/secrets:ro
 

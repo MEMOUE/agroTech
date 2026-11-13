@@ -1,0 +1,132 @@
+@if (auth.isLoggedIn()) {
+  <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+
+    @if (vue() === 'chat') {
+      <div class="mb-3 w-80 sm:w-96 h-[28rem] bg-white rounded-2xl shadow-xl border border-gray-100 flex flex-col overflow-hidden">
+        <div class="bg-gradient-to-br from-green-600 to-emerald-500 text-white px-4 py-3 flex items-center justify-between">
+          <div>
+            <p class="font-semibold text-sm">Assistant AgroTech</p>
+            <p class="text-xs text-white/80">Questions, vocal ou photo</p>
+          </div>
+          <button (click)="fermer()" class="text-white/80 hover:text-white" aria-label="Fermer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50">
+          @if (messages().length === 0) {
+            <p class="text-xs text-gray-400 text-center mt-4">
+              Posez une question, dictez-la au micro, ou envoyez une photo de votre culture.
+            </p>
+          }
+          @for (m of messages(); track $index) {
+            <div class="flex" [class.justify-end]="m.role === 'user'">
+              <div
+                class="max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap"
+                [class.bg-green-600]="m.role === 'user'"
+                [class.text-white]="m.role === 'user'"
+                [class.bg-white]="m.role === 'assistant'"
+                [class.border]="m.role === 'assistant'"
+                [class.border-gray-200]="m.role === 'assistant'"
+                [class.text-gray-700]="m.role === 'assistant'">
+                {{ m.content }}
+              </div>
+            </div>
+          }
+          @if (envoiEnCours() || photoEnCours()) {
+            <div class="flex">
+              <div class="bg-white border border-gray-200 rounded-2xl px-3 py-2 text-sm text-gray-400">
+                {{ photoEnCours() ? 'Analyse de la photo…' : '…' }}
+              </div>
+            </div>
+          }
+          @if (erreur()) {
+            <p class="text-xs text-red-500 text-center">{{ erreur() }}</p>
+          }
+        </div>
+
+        <div class="p-2 border-t border-gray-100 flex gap-1.5 items-center">
+          <input type="file" #fichierPhoto accept="image/jpeg,image/png,image/webp" class="hidden"
+            (change)="surPhotoSelectionnee($event)" />
+
+          <button type="button" (click)="fichierPhoto.click()"
+            class="w-9 h-9 shrink-0 flex items-center justify-center rounded-xl text-gray-500 hover:bg-gray-100 transition"
+            aria-label="Analyser une photo">
+            <span class="text-lg">📷</span>
+          </button>
+
+          <button type="button" (click)="basculerVocal()"
+            class="w-9 h-9 shrink-0 flex items-center justify-center rounded-xl transition relative"
+            [class.text-gray-500]="!enregistrement()"
+            [class.hover:bg-gray-100]="!enregistrement()"
+            [class.bg-red-50]="enregistrement()"
+            [class.text-red-600]="enregistrement()"
+            [attr.aria-label]="enregistrement() ? 'Arrêter la dictée' : 'Dicter au micro'">
+            <span class="text-lg">🎤</span>
+            @if (enregistrement()) {
+              <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            }
+          </button>
+
+          <input
+            [(ngModel)]="saisie"
+            (keydown.enter)="envoyer()"
+            type="text"
+            [placeholder]="enregistrement() ? 'Je vous écoute…' : 'Écrivez votre question…'"
+            class="flex-1 min-w-0 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+          <button
+            (click)="envoyer()"
+            [disabled]="envoiEnCours()"
+            class="shrink-0 px-3 py-2 bg-green-600 text-white rounded-xl text-sm font-medium hover:bg-green-700 transition disabled:opacity-50">
+            Envoyer
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (vue() === 'menu') {
+      <div class="mb-3 flex flex-col items-end gap-2">
+        <button type="button" (click)="ouvrirChat()" style="animation-delay: 0ms"
+          class="menu-icone flex items-center gap-2 bg-white shadow-lg border border-gray-100 rounded-full pl-3 pr-1.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+          Discuter
+          <span class="w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center text-base">💬</span>
+        </button>
+        <button type="button" (click)="ouvrirPhoto()" style="animation-delay: 60ms"
+          class="menu-icone flex items-center gap-2 bg-white shadow-lg border border-gray-100 rounded-full pl-3 pr-1.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+          Photo
+          <span class="w-9 h-9 rounded-full bg-amber-500 text-white flex items-center justify-center text-base">📷</span>
+        </button>
+        <button type="button" (click)="ouvrirVocal()" style="animation-delay: 120ms"
+          class="menu-icone flex items-center gap-2 bg-white shadow-lg border border-gray-100 rounded-full pl-3 pr-1.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+          Vocal
+          <span class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center text-base">🎤</span>
+        </button>
+      </div>
+    }
+
+    <!-- Tête de robot : clignement des yeux en continu, ouvre le menu (vocal/photo/chat) -->
+    <button
+      (click)="basculerMenu()"
+      class="w-14 h-14 rounded-full bg-gradient-to-br from-green-600 to-emerald-500 hover:brightness-105 text-white shadow-lg flex items-center justify-center transition"
+      [attr.aria-label]="vue() === 'ferme' ? 'Ouvrir l\'assistant IA' : 'Fermer le menu'">
+      @if (vue() === 'ferme' || vue() === 'menu') {
+        <svg viewBox="0 0 64 64" class="w-9 h-9">
+          <line x1="32" y1="4" x2="32" y2="11" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="4" r="2.4" fill="white"/>
+          <rect x="11" y="11" width="42" height="38" rx="13" fill="white" fill-opacity="0.18"/>
+          <rect x="11" y="11" width="42" height="38" rx="13" fill="none" stroke="white" stroke-width="2.2"/>
+          <ellipse class="robot-eye oeil-gauche" cx="24" cy="31" rx="4.6" ry="6.4" fill="white"/>
+          <ellipse class="robot-eye oeil-droit" cx="40" cy="31" rx="4.6" ry="6.4" fill="white"/>
+          <path d="M23 42 Q32 47 41 42" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      } @else {
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      }
+    </button>
+  </div>
+}

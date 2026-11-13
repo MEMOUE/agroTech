@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from virtual_sensors import et0_fao56, indice_humidite_radar
+from virtual_sensors import et0_fao56, indice_humidite_radar, anomalie_vegetation
 
 
 def test_et0_exemple_fao56_uccle():
@@ -37,3 +37,27 @@ def test_humidite_radar_signal_plat_refuse():
     # Forêt dense : VV varie de 0,3 dB seulement -> aucun indice (sinon on amplifierait du bruit)
     serie = [(f"2026-01-{i + 1:02d}", -8.2 + (i % 3) * 0.1) for i in range(20)]
     assert indice_humidite_radar(serie) is None
+
+
+def test_anomalie_vegetation_chute_detectee():
+    # 11 mois de NDVI stable autour de 0,6, puis chute franche sur le dernier point.
+    serie = [(f"2026-{m:02d}-01", 0.6) for m in range(1, 12)] + [("2026-12-01", 0.1)]
+    anomalie = anomalie_vegetation(serie)
+    assert anomalie is not None
+    assert anomalie["niveau"] == "basse"
+    assert anomalie["position_percentile"] < 15
+
+
+def test_anomalie_vegetation_stable_rien_a_signaler():
+    serie = [(f"2026-{m:02d}-01", 0.6 + (m % 2) * 0.02) for m in range(1, 13)]
+    assert anomalie_vegetation(serie) is None
+
+
+def test_anomalie_vegetation_historique_insuffisant():
+    assert anomalie_vegetation([("2026-01-01", 0.5)] * 3) is None
+
+
+def test_anomalie_vegetation_signal_plat_refuse():
+    # Parcelle forestière/stable toute l'année : dynamique trop faible pour être exploitable.
+    serie = [(f"2026-{m:02d}-01", 0.70 + (m % 2) * 0.01) for m in range(1, 13)]
+    assert anomalie_vegetation(serie) is None
