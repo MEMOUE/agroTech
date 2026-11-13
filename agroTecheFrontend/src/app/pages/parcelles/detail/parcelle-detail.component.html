@@ -119,12 +119,24 @@
         <!-- ── Colonne droite ────────────────────────── -->
         <div class="lg:col-span-2 space-y-5">
 
-          <!-- Carte satellite de la parcelle -->
+          <!-- Carte satellite de la parcelle, avec la délimitation des zones de culture si précisée -->
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div class="px-5 pt-4 pb-2 flex items-center justify-between">
               <h3 class="font-semibold text-gray-800">Carte satellite</h3>
             </div>
-            <app-parcelle-map [points]="parcelle()!.coordonneesGps" height="340px" />
+            <app-parcelle-map [points]="parcelle()!.coordonneesGps" [zones]="zonesTraceesAffichage()" height="340px" />
+            @if (zonesTraceesAffichage().length) {
+              <div class="flex flex-wrap gap-x-4 gap-y-1.5 px-5 pt-3 pb-4 text-xs">
+                @for (p of plannings(); track p.objectifId) {
+                  @if (p.zoneGps.length >= 3) {
+                    <span class="inline-flex items-center gap-1.5">
+                      <i class="w-2.5 h-2.5 rounded-full shrink-0" [class]="couleurParObjectif().get(p.objectifId)!.bg"></i>
+                      {{ p.culture }}
+                    </span>
+                  }
+                }
+              </div>
+            }
           </div>
 
           <!-- Santé des cultures : anomalie NDVI + analyse de photo (maladies/ravageurs). Ce n'est pas un diagnostic certain. -->
@@ -389,11 +401,6 @@
                 </p>
               }
 
-              @if (zonesTraceesAffichage().length && parcelle()) {
-                <p class="text-xs font-medium text-gray-600 mt-4 mb-2">Délimitation précise des zones tracées</p>
-                <app-parcelle-map [points]="[]" [contourReference]="parcelle()!.coordonneesGps"
-                  [zones]="zonesTraceesAffichage()" height="260px" />
-              }
             </div>
           }
 

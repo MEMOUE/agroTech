@@ -118,11 +118,11 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
       }).addTo(this.map);
     }
 
-    // Zones d'autres cultures : remplies, lecture seule.
+    // Zones d'autres cultures : contour seul (pas de remplissage), lecture seule.
     for (const zone of this.zones) {
       if (zone.points.length < 3) continue;
       this.zoneLayers.push(L.polygon(zone.points.map(p => [p.lat, p.lon]), {
-        color: zone.color, weight: 2, opacity: 0.8, fillColor: zone.color, fillOpacity: 0.25,
+        color: zone.color, weight: 2.5, opacity: 0.9, fill: false,
       }).addTo(this.map));
     }
 
@@ -153,8 +153,7 @@ export class ParcelleMapComponent implements AfterViewInit, OnChanges, OnDestroy
           color: '#16a34a',
           weight: 2.5,
           opacity: 0.9,
-          fillColor: '#4ade80',
-          fillOpacity: 0.2,
+          fill: false,
         }).addTo(this.map);
         // En mode dessin, on ne recadre pas : éviterait de "sauter" à chaque clic.
         if (!this.editable) this.map.fitBounds(this.polygon.getBounds(), { padding: [30, 30] });
