@@ -405,19 +405,24 @@
           }
 
           <!-- Cultures en cours & planning cultural : une parcelle peut porter plusieurs cultures à la fois -->
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <div class="flex items-center justify-between mb-1">
+          <details class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 group" open>
+            <summary class="flex items-center justify-between mb-1 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
               <div>
                 <h3 class="font-semibold text-gray-800">🎯 Ce qu'il faut faire</h3>
                 <p class="text-xs text-gray-400 mt-0.5">Pour chaque culture : les étapes à venir, dans l'ordre</p>
               </div>
-              @if (loadingPlanning()) {
-                <svg class="animate-spin w-5 h-5 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+              <div class="flex items-center gap-2 shrink-0">
+                @if (loadingPlanning()) {
+                  <svg class="animate-spin w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                  </svg>
+                }
+                <svg class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
-              }
-            </div>
+              </div>
+            </summary>
 
             @if (planningError()) {
               <div class="mt-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm flex gap-2">
@@ -501,7 +506,7 @@
                 </button>
               </div>
             }
-          </div>
+          </details>
 
           <!-- Détails techniques : sol, images satellite, météo — repliés par défaut pour une interface simple -->
           <details class="group">
