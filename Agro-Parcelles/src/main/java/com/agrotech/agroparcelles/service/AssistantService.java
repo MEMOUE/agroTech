@@ -71,8 +71,23 @@ public class AssistantService {
 
     /** Analyse d'une photo de culture, avec le contexte de la parcelle. */
     public PestPhotoAnalysisResponse analyserPhoto(Long parcelleId, String imageB64, String mimeType) {
-        Map<String, Object> contexte = construireContexteParcelle(parcelleId);
+        return analyserPhotoAvecContexte(imageB64, mimeType, construireContexteParcelle(parcelleId));
+    }
 
+    /**
+     * Analyse d'une photo sans parcelle précise : la plante photographiée n'est pas forcément
+     * cultivée sur une parcelle enregistrée (ex. depuis le widget flottant, hors fiche parcelle).
+     */
+    public PestPhotoAnalysisResponse analyserPhotoGeneral(String imageB64, String mimeType) {
+        Map<String, Object> contexte = Map.of(
+                "application", "AgroTech",
+                "info", "Photo générale : aucune parcelle précise associée, la plante peut ne pas être cultivée "
+                        + "sur une parcelle enregistrée par l'utilisateur.");
+        return analyserPhotoAvecContexte(imageB64, mimeType, contexte);
+    }
+
+    private PestPhotoAnalysisResponse analyserPhotoAvecContexte(String imageB64, String mimeType,
+                                                                  Map<String, Object> contexte) {
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("image_b64", imageB64);
         payload.put("mime_type", mimeType);

@@ -25,4 +25,11 @@ export class AssistantService {
     form.append('photo', photo);
     return this.http.post<PestPhotoAnalysis>(`${API}/parcelles/${parcelleId}/assistant/pest-photo`, form);
   }
+
+  /** Analyse une photo sans parcelle précise : la plante n'est pas forcément cultivée sur une parcelle enregistrée. */
+  analyserPhotoGeneral(photo: File): Observable<PestPhotoAnalysis> {
+    const form = new FormData();
+    form.append('photo', photo);
+    return this.http.post<PestPhotoAnalysis>(`${API}/assistant/pest-photo`, form);
+  }
 }

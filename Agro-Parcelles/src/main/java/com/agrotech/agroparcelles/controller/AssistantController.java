@@ -51,6 +51,21 @@ public class AssistantController {
         return ResponseEntity.ok(ChatResponse.builder().reponse(assistantService.chatParcelle(id, request)).build());
     }
 
+    @Operation(summary = "Analyser une photo de plante, sans parcelle précise",
+               description = "La plante photographiée n'est pas forcément cultivée sur une parcelle enregistrée " +
+                             "(ex. widget flottant, hors fiche parcelle). Upload jpg/png/webp, 8 Mo max. " +
+                             "Ce n'est PAS un diagnostic : confirmer auprès d'un agronome avant tout traitement.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Analyse de la photo retournée"),
+        @ApiResponse(responseCode = "400", description = "Fichier manquant, trop volumineux ou type non supporté", content = @Content),
+        @ApiResponse(responseCode = "502", description = "Assistant IA indisponible", content = @Content)
+    })
+    @PostMapping(value = "/api/assistant/pest-photo", consumes = "multipart/form-data")
+    public ResponseEntity<PestPhotoAnalysisResponse> analyserPhotoGeneral(@RequestParam("photo") MultipartFile photo) {
+        String imageB64 = decoderPhoto(photo);
+        return ResponseEntity.ok(assistantService.analyserPhotoGeneral(imageB64, photo.getContentType()));
+    }
+
     @Operation(summary = "Analyser une photo de la culture (signes de maladie/ravageur)",
                description = "Upload d'une photo (jpg/png/webp, 8 Mo max). Réponse structurée : observations, " +
                              "hypothèses avec niveau de confiance, recommandation, avertissement. " +
@@ -65,6 +80,11 @@ public class AssistantController {
     public ResponseEntity<PestPhotoAnalysisResponse> analyserPhoto(
             @PathVariable Long id,
             @RequestParam("photo") MultipartFile photo) {
+        String imageB64 = decoderPhoto(photo);
+        return ResponseEntity.ok(assistantService.analyserPhoto(id, imageB64, photo.getContentType()));
+    }
+
+    private String decoderPhoto(MultipartFile photo) {
         if (photo.isEmpty()) {
             throw new IllegalArgumentException("Aucune photo reçue.");
         }
@@ -75,14 +95,10 @@ public class AssistantController {
         if (mimeType == null || !TYPES_IMAGE_ACCEPTES.contains(mimeType)) {
             throw new IllegalArgumentException("Type de fichier non supporté (jpg, png ou webp attendu).");
         }
-
-        String imageB64;
         try {
-            imageB64 = Base64.getEncoder().encodeToString(photo.getBytes());
+            return Base64.getEncoder().encodeToString(photo.getBytes());
         } catch (java.io.IOException e) {
             throw new IllegalArgumentException("Photo illisible : " + e.getMessage());
         }
-
-        return ResponseEntity.ok(assistantService.analyserPhoto(id, imageB64, mimeType));
     }
 }

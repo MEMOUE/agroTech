@@ -114,27 +114,26 @@ export class AssistantWidgetComponent {
     this.enregistrement.set(false);
   }
 
-  /** Photo de la culture : seulement possible avec une parcelle identifiée (via l'URL courante). */
+  /**
+   * Photo de plante : si on est sur une fiche parcelle, l'analyse utilise son contexte (cultures
+   * en cours, etc.) ; sinon la photo n'est pas forcément d'une plante cultivée sur une parcelle
+   * enregistrée (ex. widget flottant depuis le tableau de bord) : on l'analyse sans ce contexte.
+   */
   protected surPhotoSelectionnee(event: Event): void {
     const input = event.target as HTMLInputElement;
     const fichier = input.files?.[0];
     if (!fichier) return;
 
-    const parcelleId = this.idParcelleCourante();
-    if (!parcelleId) {
-      this.messages.update(m => [...m, {
-        role: 'assistant',
-        content: "Ouvrez d'abord une parcelle pour analyser une photo de culture.",
-      }]);
-      input.value = '';
-      return;
-    }
-
     this.messages.update(m => [...m, { role: 'user', content: `📷 ${fichier.name}` }]);
     this.photoEnCours.set(true);
     this.erreur.set(null);
 
-    this.assistantService.analyserPhoto(parcelleId, fichier).subscribe({
+    const parcelleId = this.idParcelleCourante();
+    const appel$ = parcelleId
+      ? this.assistantService.analyserPhoto(parcelleId, fichier)
+      : this.assistantService.analyserPhotoGeneral(fichier);
+
+    appel$.subscribe({
       next: (a) => {
         const hypotheses = a.hypotheses.map(h => `• ${h.cause} (confiance ${h.confiance})`).join('\n');
         const texte = [a.observations, hypotheses, a.recommandation && `👉 ${a.recommandation}`, `⚠️ ${a.avertissement}`]
